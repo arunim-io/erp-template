@@ -10,8 +10,11 @@ backend = "core:bun"
 "bun-linux-x64-baseline.zip" = "sha256:f8f969281625dcde1abed7b405f0525909641674dcd0ea4060421747de30f6db"
 
 [tools.ruff]
-version = "0.11.4"
+version = "0.11.5"
 backend = "aqua:astral-sh/ruff"
+
+[tools.ruff.checksums]
+"ruff-x86_64-unknown-linux-musl.tar.gz" = "sha256:067c1c6c4d6033b65fe788f5310075686110b286a102431fb19883c079e2fca1"
 
 [tools.sops]
 version = "3.10.1"
@@ -26,8 +29,8 @@ version = "1.46.0"
 backend = "ubi:F1bonacc1/process-compose"
 
 [tools.uv]
-version = "0.6.13"
+version = "0.6.14"
 backend = "aqua:astral-sh/uv"
 
 [tools.uv.checksums]
-"uv-x86_64-unknown-linux-musl.tar.gz" = "sha256:779560faf6a21b5a6dbc2664c2dfbde2b9387b1f486c9197a9f4d143a3b66875"
+"uv-x86_64-unknown-linux-musl.tar.gz" = "sha256:0cac4df0cb3457b154f2039ae471e89cd4e15f3bd790bbb3cb0b8b40d940b93e"
