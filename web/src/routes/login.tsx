@@ -1,4 +1,5 @@
 import { LoginForm } from "$src/components/login-form";
+import { ThemeSwitcher } from "$src/lib/theme/switcher";
 import { createFileRoute } from "@tanstack/react-router";
 import { GalleryVerticalEnd } from "lucide-react";
 
@@ -9,7 +10,7 @@ export const Route = createFileRoute("/login")({
 function component() {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="flex flex-col gap-4 p-6 md:p-10">
+      <div className="flex flex-col gap-4 pt-6 md:pt-10">
         <div className="flex justify-center gap-2 md:justify-start">
           <a href="/" className="flex items-center gap-2 font-medium">
             <div className="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
@@ -22,6 +23,9 @@ function component() {
           <div className="w-full max-w-xs">
             <LoginForm />
           </div>
+        </div>
+        <div className="flex items-end justify-end">
+          <ThemeSwitcher />
         </div>
       </div>
       <div className="relative hidden bg-muted lg:block">
