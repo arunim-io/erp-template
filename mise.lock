@@ -17,8 +17,11 @@ backend = "aqua:astral-sh/ruff"
 "ruff-x86_64-unknown-linux-musl.tar.gz" = "sha256:067c1c6c4d6033b65fe788f5310075686110b286a102431fb19883c079e2fca1"
 
 [tools.sops]
-version = "3.10.1"
+version = "3.10.2"
 backend = "aqua:getsops/sops"
+
+[tools.sops.checksums]
+"sops-v3.10.2.linux.amd64" = "sha256:79b0f844237bd4b0446e4dc884dbc1765fc7dedc3968f743d5949c6f2e701739"
 
 [tools.taplo]
 version = "0.9.3"
