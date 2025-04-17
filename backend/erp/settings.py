@@ -46,7 +46,10 @@ INSTALLED_APPS = [
     "rest_framework_json_api",
     "allauth",
     "allauth.account",
+    "allauth.headless",
     "allauth.socialaccount",
+    "allauth.mfa",
+    "allauth.usersessions",
 ]
 
 MIDDLEWARE = [
@@ -140,6 +143,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
     "EXCEPTION_HANDLER": "rest_framework_json_api.exceptions.exception_handler",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "allauth.headless.contrib.rest_framework.authentication.XSessionTokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+    ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework_json_api.pagination.JsonApiPageNumberPagination",
     "DEFAULT_PARSER_CLASSES": [
         "rest_framework_json_api.parsers.JSONParser",
@@ -165,3 +173,8 @@ REST_FRAMEWORK = {
 }
 
 JSON_API_UNIFORM_EXCEPTIONS = True
+
+HEADLESS_ONLY = True
+
+HEADLESS_CLIENTS = ["browser"]
+HEADLESS_FRONTEND_URLS = {}
