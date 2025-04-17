@@ -6,6 +6,7 @@ dependencies = [
   "django>=5.2",
   "django-allauth[mfa,socialaccount]>=65.7.0",
   "djangorestframework>=3.16.0",
+  "djangorestframework-jsonapi[django-filter]>=7.1.0",
   "environs[django]>=14.1.1",
 ]
 

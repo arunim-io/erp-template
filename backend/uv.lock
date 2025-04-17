@@ -175,6 +175,18 @@ wheels = [
 ]
 
 [[package]]
+name = "django-filter"
+version = "25.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b5/40/c702a6fe8cccac9bf426b55724ebdf57d10a132bae80a17691d0cf0b9bac/django_filter-25.1.tar.gz", hash = "sha256:1ec9eef48fa8da1c0ac9b411744b16c3f4c31176c867886e4c48da369c407153", size = 143021 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/07/a6/70dcd68537c434ba7cb9277d403c5c829caf04f35baf5eb9458be251e382/django_filter-25.1-py3-none-any.whl", hash = "sha256:4fa48677cf5857b9b1347fed23e355ea792464e0fe07244d1fdfb8a806215b80", size = 94114 },
+]
+
+[[package]]
 name = "django-stubs"
 version = "5.1.3"
 source = { registry = "https://pypi.org/simple" }
@@ -216,6 +228,25 @@ wheels = [
 ]
 
 [[package]]
+name = "djangorestframework-jsonapi"
+version = "7.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "djangorestframework" },
+    { name = "inflection" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/4d/70/e2f183051ae6aa1d4dcae72cb3dd2c07d6863d457d33cdc8729f060be85e/djangorestframework_jsonapi-7.1.0.tar.gz", hash = "sha256:487e4fe5a0590e655cb3af947c8cee7b54be8ced14a81aac53056f2c43a92343", size = 97798 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/32/fa/6226a488c672c96ae30b362a0c84373ec0de15782c3b9bc35489ef1e604f/djangorestframework_jsonapi-7.1.0-py2.py3-none-any.whl", hash = "sha256:506d7179b6c2d29c4b7879afb4cadf8b0bb468accd40787491875ad680b4993a", size = 128532 },
+]
+
+[package.optional-dependencies]
+django-filter = [
+    { name = "django-filter" },
+]
+
+[[package]]
 name = "environs"
 version = "14.1.1"
 source = { registry = "https://pypi.org/simple" }
@@ -243,6 +274,7 @@ dependencies = [
     { name = "django" },
     { name = "django-allauth", extra = ["mfa", "socialaccount"] },
     { name = "djangorestframework" },
+    { name = "djangorestframework-jsonapi", extra = ["django-filter"] },
     { name = "environs", extra = ["django"] },
 ]
 
@@ -256,6 +288,7 @@ requires-dist = [
     { name = "django", specifier = ">=5.2" },
     { name = "django-allauth", extras = ["mfa", "socialaccount"], specifier = ">=65.7.0" },
     { name = "djangorestframework", specifier = ">=3.16.0" },
+    { name = "djangorestframework-jsonapi", extras = ["django-filter"], specifier = ">=7.1.0" },
     { name = "environs", extras = ["django"], specifier = ">=14.1.1" },
 ]
 
@@ -281,6 +314,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz", hash = "sha256:12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9", size = 190490 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/76/c6/c88e154df9c4e1a2a66ccf0005a88dfb2650c1dffb6f5ce603dfbd452ce3/idna-3.10-py3-none-any.whl", hash = "sha256:946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3", size = 70442 },
+]
+
+[[package]]
+name = "inflection"
+version = "0.5.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e1/7e/691d061b7329bc8d54edbf0ec22fbfb2afe61facb681f9aaa9bff7a27d04/inflection-0.5.1.tar.gz", hash = "sha256:1a29730d366e996aaacffb2f1f1cb9593dc38e2ddd30c91250c6dde09ea9b417", size = 15091 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/59/91/aa6bde563e0085a02a435aa99b49ef75b0a4b062635e606dab23ce18d720/inflection-0.5.1-py2.py3-none-any.whl", hash = "sha256:f38b2b640938a4f35ade69ac3d053042959b62a0f1076a5bbaa1b9526605a8a2", size = 9454 },
 ]
 
 [[package]]
