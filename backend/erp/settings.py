@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import re
 from pathlib import Path
 
 from environs import Env
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "rest_framework",
     "rest_framework_json_api",
     "allauth",
@@ -53,6 +55,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -140,6 +143,13 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# CORS
+
+CORS_ALLOW_ALL_ORIGINS = DEBUG
+
+
+# REST Framework
+
 REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
     "EXCEPTION_HANDLER": "rest_framework_json_api.exceptions.exception_handler",
@@ -172,9 +182,12 @@ REST_FRAMEWORK = {
     "TEST_REQUEST_DEFAULT_FORMAT": "vnd.api+json",
 }
 
+# JSON:API Integration
+
 JSON_API_UNIFORM_EXCEPTIONS = True
 
-HEADLESS_ONLY = True
+# Allauth
 
+HEADLESS_ONLY = True
 HEADLESS_CLIENTS = ["browser"]
 HEADLESS_FRONTEND_URLS = {}
