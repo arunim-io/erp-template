@@ -1,3 +1,4 @@
+import type { HTTPError } from "ky";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
@@ -16,6 +17,12 @@ const router = createRouter({
 declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
+  }
+}
+
+declare module "@tanstack/react-query" {
+  interface Register {
+    defaultError: HTTPError;
   }
 }
 
