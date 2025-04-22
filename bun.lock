@@ -5,10 +5,10 @@
       "name": "erp",
       "devDependencies": {
         "@antfu/eslint-config": "^4.12.0",
-        "@eslint-react/eslint-plugin": "^1.48.3",
+        "@eslint-react/eslint-plugin": "^1.48.4",
         "@tanstack/eslint-plugin-router": "^1.115.0",
-        "@types/bun": "^1.2.9",
-        "eslint": "^9.24.0",
+        "@types/bun": "^1.2.10",
+        "eslint": "^9.25.0",
         "eslint-plugin-format": "^1.0.1",
         "eslint-plugin-react-hooks": "^5.2.0",
         "eslint-plugin-react-refresh": "^0.4.19",
@@ -24,6 +24,7 @@
         "@radix-ui/react-label": "^2.1.3",
         "@radix-ui/react-slot": "^1.2.0",
         "@radix-ui/react-tooltip": "^1.2.0",
+        "@tanstack/react-query": "^5.74.4",
         "@tanstack/react-router": "^1.115.2",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
@@ -37,6 +38,7 @@
       },
       "devDependencies": {
         "@tailwindcss/vite": "^4.1.3",
+        "@tanstack/react-query-devtools": "^5.74.4",
         "@tanstack/react-router-devtools": "^1.115.2",
         "@tanstack/router-plugin": "^1.115.2",
         "@types/react": "^19.1.0",
@@ -393,6 +395,14 @@
     "@tanstack/eslint-plugin-router": ["@tanstack/eslint-plugin-router@1.115.0", "", { "dependencies": { "@typescript-eslint/utils": "^8.23.0" }, "peerDependencies": { "eslint": "^8.57.0 || ^9.0.0" } }, "sha512-vwKP9NjzAQ2nU3qADDoTSTxD1vNduLcK0312AWkXkicCWUZQZJtmRuZXPk9cEfuzDD2BAJCIUmlaF1K0vq4oRw=="],
 
     "@tanstack/history": ["@tanstack/history@1.115.0", "", {}, "sha512-K7JJNrRVvyjAVnbXOH2XLRhFXDkeP54Kt2P4FR1Kl2KDGlIbkua5VqZQD2rot3qaDrpufyUa63nuLai1kOLTsQ=="],
+
+    "@tanstack/query-core": ["@tanstack/query-core@5.74.4", "", {}, "sha512-YuG0A0+3i9b2Gfo9fkmNnkUWh5+5cFhWBN0pJAHkHilTx6A0nv8kepkk4T4GRt4e5ahbtFj2eTtkiPcVU1xO4A=="],
+
+    "@tanstack/query-devtools": ["@tanstack/query-devtools@5.73.3", "", {}, "sha512-hBQyYwsOuO7QOprK75NzfrWs/EQYjgFA0yykmcvsV62q0t6Ua97CU3sYgjHx0ZvxkXSOMkY24VRJ5uv9f5Ik4w=="],
+
+    "@tanstack/react-query": ["@tanstack/react-query@5.74.4", "", { "dependencies": { "@tanstack/query-core": "5.74.4" }, "peerDependencies": { "react": "^18 || ^19" } }, "sha512-mAbxw60d4ffQ4qmRYfkO1xzRBPUEf/72Dgo3qqea0J66nIKuDTLEqQt0ku++SDFlMGMnB6uKDnEG1xD/TDse4Q=="],
+
+    "@tanstack/react-query-devtools": ["@tanstack/react-query-devtools@5.74.4", "", { "dependencies": { "@tanstack/query-devtools": "5.73.3" }, "peerDependencies": { "@tanstack/react-query": "^5.74.4", "react": "^18 || ^19" } }, "sha512-PGCAcytQMmeagoeGG45ccBhrC1x0/5OlNjsM1FAb9OfsQZIhPzjwjhGcwmMu6TbT4RIHgvjxLwC5NHgkUwJQzw=="],
 
     "@tanstack/react-router": ["@tanstack/react-router@1.115.2", "", { "dependencies": { "@tanstack/history": "1.115.0", "@tanstack/react-store": "^0.7.0", "@tanstack/router-core": "1.115.0", "jsesc": "^3.1.0", "tiny-invariant": "^1.3.3", "tiny-warning": "^1.0.3" }, "peerDependencies": { "react": ">=18.0.0 || >=19.0.0", "react-dom": ">=18.0.0 || >=19.0.0" } }, "sha512-KWRtoDp1odMUUd0m7utTot3NsAxfb/W8UlPG5omtS0TCl8F+ErwurjS6Qn7rKg7q0CF8KcFDvhhBC1cXnOpoSQ=="],
 
