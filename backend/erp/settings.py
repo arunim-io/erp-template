@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-import re
 from pathlib import Path
 
 from environs import Env
@@ -46,12 +45,6 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework_json_api",
-    "allauth",
-    "allauth.account",
-    "allauth.headless",
-    "allauth.socialaccount",
-    "allauth.mfa",
-    "allauth.usersessions",
 ]
 
 MIDDLEWARE = [
@@ -63,7 +56,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "erp.urls"
@@ -115,11 +107,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
@@ -154,7 +141,6 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
     "EXCEPTION_HANDLER": "rest_framework_json_api.exceptions.exception_handler",
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "allauth.headless.contrib.rest_framework.authentication.XSessionTokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.BasicAuthentication",
     ],
@@ -185,9 +171,3 @@ REST_FRAMEWORK = {
 # JSON:API Integration
 
 JSON_API_UNIFORM_EXCEPTIONS = True
-
-# Allauth
-
-HEADLESS_ONLY = True
-HEADLESS_CLIENTS = ["browser"]
-HEADLESS_FRONTEND_URLS = {}
