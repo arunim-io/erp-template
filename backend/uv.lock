@@ -198,6 +198,20 @@ wheels = [
 ]
 
 [[package]]
+name = "drf-extensions"
+version = "0.8.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "djangorestframework" },
+    { name = "packaging" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/77/5a/57e3cc6f2bb4e1e84ad85eed0a12ddf22d5217b6b87c39e611d10e677a63/drf_extensions-0.8.0.tar.gz", hash = "sha256:c3f27bca74a2def53e8454a5c7b327595195df51e121743120b2f51ef5a52aaa", size = 173718 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/aa/c1/b9721c9239b465c0ceac32b33e732c08f6ea0afd8156700e417416a47733/drf_extensions-0.8.0-py2.py3-none-any.whl", hash = "sha256:ab7bd854c9061c27ab55233b66d758001e5c2d81aaa9d117cbbe1c9ea49c77ab", size = 21589 },
+]
+
+[[package]]
 name = "drf-spectacular"
 version = "0.28.0"
 source = { registry = "https://pypi.org/simple" }
@@ -217,6 +231,22 @@ wheels = [
 [package.optional-dependencies]
 sidecar = [
     { name = "drf-spectacular-sidecar" },
+]
+
+[[package]]
+name = "drf-spectacular-jsonapi"
+version = "0.5.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "djangorestframework" },
+    { name = "djangorestframework-jsonapi" },
+    { name = "drf-extensions" },
+    { name = "drf-spectacular" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ab/48/6762d6e086c0bf2155293f646cec388bf51493412490968559bd7d8ecacc/drf-spectacular-jsonapi-0.5.2.tar.gz", hash = "sha256:d5bb8f05ea985ec3751d095c4ec677876d2832fa06dfd5ea58bb1e8897e5af47", size = 15971 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/54/c0/2a634ff6644593541e8a8ff33cdf61ee8b11aa9f69be3c111adb15d3cc2d/drf_spectacular_jsonapi-0.5.2-py3-none-any.whl", hash = "sha256:d0351ced5e77df954c575010dcf79acc935cf37e45cae16e63151980b93cd806", size = 13550 },
 ]
 
 [[package]]
@@ -261,6 +291,7 @@ dependencies = [
     { name = "djangorestframework" },
     { name = "djangorestframework-jsonapi", extra = ["django-filter"] },
     { name = "drf-spectacular", extra = ["sidecar"] },
+    { name = "drf-spectacular-jsonapi" },
     { name = "environs", extra = ["django"] },
 ]
 
@@ -277,6 +308,7 @@ requires-dist = [
     { name = "djangorestframework", specifier = ">=3.16.0" },
     { name = "djangorestframework-jsonapi", extras = ["django-filter"], specifier = ">=7.1.0" },
     { name = "drf-spectacular", extras = ["sidecar"], specifier = ">=0.28.0" },
+    { name = "drf-spectacular-jsonapi", specifier = ">=0.5.2" },
     { name = "environs", extras = ["django"], specifier = ">=14.1.1" },
 ]
 
@@ -338,6 +370,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/1e/ff/26df5a9f5ac57ccf693a5854916ab47243039d2aa9e0fe5f5a0331e7b74b/marshmallow-4.0.0.tar.gz", hash = "sha256:3b6e80aac299a7935cfb97ed01d1854fb90b5079430969af92118ea1b12a8d55", size = 220507 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d6/26/6cc45d156f44dbe1d5696d9e54042e4dcaf7b946c0b86df6a97d29706f32/marshmallow-4.0.0-py3-none-any.whl", hash = "sha256:e7b0528337e9990fd64950f8a6b3a1baabed09ad17a0dfb844d701151f92d203", size = 48420 },
+]
+
+[[package]]
+name = "packaging"
+version = "25.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz", hash = "sha256:d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f", size = 165727 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl", hash = "sha256:29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484", size = 66469 },
 ]
 
 [[package]]
