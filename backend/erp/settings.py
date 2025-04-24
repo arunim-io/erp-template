@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "rest_framework_json_api",
     "drf_spectacular",
     "drf_spectacular_sidecar",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -131,6 +132,7 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 
 # CORS
 
