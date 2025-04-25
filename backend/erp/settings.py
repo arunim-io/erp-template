@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 from environs import Env
@@ -138,12 +139,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.User"
 
 
-# CORS
+# CORS - https://github.com/adamchainz/django-cors-headers#configuration
 
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 
 
-# REST Framework
+# REST Framework - https://www.django-rest-framework.org/api-guide/settings/
 
 REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
@@ -175,11 +176,11 @@ REST_FRAMEWORK = {
     "TEST_REQUEST_DEFAULT_FORMAT": "vnd.api+json",
 }
 
-# JSON:API Integration
+# JSON:API - https://django-rest-framework-json-api.readthedocs.io/en/stable/usage.html#configuration
 
 JSON_API_UNIFORM_EXCEPTIONS = True
 
-# Spectacular
+# Spectacular - https://drf-spectacular.readthedocs.io/en/latest/settings.html
 
 SPECTACULAR_SETTINGS = {
     "COMPONENT_SPLIT_REQUEST": True,
@@ -187,4 +188,13 @@ SPECTACULAR_SETTINGS = {
     "SWAGGER_UI_DIST": "SIDECAR",
     "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
     "REDOC_DIST": "SIDECAR",
+}
+
+# Knox - https://jazzband.github.io/django-rest-knox/settings/
+
+REST_KNOX = {
+    "TOKEN_TTL": timedelta(days=1),
+    "TOKEN_LIMIT_PER_USER": 5,
+    "USER_SERIALIZER": "accounts.api.serializers.UserSerializer",
+    "EXPIRY_DATETIME_FORMAT": None,
 }
