@@ -18,14 +18,14 @@ class LoginView(knox_views.LoginView):
     permission_classes = [permissions.AllowAny]
 
     @extend_schema(
-        request=serializers.LoginRequestSerializer,
+        request=serializers.LoginSerializer,
         responses={
             200: serializers.LoginResponseSerializer,
         },
     )
     @override
     def post(self, request: Request, format=None):
-        serializer = serializers.LoginRequestSerializer(data=request.data)
+        serializer = serializers.LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         user = serializer.validated_data["user"]

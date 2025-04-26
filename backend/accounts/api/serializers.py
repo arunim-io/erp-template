@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [User.USERNAME_FIELD, User.EMAIL_FIELD, "first_name", "last_name"]
 
 
-class LoginRequestSerializer(serializers.Serializer):
+class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(label=_("Username"), write_only=True)
     password = serializers.CharField(
         label=_("Password"),
@@ -21,7 +21,6 @@ class LoginRequestSerializer(serializers.Serializer):
         trim_whitespace=False,
         write_only=True,
     )
-    token = serializers.CharField(label=_("Token"), read_only=True)
 
     class Meta:
         resource_name = "auth"
