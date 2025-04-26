@@ -1,5 +1,5 @@
 import { LoginForm } from "$src/components/login-form";
-import { ThemeSwitcher } from "$src/lib/theme/switcher";
+import { ThemeSwitcher } from "$src/components/theme/switcher";
 import { createFileRoute } from "@tanstack/react-router";
 import { GalleryVerticalEnd } from "lucide-react";
 
