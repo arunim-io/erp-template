@@ -4,10 +4,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { GalleryVerticalEnd } from "lucide-react";
 
 export const Route = createFileRoute("/login")({
-  component,
+  component: LoginPage,
 });
 
-function component() {
+function LoginPage() {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 pt-6 md:pt-10">

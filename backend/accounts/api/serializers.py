@@ -14,12 +14,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField(label=_("Username"), write_only=True)
+    username = serializers.CharField(label=_("Username"))
     password = serializers.CharField(
         label=_("Password"),
         style={"input_type": "password"},
         trim_whitespace=False,
-        write_only=True,
     )
 
     class Meta:

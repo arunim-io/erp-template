@@ -11,8 +11,9 @@ taplo = "latest"
 _.file = ".env.json"
 
 DJANGO_DEBUG = true
+DJANGO_LOG_LEVEL = "DEBUG"
 NODE_ENV = "{{ env.NODE_ENV | default(value='development') }}"
-VITE_API_URL = "http://127.0.0.1:8000/"
+VITE_API_URL = "http://127.0.0.1:8000/api/v1/"
 
 [hooks]
 postinstall = ['uv sync --directory ./backend/', 'bun install']
