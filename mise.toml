@@ -15,7 +15,7 @@ postinstall = ['uv sync --directory ./backend/', 'bun install']
 
 [tasks]
 update = ['uv sync --upgrade --directory ./backend/', 'bun update']
-manage = "uv run ./backend/manage.py"
+manage = { run = "uv run ./manage.py", dir = './backend/' }
 dev = "process-compose"
 format = ["mise run ruff format .", "bun format"]
 lint = ["mise run ruff check .", "bun lint"]
