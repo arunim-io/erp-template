@@ -11,36 +11,17 @@ DJANGO_DEBUG = true
 NODE_ENV = "{{ env.NODE_ENV | default(value='development') }}"
 
 [hooks]
-postinstall = ['uv sync --directory ./backend/', 'bun install --cwd=./web/']
+postinstall = ['uv sync --directory ./backend/', 'bun install']
 
 [tasks]
-update = ['uv sync --upgrade --directory ./backend/', 'bun update --cwd=./web/']
+update = ['uv sync --upgrade --directory ./backend/', 'bun update']
 manage = "uv run ./backend/manage.py"
 dev = "process-compose"
-lint = ["mise run lint_backend", "mise run lint_web"]
+format = ["mise run ruff format .", "bun format"]
+lint = ["mise run ruff check .", "bun lint"]
 generate_secret_key = "uv run --with django python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'"
 edit_secrets = "sops edit .env.json"
-
-
-[tasks.format]
-alias = "fmt"
-run = ["mise run format_backend"]
-
-[tasks.format_backend]
-hide = true
-dir = "{{ config_root }}/backend/"
-run = "uv run ruff format ."
-
-[tasks.lint_backend]
-hide = true
-dir = "{{ config_root }}/backend/"
-run = "uv run ruff check ."
-
-
-[tasks.lint_web]
-hide = true
-dir = "{{ config_root }}/web/"
-run = "bun lint"
+ruff = "uv run --directory ./backend/ ruff"
 
 [settings]
 experimental = true

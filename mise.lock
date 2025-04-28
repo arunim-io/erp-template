@@ -3,17 +3,26 @@ version = "1.2.1"
 backend = "aqua:FiloSottile/age"
 
 [tools.bun]
-version = "1.2.8"
+version = "1.2.10"
 backend = "core:bun"
 
+[tools.bun.checksums]
+"bun-linux-x64-baseline.zip" = "sha256:4b62f599048ef320a761bacbeeb71f8784f5e373b976a9d53b3ee7811f19b004"
+
 [tools.sops]
-version = "3.10.1"
+version = "3.10.2"
 backend = "aqua:getsops/sops"
+
+[tools.sops.checksums]
+"sops-v3.10.2.linux.amd64" = "sha256:79b0f844237bd4b0446e4dc884dbc1765fc7dedc3968f743d5949c6f2e701739"
 
 [tools."ubi:F1bonacc1/process-compose"]
 version = "1.46.0"
 backend = "ubi:F1bonacc1/process-compose"
 
 [tools.uv]
-version = "0.6.12"
+version = "0.6.16"
 backend = "aqua:astral-sh/uv"
+
+[tools.uv.checksums]
+"uv-x86_64-unknown-linux-musl.tar.gz" = "sha256:25024557931d04cc34f80b818c7547c9c62b762ec6df807e30cb52f383fa2615"
