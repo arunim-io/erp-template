@@ -1,6 +1,8 @@
-import antfu from "@antfu/eslint-config";
+import Antfu from "@antfu/eslint-config";
+import TanstackQuery from "@tanstack/eslint-plugin-query";
+import TanstackRouter from "@tanstack/eslint-plugin-router";
 
-export default antfu({
+export default Antfu({
   ignores: ["**/*.gen.ts", "**/.venv/"],
   stylistic: {
     quotes: "double",
@@ -9,4 +11,4 @@ export default antfu({
   formatters: true,
   react: true,
   toml: false,
-});
+}, ...TanstackRouter.configs["flat/recommended"], ...TanstackQuery.configs["flat/recommended"]);
