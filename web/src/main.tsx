@@ -1,9 +1,12 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { ThemeProvider } from "./components/theme";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <h1>Hello, World!</h1>
+    <ThemeProvider>
+      <h1>Hello, World!</h1>
+    </ThemeProvider>
   </StrictMode>,
 );
