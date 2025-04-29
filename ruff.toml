@@ -68,4 +68,4 @@ ignore = [
 extend-unsafe-fixes = ["UP038"]
 
 [lint.per-file-ignores]
-"erp/settings.py" = ["E501"]
+"backend/erp/settings.py" = ["E501"]
