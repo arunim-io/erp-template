@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "daphne",
     "django.contrib.staticfiles",
     "strawberry_django",
 ]
@@ -71,6 +72,8 @@ TEMPLATES = [  # pyright: ignore[reportUnknownVariableType]
         },
     },
 ]
+
+ASGI_APPLICATION = "erp.asgi.application"
 
 WSGI_APPLICATION = "erp.wsgi.application"
 
