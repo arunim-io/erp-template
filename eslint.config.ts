@@ -3,7 +3,7 @@ import TanstackQuery from "@tanstack/eslint-plugin-query";
 import TanstackRouter from "@tanstack/eslint-plugin-router";
 
 export default Antfu({
-  ignores: ["**/*.gen.ts", "**/.venv/"],
+  ignores: ["**/*.gen.ts", "**/.venv/", "./backend/**/fixtures/*.json"],
   stylistic: {
     quotes: "double",
     semi: true,
