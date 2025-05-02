@@ -1,0 +1,3 @@
+{
+  "647e5a4a7d9b82b2753b091b2c265c9371fcc7fe": "query UserAuthStatusQuery { status { email firstName lastName username } }"
+}

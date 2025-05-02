@@ -2,9 +2,12 @@ version: "0.5"
 is_tui_disabled: true
 
 processes:
-  server:
+  backend-server:
     command: uv run manage.py runserver
     working_dir: ./backend/
-  web:
-    command: bun dev
+  web-server:
+    command: bun run dev
+    working_dir: ./web/
+  web-codegen:
+    command: bun run codegen:watch
     working_dir: ./web/
