@@ -1,25 +1,49 @@
 import type { ComponentPropsWithoutRef } from "react";
 import type { Control } from "react-hook-form";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "$src/components/ui/form";
-import { Input } from "$src/components/ui/input";
-import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+import { Input } from "./ui/input";
 
 interface FieldProps extends ComponentPropsWithoutRef<"input"> {
   control: Control<any>;
   label?: string;
 }
 
-type EmailFieldProps = FieldProps;
+export function UsernameField({
+  control,
+  name = "username",
+  label = "Username",
+  ...props
+}: FieldProps) {
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className="grid gap-2">
+          <FormLabel>{label}</FormLabel>
+          <div className="relative">
+            <User className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+            <FormControl>
+              <Input placeholder="johndoe" className="pl-10" {...props} {...field} />
+            </FormControl>
+          </div>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+}
 
-function EmailField({
+export function EmailField({
   control,
   label = "Email Address",
   placeholder = "johndoe@gmail.com",
   name = "email",
   ...props
-}: EmailFieldProps) {
+}: FieldProps) {
   return (
     <FormField
       control={control}
@@ -44,7 +68,7 @@ interface PasswordFieldProps extends FieldProps {
   showForgotPasswordLink?: boolean;
 }
 
-function PasswordField({
+export function PasswordField({
   control,
   name = "password",
   label = "Password",
@@ -93,5 +117,3 @@ function PasswordField({
     />
   );
 }
-
-export { EmailField, PasswordField };

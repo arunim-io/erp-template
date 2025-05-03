@@ -1,3 +1,4 @@
 {
+  "0b0661d093139d461c9e5b058e13cfbbf14d7246": "mutation UserLogin($password: String!, $username: String!) { login(username: $username, password: $password) { isActive } }",
   "830bcc820e5ea124152a40b2bdffea0a35de1e21": "query UserAuthStatus { status { isActive username } }"
 }

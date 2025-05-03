@@ -1,26 +1,42 @@
+import type { UserLoginMutation } from "$lib/gql/_generated/graphql";
 import { Button } from "$components/ui/button";
 import { Form } from "$components/ui/form";
+import { graphql } from "$lib/gql";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SiFacebook, SiGoogle } from "@icons-pack/react-simple-icons";
+import { useMutation } from "@tanstack/react-query";
+import { useRouteContext } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { EmailField, PasswordField } from "./form-fields";
+import { PasswordField, UsernameField } from "./form-fields";
 
-const loginFormSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
+const loginFormSchema = z.interface({
+  username: z.string(),
   password: z.string().min(8, { message: "Password must be at least 8 characters" }),
 });
 
 type LoginFormValues = z.infer<typeof loginFormSchema>;
 
+const userLoginMutation = graphql(`
+  mutation UserLogin($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      isActive
+    }
+  }
+`);
+
 export function LoginForm() {
+  const { graphqlClient } = useRouteContext({ from: "/login" });
+  const { mutateAsync: loginUser } = useMutation<UserLoginMutation, Error, LoginFormValues>({
+    mutationKey: ["auth", "user", "login"],
+    mutationFn: values => graphqlClient.request(userLoginMutation, values),
+  });
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
   });
 
-  function onSubmit(values: LoginFormValues) {
-    // eslint-disable-next-line no-console
-    console.log(values);
+  async function onSubmit(values: LoginFormValues) {
+    await loginUser(values);
   }
 
   return (
@@ -31,7 +47,7 @@ export function LoginForm() {
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6">
-          <EmailField control={form.control} />
+          <UsernameField control={form.control} />
           <PasswordField control={form.control} showForgotPasswordLink />
           <Button type="submit" className="w-full">
             Login
