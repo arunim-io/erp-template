@@ -4,16 +4,15 @@ import process from "node:process";
 const config: CodegenConfig = {
   overwrite: true,
   schema: process.env.VITE_API_URL,
-  documents: ["src/**/*.ts", "src/**/*.tsx"],
+  documents: ["src/**/*.tsx", "src/**/*.ts"],
   ignoreNoDocuments: true,
   generates: {
-    "src/lib/gql/": {
+    "src/lib/gql/_generated/": {
       preset: "client",
       presetConfig: {
         persistedDocuments: true,
       },
       config: {
-        documentMode: "string",
         immutableTypes: true,
         useTypeImports: true,
         extractAllFieldsToTypes: true,

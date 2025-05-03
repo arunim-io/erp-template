@@ -1,5 +1,5 @@
 /* eslint-disable */
-import type { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -43,37 +43,10 @@ export type User = {
   username: Scalars['String']['output'];
 };
 
-export type UserAuthStatusQueryQueryVariables = Exact<{ [key: string]: never; }>;
+export type UserAuthStatusQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserAuthStatusQueryQuery = { __typename?: 'Query', status: { __typename?: 'User', username: string, email: string, firstName: string, lastName: string } };
+export type UserAuthStatusQuery = { __typename?: 'Query', status: { __typename?: 'User', username: string, isActive: boolean } };
 
-export class TypedDocumentString<TResult, TVariables>
-  extends String
-  implements DocumentTypeDecoration<TResult, TVariables>
-{
-  __apiType?: DocumentTypeDecoration<TResult, TVariables>['__apiType'];
-  private value: string;
-  public __meta__?: Record<string, any> | undefined;
 
-  constructor(value: string, __meta__?: Record<string, any> | undefined) {
-    super(value);
-    this.value = value;
-    this.__meta__ = __meta__;
-  }
-
-  toString(): string & DocumentTypeDecoration<TResult, TVariables> {
-    return this.value;
-  }
-}
-
-export const UserAuthStatusQueryDocument = new TypedDocumentString(`
-    query UserAuthStatusQuery {
-  status {
-    username
-    email
-    firstName
-    lastName
-  }
-}
-    `, {"hash":"647e5a4a7d9b82b2753b091b2c265c9371fcc7fe"}) as unknown as TypedDocumentString<UserAuthStatusQueryQuery, UserAuthStatusQueryQueryVariables>;
+export const UserAuthStatusDocument = {"__meta__":{"hash":"830bcc820e5ea124152a40b2bdffea0a35de1e21"},"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserAuthStatus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"isActive"}}]}}]}}]} as unknown as DocumentNode<UserAuthStatusQuery, UserAuthStatusQueryVariables>;

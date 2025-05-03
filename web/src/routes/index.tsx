@@ -8,19 +8,21 @@ export const Route = createFileRoute("/")({
 });
 
 const UserAuthStatusQuery = graphql(/* graphql */`
-  query UserAuthStatusQuery {
+  query UserAuthStatus {
     status {
       username
-      email
-      firstName
-      lastName
+      isActive
     }
   }
 `);
 
 function RouteComponent() {
   const { graphqlClient } = useRouteContext({ from: "/" });
-  const { data, isSuccess } = useQuery({ queryKey: ["auth", "user", "status"], queryFn: () => graphqlClient.request(UserAuthStatusQuery) });
+  const { data, isSuccess } = useQuery({
+    queryKey: ["auth", "user", "status"],
+    retry: false,
+    queryFn: () => graphqlClient.request(UserAuthStatusQuery),
+  });
 
   return isSuccess
     ? (

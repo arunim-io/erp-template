@@ -1,0 +1,3 @@
+{
+  "830bcc820e5ea124152a40b2bdffea0a35de1e21": "query UserAuthStatus { status { isActive username } }"
+}
