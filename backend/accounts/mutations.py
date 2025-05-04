@@ -5,6 +5,6 @@ from . import types
 
 
 @strawberry.type
-class AuthMutation:
+class AuthMutations:
     login: types.User = strawberry_django.auth.login()
     logout = strawberry_django.auth.logout()

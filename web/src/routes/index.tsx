@@ -7,11 +7,13 @@ export const Route = createFileRoute("/")({
   component: RouteComponent,
 });
 
-const UserAuthStatusQuery = graphql(/* graphql */`
+const UserAuthStatusQuery = graphql(`
   query UserAuthStatus {
-    status {
-      username
-      isActive
+    auth {
+      status {
+        username
+        isActive
+      }
     }
   }
 `);
@@ -26,20 +28,20 @@ function RouteComponent() {
 
   return isSuccess
     ? (
-        <p>
-          Logged In!
-          <br />
-          Username:
-          {" "}
-          {data?.status.username}
-        </p>
-      )
+      <p>
+        Logged In!
+        <br />
+        Username:
+        {" "}
+        {data?.status.username}
+      </p>
+    )
     : (
-        <>
-          <h1>Not Logged In!</h1>
-          <Link to="/login">
-            <Button>Login</Button>
-          </Link>
-        </>
-      );
+      <>
+        <h1>Not Logged In!</h1>
+        <Link to="/login">
+          <Button>Login</Button>
+        </Link>
+      </>
+    );
 }

@@ -1,11 +1,25 @@
 import strawberry
-from accounts.mutations import AuthMutation
+from accounts.mutations import AuthMutations
 from accounts.queries import AuthQueries
-from strawberry.tools import merge_types
 from strawberry_django.optimizer import DjangoOptimizerExtension
 
+
+@strawberry.type
+class Query:
+    @strawberry.field
+    def auth(self) -> AuthQueries:
+        return AuthQueries()
+
+
+@strawberry.type
+class Mutation:
+    @strawberry.field
+    def auth(self) -> AuthMutations:
+        return AuthMutations()
+
+
 schema = strawberry.Schema(
-    query=merge_types("Query", (AuthQueries,)),
-    mutation=merge_types("Mutation", (AuthMutation,)),
+    query=Query,
+    mutation=Mutation,
     extensions=[DjangoOptimizerExtension],
 )

@@ -19,8 +19,10 @@ type LoginFormValues = z.infer<typeof loginFormSchema>;
 
 const userLoginMutation = graphql(`
   mutation UserLogin($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
+    auth {
+      login(username: $username, password: $password) {
       isActive
+      }
     }
   }
 `);

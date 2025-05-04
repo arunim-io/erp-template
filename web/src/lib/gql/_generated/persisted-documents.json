@@ -1,4 +1,4 @@
 {
-  "0b0661d093139d461c9e5b058e13cfbbf14d7246": "mutation UserLogin($password: String!, $username: String!) { login(username: $username, password: $password) { isActive } }",
-  "830bcc820e5ea124152a40b2bdffea0a35de1e21": "query UserAuthStatus { status { isActive username } }"
+  "32fdf3a0600be7d71c94748ac399196f5841e3c8": "mutation UserLogin($password: String!, $username: String!) { auth { login(username: $username, password: $password) { isActive } } }",
+  "8d12faa463a826bbdb0f27b953945ad51f9a3c60": "query UserAuthStatus { auth { status { isActive username } } }"
 }
