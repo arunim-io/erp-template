@@ -2,15 +2,16 @@ import type { UserLoginMutation } from "$lib/gql/_generated/graphql";
 import { Button } from "$components/ui/button";
 import { Form } from "$components/ui/form";
 import { graphql } from "$lib/gql";
+import { authStore } from "$lib/stores";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SiFacebook, SiGoogle } from "@icons-pack/react-simple-icons";
 import { useMutation } from "@tanstack/react-query";
-import { useRouteContext } from "@tanstack/react-router";
+import { useNavigate, useRouteContext } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import z from "zod";
 import { PasswordField, UsernameField } from "./form-fields";
 
-const loginFormSchema = z.interface({
+const loginFormSchema = z.object({
   username: z.string(),
   password: z.string().min(8, { message: "Password must be at least 8 characters" }),
 });
@@ -28,10 +29,19 @@ const userLoginMutation = graphql(`
 `);
 
 export function LoginForm() {
+  const navigate = useNavigate({ from: "/login" });
   const { graphqlClient } = useRouteContext({ from: "/login" });
   const { mutateAsync: loginUser } = useMutation<UserLoginMutation, Error, LoginFormValues>({
     mutationKey: ["auth", "user", "login"],
     mutationFn: values => graphqlClient.request(userLoginMutation, values),
+    async onSuccess() {
+      authStore.setState(state => ({
+        ...state,
+        isAuthenticated: true,
+      }));
+
+      await navigate({ to: "/" });
+    },
   });
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),

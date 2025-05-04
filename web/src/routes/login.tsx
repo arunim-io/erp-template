@@ -1,12 +1,26 @@
 import { LoginForm } from "$components/login-form";
-import { createFileRoute } from "@tanstack/react-router";
+import { authStore } from "$src/lib/stores";
+import { createFileRoute, useRouter, useSearch } from "@tanstack/react-router";
 import { GalleryVerticalEnd } from "lucide-react";
+import { useEffect } from "react";
+import z from "zod";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
+  validateSearch: z.object({ redirect: z.string().optional() }),
 });
 
 function LoginPage() {
+  const { history } = useRouter();
+  const { redirect } = useSearch({ from: "/login" });
+  const { isAuthenticated } = authStore.getState();
+
+  useEffect(() => {
+    if (isAuthenticated && redirect) {
+      history.push(redirect);
+    }
+  }, [history, isAuthenticated, redirect]);
+
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
