@@ -1,13 +1,31 @@
+import type { LoginFormValues } from "$src/lib/schemas/forms";
 import { LoginForm } from "$components/login-form";
+import { graphql } from "$src/lib/gql";
 import { authStore } from "$src/lib/stores";
 import { createFileRoute, useRouter, useSearch } from "@tanstack/react-router";
 import { GalleryVerticalEnd } from "lucide-react";
 import { useEffect } from "react";
 import z from "zod";
 
+const userLoginMutation = graphql(`
+  mutation UserLogin($username: String!, $password: String!) {
+    auth {
+      login(username: $username, password: $password) {
+      isActive
+      }
+    }
+  }
+`);
+
 export const Route = createFileRoute("/login")({
   component: LoginPage,
   validateSearch: z.object({ redirect: z.string().optional() }),
+  loader: ({ context: { graphqlClient } }) => ({
+    loginMutationOptions: {
+      mutationKey: ["auth", "user", "login"],
+      mutationFn: (values: LoginFormValues) => graphqlClient.request(userLoginMutation, values),
+    },
+  }),
 });
 
 function LoginPage() {

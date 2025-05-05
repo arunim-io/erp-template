@@ -13,7 +13,7 @@ export const Route = createFileRoute("/")({
   },
 });
 
-const UserAuthStatusQuery = graphql(`
+const userAuthStatusQuery = graphql(`
   query UserAuthStatus {
     auth {
       status {
@@ -29,7 +29,7 @@ function RouteComponent() {
   const { data, isSuccess } = useQuery({
     queryKey: ["auth", "user", "status"],
     retry: false,
-    queryFn: () => graphqlClient.request(UserAuthStatusQuery),
+    queryFn: () => graphqlClient.request(userAuthStatusQuery),
   });
 
   return isSuccess

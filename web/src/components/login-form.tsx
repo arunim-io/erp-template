@@ -1,39 +1,23 @@
 import type { UserLoginMutation } from "$lib/gql/_generated/graphql";
+import type { LoginFormValues } from "$src/lib/schemas/forms";
 import { Button } from "$components/ui/button";
 import { Form } from "$components/ui/form";
 import { graphql } from "$lib/gql";
 import { authStore } from "$lib/stores";
+import { loginFormSchema } from "$src/lib/schemas/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SiFacebook, SiGoogle } from "@icons-pack/react-simple-icons";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate, useRouteContext } from "@tanstack/react-router";
+import { useLoaderData, useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
-import z from "zod";
 import { PasswordField, UsernameField } from "./form-fields";
-
-const loginFormSchema = z.object({
-  username: z.string(),
-  password: z.string().min(8, { message: "Password must be at least 8 characters" }),
-});
-
-type LoginFormValues = z.infer<typeof loginFormSchema>;
-
-const userLoginMutation = graphql(`
-  mutation UserLogin($username: String!, $password: String!) {
-    auth {
-      login(username: $username, password: $password) {
-      isActive
-      }
-    }
-  }
-`);
 
 export function LoginForm() {
   const navigate = useNavigate({ from: "/login" });
-  const { graphqlClient } = useRouteContext({ from: "/login" });
+  const { loginMutationOptions } = useLoaderData({ from: "/login" });
+
   const { mutateAsync: loginUser } = useMutation<UserLoginMutation, Error, LoginFormValues>({
-    mutationKey: ["auth", "user", "login"],
-    mutationFn: values => graphqlClient.request(userLoginMutation, values),
+    ...loginMutationOptions,
     async onSuccess() {
       authStore.setState(state => ({
         ...state,
@@ -45,6 +29,7 @@ export function LoginForm() {
   });
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
+    defaultValues: { username: "", password: "" },
   });
 
   async function onSubmit(values: LoginFormValues) {
