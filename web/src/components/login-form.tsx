@@ -2,7 +2,6 @@ import type { UserLoginMutation } from "$lib/gql/_generated/graphql";
 import type { LoginFormValues } from "$src/lib/schemas/forms";
 import { Button } from "$components/ui/button";
 import { Form } from "$components/ui/form";
-import { graphql } from "$lib/gql";
 import { authStore } from "$lib/stores";
 import { loginFormSchema } from "$src/lib/schemas/forms";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,7 +13,7 @@ import { PasswordField, UsernameField } from "./form-fields";
 
 export function LoginForm() {
   const navigate = useNavigate({ from: "/login" });
-  const { loginMutationOptions } = useLoaderData({ from: "/login" });
+  const { loginMutationOptions } = useLoaderData({ from: "/_auth/login" });
 
   const { mutateAsync: loginUser } = useMutation<UserLoginMutation, Error, LoginFormValues>({
     ...loginMutationOptions,
