@@ -9,7 +9,7 @@ import "./index.css";
 
 const queryClient = new QueryClient();
 
-const graphqlClient = new GraphQLClient(import.meta.env.VITE_API_URL);
+const graphqlClient = new GraphQLClient(import.meta.env.VITE_API_URL, { credentials: "include" });
 
 const router = createRouter({ routeTree, context: { queryClient, graphqlClient } });
 
