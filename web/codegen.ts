@@ -4,7 +4,7 @@ import process from "node:process";
 const config: CodegenConfig = {
   overwrite: true,
   schema: process.env.VITE_API_URL,
-  documents: ["src/**/*.tsx", "src/**/*.ts"],
+  documents: "src/**/!(*.d).{ts,tsx}",
   ignoreNoDocuments: true,
   generates: {
     "src/lib/gql/_generated/": {
