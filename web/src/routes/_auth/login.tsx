@@ -19,7 +19,7 @@ const userLoginMutation = graphql(`
 
 export const Route = createFileRoute("/_auth/login")({
   component: LoginPage,
-  validateSearch: z.object({ redirect: z.string().optional() }),
+  validateSearch: z.object({ redirect: z.string().default("/") }),
   loader: ({ context: { graphqlClient } }) => ({
     loginMutationOptions: {
       mutationKey: ["auth", "user", "login"],
@@ -34,7 +34,7 @@ function LoginPage() {
   const { isAuthenticated } = authStore.getState();
 
   useEffect(() => {
-    if (isAuthenticated && redirect) {
+    if (isAuthenticated) {
       history.push(redirect);
     }
   }, [history, isAuthenticated, redirect]);
