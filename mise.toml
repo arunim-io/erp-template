@@ -4,10 +4,14 @@ uv = "latest"
 "ubi:F1bonacc1/process-compose" = "latest"
 age = "latest"
 sops = "latest"
+ruff = "latest"
+taplo = "latest"
 
 [env]
 _.file = ".env.json"
+
 DJANGO_DEBUG = true
+DJANGO_LOG_LEVEL = "DEBUG"
 NODE_ENV = "{{ env.NODE_ENV | default(value='development') }}"
 VITE_API_URL = "http://127.0.0.1:8000/graphql"
 
@@ -26,5 +30,5 @@ ruff = "uv run --directory ./backend/ ruff"
 
 [settings]
 experimental = true
-python.uv_venv_auto = true
+
 pipx.uvx = true

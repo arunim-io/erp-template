@@ -1,5 +1,6 @@
 target-version = "py313"
-extend-exclude = ["*/migrations/*.py"]
+extend-include = ["./backend/**/*.py"]
+extend-exclude = ["**/migrations/*.py"]
 
 [lint]
 select = [
