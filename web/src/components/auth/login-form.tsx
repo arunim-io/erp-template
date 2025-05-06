@@ -1,5 +1,6 @@
 import type { UserLoginMutation } from "$lib/gql/_generated/graphql";
 import type { LoginFormValues } from "$src/lib/schemas/forms";
+import { PasswordField, UsernameField } from "$components/form-fields";
 import { Button } from "$components/ui/button";
 import { Form } from "$components/ui/form";
 import { authStore } from "$lib/stores";
@@ -9,7 +10,6 @@ import { SiFacebook, SiGoogle } from "@icons-pack/react-simple-icons";
 import { useMutation } from "@tanstack/react-query";
 import { useLoaderData, useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
-import { PasswordField, UsernameField } from "./form-fields";
 
 export function LoginForm() {
   const navigate = useNavigate({ from: "/login" });

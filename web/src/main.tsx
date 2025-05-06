@@ -11,7 +11,11 @@ const queryClient = new QueryClient();
 
 const graphqlClient = new GraphQLClient(import.meta.env.VITE_API_URL, { credentials: "include" });
 
-const router = createRouter({ routeTree, context: { queryClient, graphqlClient } });
+const router = createRouter({
+  routeTree,
+  defaultPreloadStaleTime: 0,
+  context: { queryClient, graphqlClient },
+});
 
 declare module "@tanstack/react-router" {
   interface Register {

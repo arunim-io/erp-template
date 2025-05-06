@@ -1,5 +1,5 @@
 import type { LoginFormValues } from "$src/lib/schemas/forms";
-import { LoginForm } from "$components/login-form";
+import { LoginForm } from "$components/auth/login-form";
 import { graphql } from "$src/lib/gql";
 import { authStore } from "$src/lib/stores";
 import { createFileRoute, useRouter, useSearch } from "@tanstack/react-router";
