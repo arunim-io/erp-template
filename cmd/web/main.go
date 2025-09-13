@@ -11,10 +11,13 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	erp "github.com/arunim-io/erp/internal/core"
 )
 
 func main() {
-	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
+	app := erp.NewApp()
+	logger := app.Logger
 
 	mux := http.NewServeMux()
 
