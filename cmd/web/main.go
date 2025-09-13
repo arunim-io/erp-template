@@ -4,8 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log/slog"
-	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -26,7 +24,7 @@ func main() {
 	})
 
 	s := http.Server{
-		Addr:         net.JoinHostPort("0.0.0.0", "8000"),
+		Addr:         app.Settings.GetServerAddress(),
 		Handler:      mux,
 		ReadTimeout:  30 * time.Second,
 		WriteTimeout: 30 * time.Second,
