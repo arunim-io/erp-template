@@ -6,6 +6,10 @@ backend = "core:go"
 version = "1.16.2"
 backend = "go:github.com/amacneil/dbmate"
 
+[tools."go:github.com/sqlc-dev/sqlc/cmd/sqlc"]
+version = "1.30.0"
+backend = "go:github.com/sqlc-dev/sqlc/cmd/sqlc"
+
 [tools."go:golang.org/x/tools/gopls"]
 version = "0.20.0"
 backend = "go:golang.org/x/tools/gopls"

@@ -4,11 +4,13 @@ import (
 	"database/sql"
 	"net/url"
 
+	"github.com/arunim-io/erp/internal/orm"
 	_ "modernc.org/sqlite"
 )
 
 type DB struct {
-	db *sql.DB
+	db      *sql.DB
+	Queries *orm.Queries
 }
 
 func GetDB(dsn *url.URL) (*DB, error) {
@@ -22,5 +24,7 @@ func GetDB(dsn *url.URL) (*DB, error) {
 		return nil, err
 	}
 
-	return &DB{db: db}, nil
+	queries := orm.New(db)
+
+	return &DB{db: db, Queries: queries}, nil
 }

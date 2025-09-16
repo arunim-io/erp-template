@@ -24,7 +24,9 @@ func main() {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, World!")
+		users, _ := app.DB.Queries.ListUsers(r.Context())
+
+		fmt.Fprintf(w, "Hello, World!\nNo of users: %d", len(users))
 	})
 
 	s := http.Server{
