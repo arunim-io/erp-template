@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"os"
 	"os/signal"
@@ -14,9 +15,12 @@ import (
 )
 
 func main() {
-	app := erp.NewApp()
-	logger := app.Logger
+	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
 
+	app, err := erp.NewApp(logger)
+	if err != nil {
+		logger.Error("Error while initializing...", "error", err)
+	}
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {

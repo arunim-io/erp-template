@@ -1,3 +1,9 @@
+[env]
+DATABASE_URL = "sqlite:{{ config_root }}/db.sqlite3"
+DBMATE_WAIT = true
+
 [tools]
 go = "latest"
+"go:github.com/amacneil/dbmate" = "latest"
 "go:golang.org/x/tools/gopls" = "latest"
+sqlite = "latest"

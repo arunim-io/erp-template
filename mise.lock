@@ -2,6 +2,14 @@
 version = "1.25.1"
 backend = "core:go"
 
+[tools."go:github.com/amacneil/dbmate"]
+version = "1.16.2"
+backend = "go:github.com/amacneil/dbmate"
+
 [tools."go:golang.org/x/tools/gopls"]
 version = "0.20.0"
 backend = "go:golang.org/x/tools/gopls"
+
+[tools.sqlite]
+version = "3.50.4"
+backend = "asdf:sqlite"
