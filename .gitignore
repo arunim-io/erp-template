@@ -33,3 +33,5 @@ go.work.sum
 
 tmp/
 db.sqlite3
+node_modules
+dist

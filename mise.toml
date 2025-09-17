@@ -3,6 +3,7 @@ DATABASE_URL = "sqlite:{{ config_root }}/db.sqlite3"
 DBMATE_WAIT = true
 
 [tools]
+bun = "latest"
 go = "latest"
 "go:github.com/a-h/templ/cmd/templ" = "latest"
 "go:github.com/amacneil/dbmate" = "latest"

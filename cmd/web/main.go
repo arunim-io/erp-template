@@ -23,7 +23,9 @@ func main() {
 	}
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
+	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static/dist"))))
+
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		users, _ := app.DB.Queries.ListUsers(ctx)
 

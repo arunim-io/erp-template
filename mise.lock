@@ -1,3 +1,7 @@
+[tools.bun]
+version = "1.2.21"
+backend = "core:bun"
+
 [tools.go]
 version = "1.25.1"
 backend = "core:go"
