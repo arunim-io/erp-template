@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"errors"
-	"fmt"
 	"log/slog"
 	"net/http"
 	"os"
@@ -12,6 +11,7 @@ import (
 	"time"
 
 	erp "github.com/arunim-io/erp/internal/core"
+	templates "github.com/arunim-io/erp/templates/pages"
 )
 
 func main() {
@@ -24,9 +24,10 @@ func main() {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
-		users, _ := app.DB.Queries.ListUsers(r.Context())
+		ctx := r.Context()
+		users, _ := app.DB.Queries.ListUsers(ctx)
 
-		fmt.Fprintf(w, "Hello, World!\nNo of users: %d", len(users))
+		templates.Index(len(users)).Render(ctx, w)
 	})
 
 	s := http.Server{

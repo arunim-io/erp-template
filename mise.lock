@@ -2,6 +2,10 @@
 version = "1.25.1"
 backend = "core:go"
 
+[tools."go:github.com/a-h/templ/cmd/templ"]
+version = "0.3.943"
+backend = "go:github.com/a-h/templ/cmd/templ"
+
 [tools."go:github.com/amacneil/dbmate"]
 version = "1.16.2"
 backend = "go:github.com/amacneil/dbmate"
