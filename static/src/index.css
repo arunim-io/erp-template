@@ -1,1 +1,5 @@
-  @import "tailwindcss" source("../../templates/");
+@import "tailwindcss" source("../../templates/");
+
+iconify-icon {
+  @apply inline-block size-[1em];
+}
