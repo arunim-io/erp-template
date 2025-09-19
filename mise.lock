@@ -1,3 +1,12 @@
+[tools.biome]
+version = "2.2.4"
+backend = "aqua:biomejs/biome"
+
+[tools.biome.platforms.linux-x64]
+checksum = "blake3:69e28b0d312e6739bb02fcb6368b9aad8abff66cf2ac2340a083d1ce6c72394d"
+size = 41851456
+url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.2.4/biome-linux-x64"
+
 [tools.bun]
 version = "1.2.22"
 backend = "core:bun"
