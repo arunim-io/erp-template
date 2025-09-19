@@ -10,7 +10,8 @@
 	},
 	"formatter": {
 		"enabled": true,
-		"indentStyle": "tab"
+		"indentStyle": "tab",
+		"indentWidth": 2
 	},
 	"linter": {
 		"enabled": true,
@@ -18,9 +19,32 @@
 			"recommended": true
 		}
 	},
-	"javascript": {
+	"json": {
+		"assist": {
+			"enabled": true
+		},
 		"formatter": {
+			"enabled": true
+		}
+	},
+	"javascript": {
+		"assist": {
+			"enabled": true
+		},
+		"formatter": {
+			"enabled": true,
 			"quoteStyle": "double"
+		}
+	},
+	"css": {
+		"assist": {
+			"enabled": true
+		},
+		"formatter": {
+			"enabled": true
+		},
+		"linter": {
+			"enabled": false
 		}
 	},
 	"assist": {
