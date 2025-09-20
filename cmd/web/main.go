@@ -29,7 +29,7 @@ func main() {
 		ctx := r.Context()
 		users, _ := app.DB.Queries.ListUsers(ctx)
 
-		templates.Index(len(users)).Render(ctx, w)
+		templates.IndexPage(len(users)).Render(ctx, w)
 	})
 
 	s := http.Server{
