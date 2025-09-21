@@ -9,7 +9,7 @@ type App struct {
 }
 
 func NewApp(logger *slog.Logger) (*App, error) {
-	settings, err := GetSettings()
+	settings, err := Load()
 	if err != nil {
 		return nil, err
 	}

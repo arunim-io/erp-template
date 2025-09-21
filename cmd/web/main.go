@@ -33,7 +33,7 @@ func main() {
 	})
 
 	s := http.Server{
-		Addr:         app.Settings.GetServerAddress(),
+		Addr:         app.Settings.ServerAddress(),
 		Handler:      mux,
 		ReadTimeout:  30 * time.Second,
 		WriteTimeout: 30 * time.Second,
