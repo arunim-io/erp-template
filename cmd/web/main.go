@@ -11,7 +11,7 @@ import (
 	"time"
 
 	erp "github.com/arunim-io/erp/internal/core"
-	templates "github.com/arunim-io/erp/templates/pages"
+	"github.com/arunim-io/erp/internal/templates/pages"
 )
 
 func main() {
@@ -29,7 +29,7 @@ func main() {
 		ctx := r.Context()
 		users, _ := app.DB.Queries.ListUsers(ctx)
 
-		templates.IndexPage(len(users)).Render(ctx, w)
+		pages.Index(len(users)).Render(ctx, w)
 	})
 
 	s := http.Server{
