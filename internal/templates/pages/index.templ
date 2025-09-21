@@ -1,12 +1,16 @@
 package pages
 
 import "github.com/arunim-io/erp/internal/templates/layouts"
+import "github.com/arunim-io/erp/internal/templates/components/ui"
 
 templ Index(usersCount int) {
 	@layouts.Root() {
 		<main>
 			<h1 class="text-4xl text-blue-500">Hello, World!</h1>
 			<h2>No of users: { usersCount }</h2>
+			@ui.Button(ui.ButtonProps{Href: "/login"}) {
+				Login
+			}
 		</main>
 	}
 }

@@ -1,0 +1,125 @@
+package ui
+
+import "github.com/arunim-io/erp/internal/utils"
+
+type ButtonVariant string
+type ButtonSize string
+type ButtonType string
+
+const (
+	ButtonVariantDefault     ButtonVariant = "default"
+	ButtonVariantDestructive ButtonVariant = "desctructive"
+	ButtonVariantOutline     ButtonVariant = "outline"
+	ButtonVariantSecondary   ButtonVariant = "secondary"
+	ButtonVariantGhost       ButtonVariant = "ghost"
+	ButtonVariantLink        ButtonVariant = "link"
+
+	ButtonSizeDefault ButtonSize = "default"
+	ButtonSizeSm      ButtonSize = "sm"
+	ButtonSizeLg      ButtonSize = "lg"
+	ButtonSizeIcon    ButtonSize = "icon"
+
+	ButtonTypeButton ButtonType = "button"
+	ButtonTypeReset  ButtonType = "reset"
+	ButtonTypeSubmit ButtonType = "submit"
+)
+
+type ButtonProps struct {
+	ID        string
+	Class     string
+	Attrs     templ.Attributes
+	Variant   ButtonVariant
+	Size      ButtonSize
+	Type      ButtonType
+	FullWidth bool
+	Href      string
+	Target    string
+	Disabled  bool
+	Form      string
+}
+
+templ Button(props ...ButtonProps) {
+	{{ var p ButtonProps }}
+	if len(props)>0 {
+		{{ p = props[0] }}
+	}
+	if p.Type == "" {
+		{{ p.Type = ButtonTypeButton }}
+	}
+	if p.Href != "" && !p.Disabled {
+		<a
+			if p.ID != "" {
+				id={ p.ID }
+			}
+			href={ templ.SafeURL(p.Href) }
+			if p.Target != "" {
+				target={ p.Target }
+			}
+			class={ p.classes() }
+			{ p.Attrs... }
+		>
+			{ children... }
+		</a>
+	} else {
+		<button
+			if p.ID != "" {
+				id={ p.ID }
+			}
+			if p.Type != "" {
+				type={ string(p.Type) }
+			}
+			if p.Form != "" {
+				form={ p.Form }
+			}
+			disabled?={ p.Disabled }
+			class={ p.classes() }
+			{ p.Attrs... }
+		>
+			{ children... }
+		</button>
+	}
+}
+
+func (props ButtonProps) classes() string {
+	var classes []string = []string{
+		"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+		props.variantClasses(),
+		props.sizeClasses(),
+	}
+
+	if props.FullWidth {
+		classes = append(classes, "w-full")
+	}
+
+	return utils.MergeClasses(classes...)
+}
+
+func (props ButtonProps) variantClasses() string {
+	switch props.Variant {
+	case ButtonVariantDestructive:
+		return "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90"
+	case ButtonVariantOutline:
+		return "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground"
+	case ButtonVariantSecondary:
+		return "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80"
+	case ButtonVariantGhost:
+		return "hover:bg-accent hover:text-accent-foreground"
+	case ButtonVariantLink:
+		return "text-primary underline-offset-4 hover:underline"
+	default:
+		return "bg-primary text-primary-foreground shadow hover:bg-primary/90"
+	}
+}
+
+func (props ButtonProps) sizeClasses() string {
+	switch props.Size {
+	case ButtonSizeSm:
+		return "h-8 rounded-md px-3 text-xs"
+	case ButtonSizeLg:
+		return "h-10 rounded-md px-8"
+	case ButtonSizeIcon:
+		return "size-9"
+	default:
+		return "h-9 px-4 py-2"
+	}
+}
