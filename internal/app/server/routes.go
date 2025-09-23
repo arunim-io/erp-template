@@ -1,14 +1,15 @@
-package erp
+package server
 
 import (
 	"net/http"
 
+	erp "github.com/arunim-io/erp/internal/app"
 	"github.com/arunim-io/erp/internal/templates/pages"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func RootRouter(app *App) *chi.Mux {
+func RootRouter(app *erp.App) *chi.Mux {
 	r := chi.NewRouter()
 	r.Use(
 		middleware.SupressNotFound(r),
@@ -33,7 +34,7 @@ func RootRouter(app *App) *chi.Mux {
 	return r
 }
 
-func IndexRoute(app *App) http.HandlerFunc {
+func IndexRoute(app *erp.App) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		users, _ := app.DB.Queries.ListUsers(ctx)

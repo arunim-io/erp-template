@@ -1,4 +1,4 @@
-package erp
+package app
 
 import (
 	"database/sql"
