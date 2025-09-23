@@ -22,7 +22,7 @@ func RootRouter(app *erp.App) *chi.Mux {
 	)
 
 	r.Handle(
-		"/static/",
+		"/static/*",
 		http.StripPrefix(
 			"/static/",
 			http.FileServer(http.Dir("static/dist")),
