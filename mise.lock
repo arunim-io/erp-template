@@ -1,4 +1,4 @@
-[tools.biome]
+[[tools.biome]]
 version = "2.2.4"
 backend = "aqua:biomejs/biome"
 
@@ -7,7 +7,7 @@ checksum = "blake3:69e28b0d312e6739bb02fcb6368b9aad8abff66cf2ac2340a083d1ce6c723
 size = 41851456
 url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.2.4/biome-linux-x64"
 
-[tools.bun]
+[[tools.bun]]
 version = "1.2.22"
 backend = "core:bun"
 
@@ -15,30 +15,30 @@ backend = "core:bun"
 checksum = "blake3:bf32acffd6e77803ba760caf8d2909389da01c95613b81fe155fe87e2a8f8004"
 size = 39256266
 
-[tools.go]
+[[tools.go]]
 version = "1.25.1"
 backend = "core:go"
 
-[tools."go:github.com/a-h/templ/cmd/templ"]
+[[tools."go:github.com/a-h/templ/cmd/templ"]]
 version = "0.3.943"
 backend = "go:github.com/a-h/templ/cmd/templ"
 
-[tools."go:github.com/air-verse/air"]
+[[tools."go:github.com/air-verse/air"]]
 version = "1.63.0"
 backend = "go:github.com/air-verse/air"
 
-[tools."go:github.com/amacneil/dbmate"]
+[[tools."go:github.com/amacneil/dbmate"]]
 version = "1.16.2"
 backend = "go:github.com/amacneil/dbmate"
 
-[tools."go:github.com/sqlc-dev/sqlc/cmd/sqlc"]
+[[tools."go:github.com/sqlc-dev/sqlc/cmd/sqlc"]]
 version = "1.30.0"
 backend = "go:github.com/sqlc-dev/sqlc/cmd/sqlc"
 
-[tools."go:golang.org/x/tools/gopls"]
+[[tools."go:golang.org/x/tools/gopls"]]
 version = "0.20.0"
 backend = "go:golang.org/x/tools/gopls"
 
-[tools.sqlite]
+[[tools.sqlite]]
 version = "3.50.4"
 backend = "asdf:sqlite"
