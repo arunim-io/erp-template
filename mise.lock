@@ -35,6 +35,10 @@ backend = "go:github.com/amacneil/dbmate"
 version = "1.30.0"
 backend = "go:github.com/sqlc-dev/sqlc/cmd/sqlc"
 
+[[tools."go:github.com/templui/templui/cmd/templui"]]
+version = "0.97.0"
+backend = "go:github.com/templui/templui/cmd/templui"
+
 [[tools."go:golang.org/x/tools/gopls"]]
 version = "0.20.0"
 backend = "go:golang.org/x/tools/gopls"
