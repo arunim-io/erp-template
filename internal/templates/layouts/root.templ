@@ -1,5 +1,12 @@
 package layouts
 
+import (
+	"github.com/arunim-io/erp/internal/templates/components/ui/input"
+	"github.com/arunim-io/erp/internal/templates/components/ui/label"
+)
+
+var scriptsHandle templ.OnceHandle
+
 templ Root() {
 	<!DOCTYPE html>
 	<html lang="en">
@@ -11,7 +18,11 @@ templ Root() {
 		</head>
 		<body>
 			{ children... }
-			<script src="/static/index.js" defer></script>
+			@scriptsHandle.Once() {
+				<script src="/static/index.js" defer></script>
+				@input.Script()
+				@label.Script()
+			}
 		</body>
 	</html>
 }

@@ -2,6 +2,6 @@
 	"componentsDir": "internal/templates/components/ui",
 	"utilsDir": "internal/utils",
 	"moduleName": "github.com/arunim-io/erp",
-	"jsDir": "static/src/ui",
-	"jsPublicPath": "/static"
+	"jsDir": "static/dist/ui",
+	"jsPublicPath": "/static/ui"
 }

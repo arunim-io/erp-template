@@ -13,3 +13,12 @@ go = "latest"
 "go:github.com/templui/templui/cmd/templui" = "latest"
 "go:golang.org/x/tools/gopls" = "latest"
 sqlite = "latest"
+
+[tasks]
+clean = "rm -rf ./node_modules/ ./tmp/ ./static/dist/"
+dev = "air"
+install-deps = ["bun install", "go mod tidy"]
+reset = ["mise run clean", "mise run install-deps"]
+
+[hooks]
+postinstall = "mise run install-deps"

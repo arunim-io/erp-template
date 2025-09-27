@@ -6,7 +6,7 @@ tmp_dir = "tmp"
 args_bin = []
 bin = "./tmp/main"
 cmd = "go build -o ./tmp/main ./cmd/web/"
-delay = 1000
+delay = 100
 exclude_dir = [
   "assets",
   "tmp",
@@ -18,7 +18,7 @@ exclude_dir = [
 ]
 exclude_file = []
 exclude_regex = ["_test.go", "_templ.go"]
-exclude_unchanged = false
+exclude_unchanged = true
 follow_symlink = false
 full_bin = ""
 include_dir = []
@@ -53,7 +53,7 @@ silent = false
 time = false
 
 [misc]
-clean_on_exit = false
+clean_on_exit = true
 
 [proxy]
 app_port = 0
