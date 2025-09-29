@@ -15,7 +15,7 @@ go = "latest"
 sqlite = "latest"
 
 [tasks]
-clean = "rm -rf ./node_modules/ ./tmp/ ./static/dist/"
+clean = "rm -rf ./node_modules/ ./tmp/ ./static/dist/index.*"
 dev = "air"
 install-deps = ["bun install", "go mod tidy"]
 reset = ["mise run clean", "mise run install-deps"]
