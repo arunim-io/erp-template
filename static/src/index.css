@@ -1,4 +1,4 @@
-@import "tailwindcss" source("../../internal/templates/");
+@import "tailwindcss" source("../../internal/");
 @import "tw-animate-css";
 
 @custom-variant dark (&:where(.dark, .dark *));

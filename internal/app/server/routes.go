@@ -3,7 +3,9 @@ package server
 import (
 	"net/http"
 
+	"github.com/a-h/templ"
 	erp "github.com/arunim-io/erp/internal/app"
+	auth "github.com/arunim-io/erp/internal/auth/templates/pages"
 	"github.com/arunim-io/erp/internal/templates/pages"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -30,6 +32,7 @@ func RootRouter(app *erp.App) *chi.Mux {
 	)
 
 	r.Get("/", IndexRoute(app))
+	r.Get("/login", templ.Handler(auth.LoginPage()).ServeHTTP)
 
 	return r
 }
