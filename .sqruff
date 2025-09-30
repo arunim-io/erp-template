@@ -1,0 +1,5 @@
+# vim: set filetype=cfg:
+
+[sqruff]
+dialect = sqlite
+rules = all

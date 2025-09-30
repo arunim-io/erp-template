@@ -15,6 +15,10 @@ backend = "core:bun"
 checksum = "blake3:bf32acffd6e77803ba760caf8d2909389da01c95613b81fe155fe87e2a8f8004"
 size = 39256266
 
+[[tools."cargo:sqruff"]]
+version = "0.29.3"
+backend = "cargo:sqruff"
+
 [[tools.go]]
 version = "1.25.1"
 backend = "core:go"

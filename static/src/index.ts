@@ -4,10 +4,10 @@ import "htmx.org";
 import "iconify-icon";
 
 declare global {
-  interface Window {
-    htmx: typeof htmx;
-    Alpine: typeof Alpine;
-  }
+	interface Window {
+		htmx: typeof htmx;
+		Alpine: typeof Alpine;
+	}
 }
 
 window.htmx = htmx;

@@ -6,6 +6,7 @@
 		"useIgnoreFile": true
 	},
 	"files": {
+		"includes": ["**", "!static/src/index.css"],
 		"ignoreUnknown": true
 	},
 	"formatter": {
@@ -44,7 +45,7 @@
 			"enabled": true
 		},
 		"linter": {
-			"enabled": false
+			"enabled": true
 		}
 	},
 	"assist": {

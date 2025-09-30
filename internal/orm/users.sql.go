@@ -10,7 +10,9 @@ import (
 )
 
 const createUser = `-- name: CreateUser :one
-INSERT INTO users ( id ) VALUES ( ? ) RETURNING id
+;
+
+INSERT INTO users (id) VALUES (?) RETURNING id
 `
 
 func (q *Queries) CreateUser(ctx context.Context, id int64) (int64, error) {
@@ -57,6 +59,8 @@ func (q *Queries) ListUsers(ctx context.Context) ([]int64, error) {
 }
 
 const updateUser = `-- name: UpdateUser :exec
+;
+
 
 DELETE FROM users WHERE id = ?
 `

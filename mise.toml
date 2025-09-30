@@ -5,6 +5,7 @@ DBMATE_WAIT = true
 [tools]
 biome = "2.2.4"
 bun = "latest"
+"cargo:sqruff" = "latest"
 go = "latest"
 "go:github.com/a-h/templ/cmd/templ" = "latest"
 "go:github.com/air-verse/air" = "latest"
@@ -19,6 +20,11 @@ clean = "rm -rf ./node_modules/ ./tmp/ ./static/dist/index.*"
 dev = "air"
 install-deps = ["bun install", "go mod tidy"]
 reset = ["mise run clean", "mise run install-deps"]
+fix = [
+  "gofmt -w .",
+  "biome check --fix .",
+  "sqruff fix ./db/migrations/ ./db/queries/",
+]
 
 [hooks]
 postinstall = "mise run install-deps"
