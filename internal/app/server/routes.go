@@ -10,6 +10,7 @@ import (
 	"github.com/arunim-io/erp/internal/templates/pages"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/gorilla/csrf"
 )
 
 func RootRouter(app *erp.App) *chi.Mux {
@@ -22,6 +23,7 @@ func RootRouter(app *erp.App) *chi.Mux {
 		middleware.Recoverer,
 		middleware.RedirectSlashes,
 		middleware.StripSlashes,
+		csrf.Protect(app.Key.ExportBytes()),
 	)
 
 	r.Handle(
