@@ -19,6 +19,7 @@ type Server struct {
 
 func New(app *app.App) *Server {
 	return &Server{
+		app: app,
 		instance: &http.Server{
 			Addr:         app.Settings.ServerAddress(),
 			Handler:      RootRouter(app),
@@ -26,7 +27,6 @@ func New(app *app.App) *Server {
 			WriteTimeout: 30 * time.Second,
 			IdleTimeout:  120 * time.Second,
 		},
-		app: app,
 	}
 }
 

@@ -16,6 +16,8 @@ import (
 type Settings struct {
 	RootDir string `koanf:"root_dir"`
 
+	SecretKey string `koanf:"secret_key"`
+
 	Server struct {
 		Host string `koanf:"host"`
 		Port int    `koanf:"port"`
@@ -56,7 +58,7 @@ func Load() (*Settings, error) {
 
 	// Load from Env variables
 	if err := k.Load(
-		env.Provider("ERP_", ".", func(s string) string { return s[4:] }),
+		env.Provider("ERP_", ".", func(v string) string { return v[4:] }),
 		nil,
 	); err != nil {
 		return nil, err
