@@ -4,10 +4,38 @@
 
 package orm
 
+import (
+	"database/sql"
+)
+
 type SchemaMigration struct {
 	Version string
 }
 
+type SqliteSequence struct {
+	Name interface{}
+	Seq  interface{}
+}
+
 type User struct {
-	ID int64
+	ID         int64
+	Password   sql.NullString
+	LastLogin  sql.NullTime
+	IsActive   sql.NullBool
+	Username   string
+	FirstName  sql.NullString
+	LastName   sql.NullString
+	Email      string
+	DateJoined sql.NullTime
+}
+
+type UserView struct {
+	ID         int64
+	LastLogin  sql.NullTime
+	IsActive   sql.NullBool
+	Username   string
+	FirstName  sql.NullString
+	LastName   sql.NullString
+	Email      string
+	DateJoined sql.NullTime
 }

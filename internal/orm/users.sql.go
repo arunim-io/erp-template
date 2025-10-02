@@ -7,47 +7,162 @@ package orm
 
 import (
 	"context"
+	"database/sql"
 )
 
 const createUser = `-- name: CreateUser :one
 ;
 
-INSERT INTO users (id) VALUES (?) RETURNING id
+INSERT INTO users (
+username,
+email,
+password,
+first_name,
+last_name
+) VALUES (?, ?, ?, ?, ?) RETURNING id, password, last_login, is_active, username, first_name, last_name, email, date_joined
 `
 
-func (q *Queries) CreateUser(ctx context.Context, id int64) (int64, error) {
-	row := q.db.QueryRowContext(ctx, createUser, id)
-	err := row.Scan(&id)
-	return id, err
+type CreateUserParams struct {
+	Username  string
+	Email     string
+	Password  sql.NullString
+	FirstName sql.NullString
+	LastName  sql.NullString
+}
+
+func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
+	row := q.db.QueryRowContext(ctx, createUser,
+		arg.Username,
+		arg.Email,
+		arg.Password,
+		arg.FirstName,
+		arg.LastName,
+	)
+	var i User
+	err := row.Scan(
+		&i.ID,
+		&i.Password,
+		&i.LastLogin,
+		&i.IsActive,
+		&i.Username,
+		&i.FirstName,
+		&i.LastName,
+		&i.Email,
+		&i.DateJoined,
+	)
+	return i, err
+}
+
+const deleteUser = `-- name: DeleteUser :exec
+;
+
+DELETE FROM users WHERE id = ?
+`
+
+func (q *Queries) DeleteUser(ctx context.Context, id int64) error {
+	_, err := q.db.ExecContext(ctx, deleteUser, id)
+	return err
+}
+
+const getUserByEmail = `-- name: GetUserByEmail :one
+;
+
+SELECT id, last_login, is_active, username, first_name, last_name, email, date_joined FROM user_view WHERE email = ? LIMIT 1
+`
+
+func (q *Queries) GetUserByEmail(ctx context.Context, email string) (UserView, error) {
+	row := q.db.QueryRowContext(ctx, getUserByEmail, email)
+	var i UserView
+	err := row.Scan(
+		&i.ID,
+		&i.LastLogin,
+		&i.IsActive,
+		&i.Username,
+		&i.FirstName,
+		&i.LastName,
+		&i.Email,
+		&i.DateJoined,
+	)
+	return i, err
 }
 
 const getUserByID = `-- name: GetUserByID :one
-SELECT id FROM users WHERE id = ? LIMIT 1
+;
+
+SELECT id, last_login, is_active, username, first_name, last_name, email, date_joined FROM user_view WHERE id = ? LIMIT 1
 `
 
-func (q *Queries) GetUserByID(ctx context.Context, id int64) (int64, error) {
+func (q *Queries) GetUserByID(ctx context.Context, id int64) (UserView, error) {
 	row := q.db.QueryRowContext(ctx, getUserByID, id)
-	err := row.Scan(&id)
-	return id, err
+	var i UserView
+	err := row.Scan(
+		&i.ID,
+		&i.LastLogin,
+		&i.IsActive,
+		&i.Username,
+		&i.FirstName,
+		&i.LastName,
+		&i.Email,
+		&i.DateJoined,
+	)
+	return i, err
+}
+
+const getUserByUsername = `-- name: GetUserByUsername :one
+;
+
+SELECT id, last_login, is_active, username, first_name, last_name, email, date_joined FROM user_view WHERE username = ? LIMIT 1
+`
+
+func (q *Queries) GetUserByUsername(ctx context.Context, username string) (UserView, error) {
+	row := q.db.QueryRowContext(ctx, getUserByUsername, username)
+	var i UserView
+	err := row.Scan(
+		&i.ID,
+		&i.LastLogin,
+		&i.IsActive,
+		&i.Username,
+		&i.FirstName,
+		&i.LastName,
+		&i.Email,
+		&i.DateJoined,
+	)
+	return i, err
 }
 
 const listUsers = `-- name: ListUsers :many
-SELECT id FROM users ORDER BY id
+
+SELECT id, last_login, is_active, username, first_name, last_name, email, date_joined FROM user_view ORDER BY id LIMIT ? OFFSET ?
 `
 
-func (q *Queries) ListUsers(ctx context.Context) ([]int64, error) {
-	rows, err := q.db.QueryContext(ctx, listUsers)
+type ListUsersParams struct {
+	Limit  int64
+	Offset int64
+}
+
+// noqa: disable=AM04
+func (q *Queries) ListUsers(ctx context.Context, arg ListUsersParams) ([]UserView, error) {
+	rows, err := q.db.QueryContext(ctx, listUsers, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []int64
+	var items []UserView
 	for rows.Next() {
-		var id int64
-		if err := rows.Scan(&id); err != nil {
+		var i UserView
+		if err := rows.Scan(
+			&i.ID,
+			&i.LastLogin,
+			&i.IsActive,
+			&i.Username,
+			&i.FirstName,
+			&i.LastName,
+			&i.Email,
+			&i.DateJoined,
+		); err != nil {
 			return nil, err
 		}
-		items = append(items, id)
+		items = append(items, i)
 	}
 	if err := rows.Close(); err != nil {
 		return nil, err
@@ -61,12 +176,45 @@ func (q *Queries) ListUsers(ctx context.Context) ([]int64, error) {
 const updateUser = `-- name: UpdateUser :exec
 ;
 
-
-DELETE FROM users WHERE id = ?
+UPDATE users SET
+username = ?,
+email = ?,
+first_name = ?,
+last_name = ?
+WHERE id = ?
 `
 
-// UPDATE users SET * where id = ?;
-func (q *Queries) UpdateUser(ctx context.Context, id int64) error {
-	_, err := q.db.ExecContext(ctx, updateUser, id)
+type UpdateUserParams struct {
+	Username  string
+	Email     string
+	FirstName sql.NullString
+	LastName  sql.NullString
+	ID        int64
+}
+
+func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) error {
+	_, err := q.db.ExecContext(ctx, updateUser,
+		arg.Username,
+		arg.Email,
+		arg.FirstName,
+		arg.LastName,
+		arg.ID,
+	)
+	return err
+}
+
+const updateUserPassword = `-- name: UpdateUserPassword :exec
+;
+
+UPDATE users SET password = ? WHERE id = ?
+`
+
+type UpdateUserPasswordParams struct {
+	Password sql.NullString
+	ID       int64
+}
+
+func (q *Queries) UpdateUserPassword(ctx context.Context, arg UpdateUserPasswordParams) error {
+	_, err := q.db.ExecContext(ctx, updateUserPassword, arg.Password, arg.ID)
 	return err
 }
