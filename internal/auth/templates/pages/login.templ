@@ -4,23 +4,67 @@ import (
 	"github.com/arunim-io/erp/internal/templates/components/ui/button"
 	"github.com/arunim-io/erp/internal/templates/components/ui/form"
 	"github.com/arunim-io/erp/internal/templates/components/ui/input"
+	"github.com/arunim-io/erp/internal/templates/components/ui/radio"
 	"github.com/arunim-io/erp/internal/templates/layouts"
 )
 
 templ LoginPage() {
 	@layouts.Root() {
 		<main class="p-5">
-			<form class="space-y-5">
+			<form class="space-y-5" x-data={ templ.JSONString(map[string]string{"loginMethod": "username"}) }>
 				<h1 class="text-2xl font-semibold">Login Form</h1>
 				<input type="hidden" name="gorilla.csrf.Token" value={ ctx.Value("gorilla.csrf.Token").(string) }/>
 				@form.Item() {
+					<h2 class="text-xl font-medium">Login Method</h2>
+					@form.ItemFlex() {
+						@radio.Radio(radio.Props{
+							ID:         "login-method-username",
+							Name:       "login-method",
+							Value:      "username",
+							Attributes: templ.Attributes{"x-model": "loginMethod"},
+						})
+						@form.Label(form.LabelProps{For: "login-method-username"}) {
+							By username
+						}
+					}
+					@form.ItemFlex() {
+						@radio.Radio(radio.Props{
+							ID:         "login-method-email",
+							Name:       "login-method",
+							Value:      "email",
+							Attributes: templ.Attributes{"x-model": "loginMethod"},
+						})
+						@form.Label(form.LabelProps{For: "login-method-email"}) {
+							By Email
+						}
+					}
+				}
+				@form.Item(form.ItemProps{Attributes: templ.Attributes{
+					"x-cloak": true,
+					"x-show":  "loginMethod == 'username'",
+				}}) {
 					@form.Label(form.LabelProps{For: "username"}) {
 						Username
 					}
 					@input.Input(input.Props{
 						ID:          "username",
+						Name:        "username",
 						Placeholder: "johndoe",
 						Attributes:  templ.Attributes{"autocomplete": "username"},
+					})
+				}
+				@form.Item(form.ItemProps{Attributes: templ.Attributes{
+					"x-cloak": true,
+					"x-show":  "loginMethod == 'email'",
+				}}) {
+					@form.Label(form.LabelProps{For: "email"}) {
+						Email Address
+					}
+					@input.Input(input.Props{
+						ID:          "email",
+						Name:        "email",
+						Placeholder: "john.doe@gmail.com",
+						Attributes:  templ.Attributes{"autocomplete": "email"},
 					})
 				}
 				@form.Item() {
