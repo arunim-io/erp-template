@@ -21,7 +21,7 @@ func New(app *app.App) *Server {
 	return &Server{
 		app: app,
 		instance: &http.Server{
-			Addr:         app.Settings.ServerAddress(),
+			Addr:         app.Settings.Server.ServerAddress(),
 			Handler:      RootRouter(app),
 			ReadTimeout:  30 * time.Second,
 			WriteTimeout: 30 * time.Second,

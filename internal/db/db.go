@@ -1,4 +1,4 @@
-package app
+package db
 
 import (
 	"database/sql"
@@ -9,11 +9,11 @@ import (
 )
 
 type DB struct {
-	db      *sql.DB
-	Queries *orm.Queries
+	instance *sql.DB
+	Queries  *orm.Queries
 }
 
-func GetDB(dsn *url.URL) (*DB, error) {
+func New(dsn *url.URL) (*DB, error) {
 	db, err := sql.Open("sqlite", dsn.String())
 	if err != nil {
 		return nil, err
@@ -26,5 +26,5 @@ func GetDB(dsn *url.URL) (*DB, error) {
 
 	queries := orm.New(db)
 
-	return &DB{db: db, Queries: queries}, nil
+	return &DB{instance: db, Queries: queries}, nil
 }

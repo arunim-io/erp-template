@@ -4,25 +4,27 @@ import (
 	"log/slog"
 
 	"aidanwoods.dev/go-paseto"
+	"github.com/arunim-io/erp/internal/db"
+	"github.com/arunim-io/erp/internal/settings"
 )
 
 type App struct {
 	Logger   *slog.Logger
-	Settings *Settings
-	DB       *DB
+	Settings *settings.Settings
+	DB       *db.DB
 	Key      *paseto.V4SymmetricKey
 }
 
-func NewApp(logger *slog.Logger) (*App, error) {
+func New(logger *slog.Logger) (*App, error) {
 	app := &App{Logger: logger}
 
-	settings, err := Load()
+	settings, err := settings.Load()
 	if err != nil {
 		return nil, err
 	}
 	app.Settings = settings
 
-	db, err := GetDB(settings.Database.URI)
+	db, err := db.New(settings.Database.URI)
 	if err != nil {
 		return nil, err
 	}
