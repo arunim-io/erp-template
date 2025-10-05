@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/alexedwards/scs/v2"
 	"github.com/knadh/koanf/parsers/dotenv"
 	"github.com/knadh/koanf/providers/env"
 	"github.com/knadh/koanf/providers/file"
@@ -29,16 +30,16 @@ type Settings struct {
 	// The root directory for the project. Useful for accessing files in the project.
 	RootDir string `koanf:"root_dir"`
 	// A secret key for this server. This is mainly used for security purposes.
-	SecretKey string        `koanf:"secret_key"`
-	Server    ServerConfig  `koanf:"server"`
-	Database  *DBConfig     `koanf:"db"`
-	Session   SessionConfig `koanf:"session"`
+	SecretKey     string            `koanf:"secret_key"`
+	Server        ServerConfig      `koanf:"server"`
+	Database      *DBConfig         `koanf:"db"`
+	SessionCookie scs.SessionCookie `koanf:"session"`
 }
 
 func getDefault() (*Settings, error) {
 	s := &Settings{
-		Session: DefaultSessionConfig(),
-		Server:  DefaultServerConfig(),
+		Server:        DefaultServerConfig(),
+		SessionCookie: scs.SessionCookie{},
 	}
 
 	cwd, err := os.Getwd()

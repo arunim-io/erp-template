@@ -6,6 +6,8 @@ require (
 	aidanwoods.dev/go-paseto v1.5.4
 	github.com/Oudwins/tailwind-merge-go v0.2.1
 	github.com/a-h/templ v0.3.943
+	github.com/alexedwards/scs/sqlite3store v0.0.0-20251002162104-209de6e426de
+	github.com/alexedwards/scs/v2 v2.9.0
 	github.com/go-chi/chi/v5 v5.2.3
 	github.com/gorilla/csrf v1.7.3
 	github.com/knadh/koanf/parsers/dotenv v1.1.0

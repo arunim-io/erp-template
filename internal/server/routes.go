@@ -23,6 +23,7 @@ func RootRouter(app *erp.App) *chi.Mux {
 		middleware.Recoverer,
 		middleware.RedirectSlashes,
 		middleware.StripSlashes,
+		app.SessionManager.LoadAndSave,
 		csrf.Protect(app.Key.ExportBytes()),
 	)
 

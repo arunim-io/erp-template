@@ -4,15 +4,18 @@ import (
 	"log/slog"
 
 	"aidanwoods.dev/go-paseto"
+	"github.com/alexedwards/scs/sqlite3store"
+	"github.com/alexedwards/scs/v2"
 	"github.com/arunim-io/erp/internal/db"
 	"github.com/arunim-io/erp/internal/settings"
 )
 
 type App struct {
-	Logger   *slog.Logger
-	Settings *settings.Settings
-	DB       *db.DB
-	Key      *paseto.V4SymmetricKey
+	Logger         *slog.Logger
+	Settings       *settings.Settings
+	DB             *db.DB
+	Key            *paseto.V4SymmetricKey
+	SessionManager *scs.SessionManager
 }
 
 func New(logger *slog.Logger) (*App, error) {
@@ -47,6 +50,12 @@ func New(logger *slog.Logger) (*App, error) {
 	}
 
 	app.Key = &secretKey
+
+	sm := scs.New()
+
+	sm.Cookie = settings.SessionCookie
+
+	app.SessionManager = sm
 
 	return app, nil
 }
