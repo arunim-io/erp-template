@@ -6,10 +6,14 @@ import (
 
 	"github.com/arunim-io/erp/internal/app"
 	"github.com/arunim-io/erp/internal/server"
+	"github.com/go-chi/httplog/v3"
 )
 
 func main() {
-	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
+	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
+		Level:       slog.LevelDebug,
+		ReplaceAttr: httplog.SchemaECS.ReplaceAttr,
+	}))
 
 	app, err := app.New(logger)
 	if err != nil {

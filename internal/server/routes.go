@@ -1,6 +1,7 @@
 package server
 
 import (
+	"log/slog"
 	"net/http"
 
 	"github.com/arunim-io/erp/internal/app"
@@ -9,6 +10,7 @@ import (
 	"github.com/arunim-io/erp/internal/templates/pages"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/httplog/v3"
 	"github.com/gorilla/csrf"
 )
 
@@ -16,14 +18,23 @@ func RootRouter(app *app.App) *chi.Mux {
 	r := chi.NewRouter()
 	r.Use(
 		middleware.SupressNotFound(r),
-		middleware.Logger,
+		httplog.RequestLogger(app.Logger, &httplog.Options{
+			Level:         slog.LevelDebug,
+			Schema:        httplog.SchemaECS,
+			RecoverPanics: true,
+		}),
 		middleware.CleanPath,
 		middleware.GetHead,
 		middleware.Recoverer,
 		middleware.RedirectSlashes,
 		middleware.StripSlashes,
 		app.SessionManager.LoadAndSave,
-		csrf.Protect(app.Key.ExportBytes()),
+		csrf.Protect(
+			app.Key.ExportBytes(),
+			csrf.HttpOnly(false),
+			csrf.Secure(false),
+			csrf.SameSite(csrf.SameSiteLaxMode),
+		),
 	)
 
 	r.Handle(
