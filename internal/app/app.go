@@ -4,7 +4,6 @@ import (
 	"log/slog"
 
 	"aidanwoods.dev/go-paseto"
-	"github.com/alexedwards/scs/sqlite3store"
 	"github.com/alexedwards/scs/v2"
 	"github.com/arunim-io/erp/internal/db"
 	"github.com/arunim-io/erp/internal/settings"
