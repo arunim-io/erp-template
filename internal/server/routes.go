@@ -3,9 +3,8 @@ package server
 import (
 	"net/http"
 
-	"github.com/a-h/templ"
-	erp "github.com/arunim-io/erp/internal/app"
-	auth "github.com/arunim-io/erp/internal/auth/templates/pages"
+	"github.com/arunim-io/erp/internal/app"
+	"github.com/arunim-io/erp/internal/auth"
 	"github.com/arunim-io/erp/internal/orm"
 	"github.com/arunim-io/erp/internal/templates/pages"
 	"github.com/go-chi/chi/v5"
@@ -13,7 +12,7 @@ import (
 	"github.com/gorilla/csrf"
 )
 
-func RootRouter(app *erp.App) *chi.Mux {
+func RootRouter(app *app.App) *chi.Mux {
 	r := chi.NewRouter()
 	r.Use(
 		middleware.SupressNotFound(r),
@@ -36,12 +35,13 @@ func RootRouter(app *erp.App) *chi.Mux {
 	)
 
 	r.Get("/", IndexRoute(app))
-	r.Get("/login", templ.Handler(auth.LoginPage()).ServeHTTP)
+
+	r.Mount("/", auth.Router(app))
 
 	return r
 }
 
-func IndexRoute(app *erp.App) http.HandlerFunc {
+func IndexRoute(app *app.App) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		users, _ := app.DB.Queries.ListUsers(ctx, orm.ListUsersParams{})

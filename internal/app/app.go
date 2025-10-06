@@ -7,6 +7,8 @@ import (
 	"github.com/alexedwards/scs/v2"
 	"github.com/arunim-io/erp/internal/db"
 	"github.com/arunim-io/erp/internal/settings"
+	"github.com/go-playground/form/v4"
+	"github.com/go-playground/validator/v10"
 )
 
 type App struct {
@@ -15,6 +17,10 @@ type App struct {
 	DB             *db.DB
 	Key            *paseto.V4SymmetricKey
 	SessionManager *scs.SessionManager
+	Form           struct {
+		Decoder   *form.Decoder
+		Validator *validator.Validate
+	}
 }
 
 func New(logger *slog.Logger) (*App, error) {
@@ -55,6 +61,9 @@ func New(logger *slog.Logger) (*App, error) {
 	sm.Cookie = settings.SessionCookie
 
 	app.SessionManager = sm
+
+	app.Form.Decoder = form.NewDecoder()
+	app.Form.Validator = validator.New(validator.WithRequiredStructEnabled())
 
 	return app, nil
 }
