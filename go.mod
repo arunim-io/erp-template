@@ -8,6 +8,7 @@ require (
 	github.com/Oudwins/tailwind-merge-go v0.2.1
 	github.com/a-h/templ v0.3.943
 	github.com/alexedwards/scs/v2 v2.9.0
+	github.com/angelofallars/htmx-go v0.5.0
 	github.com/go-chi/chi/v5 v5.2.3
 	github.com/go-chi/httplog/v3 v3.2.2
 	github.com/go-playground/form/v4 v4.2.1

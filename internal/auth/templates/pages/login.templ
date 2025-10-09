@@ -8,36 +8,41 @@ import (
 	"github.com/arunim-io/erp/internal/templates/layouts"
 )
 
+templ selector() {
+	{{ commonAttrs := templ.Attributes{"x-model": "loginMethod"} }}
+	@form.Item() {
+		<h2 class="text-xl font-medium">Login Method</h2>
+		@form.ItemFlex() {
+			@radio.Radio(radio.Props{
+				ID:         "login-method-username",
+				Name:       "login-method",
+				Value:      "username",
+				Attributes: commonAttrs,
+			})
+			@form.Label(form.LabelProps{For: "login-method-username"}) {
+				By username
+			}
+		}
+		@form.ItemFlex() {
+			@radio.Radio(radio.Props{
+				ID:         "login-method-email",
+				Name:       "login-method",
+				Value:      "email",
+				Attributes: commonAttrs,
+			})
+			@form.Label(form.LabelProps{For: "login-method-email"}) {
+				By Email
+			}
+		}
+	}
+}
+
 templ LoginPage() {
 	@layouts.Root() {
 		<main class="p-5">
-			<form class="space-y-5" x-data={ templ.JSONString(map[string]string{"loginMethod": "username"}) }>
+			<form class="space-y-5" x-data={ templ.JSONString(map[string]string{"loginMethod": "username"}) } method="post" action="/login" hx-post="/login">
 				<h1 class="text-2xl font-semibold">Login Form</h1>
-				@form.Item() {
-					<h2 class="text-xl font-medium">Login Method</h2>
-					@form.ItemFlex() {
-						@radio.Radio(radio.Props{
-							ID:         "login-method-username",
-							Name:       "login-method",
-							Value:      "username",
-							Attributes: templ.Attributes{"x-model": "loginMethod"},
-						})
-						@form.Label(form.LabelProps{For: "login-method-username"}) {
-							By username
-						}
-					}
-					@form.ItemFlex() {
-						@radio.Radio(radio.Props{
-							ID:         "login-method-email",
-							Name:       "login-method",
-							Value:      "email",
-							Attributes: templ.Attributes{"x-model": "loginMethod"},
-						})
-						@form.Label(form.LabelProps{For: "login-method-email"}) {
-							By Email
-						}
-					}
-				}
+				@selector()
 				@form.Item(form.ItemProps{Attributes: templ.Attributes{
 					"x-cloak": true,
 					"x-show":  "loginMethod == 'username'",
@@ -77,7 +82,7 @@ templ LoginPage() {
 						Attributes:  templ.Attributes{"autocomplete": "current-password"},
 					})
 				}
-				@button.Button(button.Props{}) {
+				@button.Button(button.Props{Type: button.TypeSubmit}) {
 					Login
 				}
 			</form>
