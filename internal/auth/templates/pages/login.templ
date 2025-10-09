@@ -13,7 +13,6 @@ templ LoginPage() {
 		<main class="p-5">
 			<form class="space-y-5" x-data={ templ.JSONString(map[string]string{"loginMethod": "username"}) }>
 				<h1 class="text-2xl font-semibold">Login Form</h1>
-				<input type="hidden" name="gorilla.csrf.Token" value={ ctx.Value("gorilla.csrf.Token").(string) }/>
 				@form.Item() {
 					<h2 class="text-xl font-medium">Login Method</h2>
 					@form.ItemFlex() {

@@ -4,6 +4,7 @@ import (
 	"log/slog"
 	"net/http"
 
+	"filippo.io/csrf"
 	"github.com/arunim-io/erp/internal/app"
 	"github.com/arunim-io/erp/internal/auth"
 	"github.com/arunim-io/erp/internal/orm"
@@ -11,10 +12,9 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/httplog/v3"
-	"github.com/gorilla/csrf"
 )
 
-func RootRouter(app *app.App) *chi.Mux {
+func RootRouter(app *app.App) http.Handler {
 	r := chi.NewRouter()
 	r.Use(
 		middleware.SupressNotFound(r),
@@ -29,12 +29,6 @@ func RootRouter(app *app.App) *chi.Mux {
 		middleware.RedirectSlashes,
 		middleware.StripSlashes,
 		app.SessionManager.LoadAndSave,
-		csrf.Protect(
-			app.Key.ExportBytes(),
-			csrf.HttpOnly(false),
-			csrf.Secure(false),
-			csrf.SameSite(csrf.SameSiteLaxMode),
-		),
 	)
 
 	r.Handle(
@@ -49,7 +43,7 @@ func RootRouter(app *app.App) *chi.Mux {
 
 	r.Mount("/", auth.Router(app))
 
-	return r
+	return csrf.New().Handler(r)
 }
 
 func IndexRoute(app *app.App) http.HandlerFunc {
