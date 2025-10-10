@@ -1,6 +1,7 @@
 package settings
 
 import (
+	"log/slog"
 	"os"
 	"path/filepath"
 
@@ -27,19 +28,27 @@ func Load() (*Settings, error) {
 
 // This struct contains the settings used throughout the server.
 type Settings struct {
+	// A flag that controls parts of the server.
+	Debug bool `koanf:"debug"`
 	// The root directory for the project. Useful for accessing files in the project.
 	RootDir string `koanf:"root_dir"`
 	// A secret key for this server. This is mainly used for security purposes.
 	SecretKey     string            `koanf:"secret_key"`
 	Server        ServerConfig      `koanf:"server"`
-	Database      *DBConfig         `koanf:"db"`
+	Database      *DBConfig         `koanf:"b"`
 	SessionCookie scs.SessionCookie `koanf:"session"`
+}
+
+func (s *Settings) LogLevel() slog.Level {
+	if s.Debug {
+		return slog.LevelDebug
+	}
+	return slog.LevelInfo
 }
 
 func getDefault() (*Settings, error) {
 	s := &Settings{
-		Server:        DefaultServerConfig(),
-		SessionCookie: scs.SessionCookie{},
+		Server: DefaultServerConfig(),
 	}
 
 	cwd, err := os.Getwd()
@@ -53,6 +62,8 @@ func getDefault() (*Settings, error) {
 		return nil, err
 	}
 	s.Database = db
+
+	s.SessionCookie = scs.SessionCookie{Secure: !s.Debug}
 
 	return s, nil
 }
@@ -80,7 +91,6 @@ func loadFromEnv(s *Settings) error {
 		loadDotenv(".env")
 	}
 
-	// Load from Env variables
 	if err := k.Load(
 		env.Provider("ERP_", ".", func(v string) string { return v[4:] }),
 		nil,

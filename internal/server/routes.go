@@ -1,7 +1,6 @@
 package server
 
 import (
-	"log/slog"
 	"net/http"
 
 	"filippo.io/csrf"
@@ -19,7 +18,7 @@ func RootRouter(app *app.App) http.Handler {
 	r.Use(
 		middleware.SupressNotFound(r),
 		httplog.RequestLogger(app.Logger, &httplog.Options{
-			Level:         slog.LevelDebug,
+			Level:         app.Settings.LogLevel(),
 			Schema:        httplog.SchemaECS,
 			RecoverPanics: true,
 		}),
@@ -29,6 +28,15 @@ func RootRouter(app *app.App) http.Handler {
 		middleware.RedirectSlashes,
 		middleware.StripSlashes,
 		app.SessionManager.LoadAndSave,
+		func(h http.Handler) http.Handler {
+			if app.Settings.Debug {
+				return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+					w.Header().Set("Cache-Control", "no-store")
+					h.ServeHTTP(w, r)
+				})
+			}
+			return h
+		},
 	)
 
 	r.Handle(

@@ -52,6 +52,4 @@ func (s *Server) Run() {
 		s.app.Logger.Error("Server forced to shut down", "error", err)
 		os.Exit(1)
 	}
-
-	s.app.Logger.Info("Server has exited...")
 }

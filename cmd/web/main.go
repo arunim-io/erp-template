@@ -10,10 +10,7 @@ import (
 )
 
 func main() {
-	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
-		Level:       slog.LevelDebug,
-		ReplaceAttr: httplog.SchemaECS.ReplaceAttr,
-	}))
+	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{ReplaceAttr: httplog.SchemaECS.ReplaceAttr}))
 
 	app, err := app.New(logger)
 	if err != nil {

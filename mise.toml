@@ -3,8 +3,9 @@ redactions = ["ERP_SECRET_KEY"]
 [env]
 _.file = ".env"
 DATABASE_URL = "sqlite:{{ config_root }}/db.sqlite3"
-ERP_DATABASE_URL.value = "{{env.DATABASE_URL}}"
 DBMATE_WAIT = true
+ERP_DEBUG = true
+ERP_DATABASE_URL.value = "{{env.DATABASE_URL}}"
 
 [tools]
 biome = "2.2.4"
