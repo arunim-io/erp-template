@@ -1,0 +1,54 @@
+package auth
+
+import (
+	"github.com/arunim-io/erp/internal/templates/components/ui/button"
+	"github.com/arunim-io/erp/internal/templates/components/ui/form"
+	"github.com/arunim-io/erp/internal/templates/components/ui/input"
+	"github.com/arunim-io/erp/internal/templates/layouts"
+)
+
+templ RegisterPage() {
+	@layouts.Root() {
+		<main class="p-5">
+			<form class="space-y-5" method="post" action="/register" hx-post="/register">
+				<h1 class="text-2xl font-semibold">Register Form</h1>
+				@form.Item(form.ItemProps{}) {
+					@form.Label(form.LabelProps{For: "username"}) {
+						Username
+					}
+					@input.Input(input.Props{
+						ID:          "username",
+						Name:        "username",
+						Placeholder: "johndoe",
+						Attributes:  templ.Attributes{"autocomplete": "username"},
+					})
+				}
+				@form.Item(form.ItemProps{}) {
+					@form.Label(form.LabelProps{For: "email"}) {
+						Email Address
+					}
+					@input.Input(input.Props{
+						ID:          "email",
+						Name:        "email",
+						Placeholder: "john.doe@gmail.com",
+						Attributes:  templ.Attributes{"autocomplete": "email"},
+					})
+				}
+				@form.Item() {
+					@form.Label(form.LabelProps{For: "password"}) {
+						Password
+					}
+					@input.Input(input.Props{
+						ID:          "password",
+						Type:        input.TypePassword,
+						Placeholder: "**********",
+						Attributes:  templ.Attributes{"autocomplete": "current-password"},
+					})
+				}
+				@button.Button(button.Props{Type: button.TypeSubmit}) {
+					Register
+				}
+			</form>
+		</main>
+	}
+}
