@@ -6,7 +6,7 @@ import (
 )
 
 templ Index(usersCount int) {
-	@layouts.Root() {
+	@layouts.Root("Home") {
 		<main class="space-y-10 p-5">
 			@button.Button(button.Props{Href: "/login"}) {
 				Go to Login

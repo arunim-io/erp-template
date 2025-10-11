@@ -8,11 +8,33 @@ import (
 )
 
 templ RegisterPage() {
-	@layouts.Root() {
+	@layouts.Root("Register") {
 		<main class="p-5">
-			<form class="space-y-5" method="post" action="/register" hx-post="/register">
+			<form class="space-y-5" method="post" action="/register">
 				<h1 class="text-2xl font-semibold">Register Form</h1>
-				@form.Item(form.ItemProps{}) {
+				@form.Item() {
+					@form.Label(form.LabelProps{For: "first-name"}) {
+						First Name
+					}
+					@input.Input(input.Props{
+						ID:          "first-name",
+						Name:        "first-name",
+						Placeholder: "John",
+						Attributes:  templ.Attributes{"autocomplete": "given-name"},
+					})
+				}
+				@form.Item() {
+					@form.Label(form.LabelProps{For: "last-name"}) {
+						Last Name
+					}
+					@input.Input(input.Props{
+						ID:          "last-name",
+						Name:        "last-name",
+						Placeholder: "Doe",
+						Attributes:  templ.Attributes{"autocomplete": "family-name"},
+					})
+				}
+				@form.Item() {
 					@form.Label(form.LabelProps{For: "username"}) {
 						Username
 					}
@@ -23,13 +45,14 @@ templ RegisterPage() {
 						Attributes:  templ.Attributes{"autocomplete": "username"},
 					})
 				}
-				@form.Item(form.ItemProps{}) {
+				@form.Item() {
 					@form.Label(form.LabelProps{For: "email"}) {
 						Email Address
 					}
 					@input.Input(input.Props{
 						ID:          "email",
 						Name:        "email",
+						Type:        input.TypeEmail,
 						Placeholder: "john.doe@gmail.com",
 						Attributes:  templ.Attributes{"autocomplete": "email"},
 					})

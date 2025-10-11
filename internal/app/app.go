@@ -1,14 +1,17 @@
 package app
 
 import (
+	"context"
 	"log/slog"
+	"time"
 
 	"aidanwoods.dev/go-paseto"
 	"github.com/alexedwards/scs/v2"
-	"github.com/arunim-io/erp/internal/db"
-	"github.com/arunim-io/erp/internal/settings"
 	"github.com/go-playground/form/v4"
 	"github.com/go-playground/validator/v10"
+
+	"github.com/arunim-io/erp/internal/db"
+	"github.com/arunim-io/erp/internal/settings"
 )
 
 type App struct {
@@ -23,19 +26,26 @@ type App struct {
 	}
 }
 
+const CancelTimeout time.Duration = 30 * time.Second
+
 func New(logger *slog.Logger) (*App, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), CancelTimeout)
+
+	defer cancel()
 	app := &App{Logger: logger}
 
 	settings, err := settings.Load()
 	if err != nil {
 		return nil, err
 	}
+
 	app.Settings = settings
 
-	db, err := db.New(settings.Database.URI)
+	db, err := db.New(ctx, settings.Database.URI)
 	if err != nil {
 		return nil, err
 	}
+
 	app.DB = db
 
 	var secretKey paseto.V4SymmetricKey
@@ -43,11 +53,16 @@ func New(logger *slog.Logger) (*App, error) {
 	if settings.SecretKey == "" {
 		secretKey = paseto.NewV4SymmetricKey()
 
-		logger.Warn("Using a temporary Secret Key. Please set the secret key as soon as possible.", "tempSecretKey", secretKey.ExportHex())
+		logger.Warn(
+			"Using a temporary Secret Key. Please set the secret key as soon as possible.",
+			"tempSecretKey",
+			secretKey.ExportHex(),
+		)
 	} else {
 		key, err := paseto.V4SymmetricKeyFromHex(settings.SecretKey)
 		if err != nil {
 			logger.Error("This secret key is invalid...", "error", err)
+
 			return nil, err
 		}
 

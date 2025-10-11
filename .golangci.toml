@@ -1,0 +1,121 @@
+version = "2"
+
+[formatters]
+enable = ["gci", "gofumpt", "golines"]
+
+[formatters.settings.gci]
+custom-order = true
+sections = ["standard", "default", "localmodule"]
+
+[formatters.settings.gofumpt]
+extra-rules = true
+module-path = "github.com/arunim-io/erp"
+
+[formatters.settings.golines]
+tab-len = 2
+shorten-comments = true
+
+[linters]
+default = "standard"
+enable = [
+  "asciicheck",
+  "bidichk",
+  "canonicalheader",
+  "containedctx",
+  "contextcheck",
+  "copyloopvar",
+  "cyclop",
+  "decorder",
+  "dogsled",
+  "dupl",
+  "dupword",
+  "durationcheck",
+  "embeddedstructfieldcheck",
+  "errname",
+  "errorlint",
+  "exhaustive",
+  "exptostd",
+  "fatcontext",
+  "forbidigo",
+  "forcetypeassert",
+  "funcorder",
+  "funlen",
+  "gocheckcompilerdirectives",
+  "gochecknoinits",
+  "gochecksumtype",
+  "gocognit",
+  "goconst",
+  "gocritic",
+  "godoclint",
+  "godot",
+  "godox",
+  "gomoddirectives",
+  "gomodguard",
+  "goprintffuncname",
+  "gosec",
+  "gosmopolitan",
+  "iface",
+  "inamedparam",
+  "interfacebloat",
+  "intrange",
+  "iotamixing",
+  "ireturn",
+  "loggercheck",
+  "makezero",
+  "mirror",
+  "mnd",
+  "nakedret",
+  "nestif",
+  "nilnesserr",
+  "nilnil",
+  "nlreturn",
+  "noctx",
+  "nolintlint",
+  "nosprintfhostport",
+  "perfsprint",
+  "prealloc",
+  "predeclared",
+  "reassign",
+  'revive',
+  "recvcheck",
+  "sloglint",
+  "unconvert",
+  "unparam",
+  "usestdlibvars",
+  "wastedassign",
+  "whitespace",
+]
+
+[linters.settings]
+copyloopvar.check-alias = true
+embeddedstructfieldcheck.forbid-mutex = true
+errcheck.check-type-assertions = true
+exhaustive.check = ["switch", "map"]
+funlen = { lines = 100, statements = 50 }
+forbidigo.analyze-types = true
+funcorder.alphabetical = true
+gochecksumtype.default-signifies-exhaustive = false
+gocognit.min-complexity = 20
+goconst = { find-duplicates = true, eval-const-expressions = true }
+gocritic.settings = { captLocal.paramsOnly = false, underef.skipRecvDeref = false }
+godoclint.enable = ["no-unused-link"]
+govet = { enable-all = true, disable = ["fieldalignment"] }
+ireturn.allow = ["anon", "error", "empty", "stdlib", "generic"]
+nakedret.max-func-lines = 0
+nilnil.detect-opposite = true
+nolintlint = { require-explanation = true, require-specific = true }
+reassign.patterns = [".*"]
+sloglint = { no-global = "all", context = "scope" }
+
+[linters.exclusions]
+warn-unused = true
+generated = "strict"
+presets = ["std-error-handling", "common-false-positives", "comments"]
+paths = [
+  '^internal/templates/components/(?:.*/)*[^/]+\.go$',
+  "internal/utils/templui.go",
+]
+
+[[linters.exclusions.rules]]
+text = "should have a package comment"
+linters = ["revive"]

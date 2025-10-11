@@ -1,11 +1,15 @@
 package db
 
 import (
+	"context"
 	"database/sql"
+	"fmt"
 	"net/url"
 
-	"github.com/arunim-io/erp/internal/orm"
+	// Load sqlite3 driver.
 	_ "modernc.org/sqlite"
+
+	"github.com/arunim-io/erp/internal/orm"
 )
 
 type DB struct {
@@ -13,18 +17,21 @@ type DB struct {
 	Queries  *orm.Queries
 }
 
-func New(dsn *url.URL) (*DB, error) {
-	db, err := sql.Open("sqlite", dsn.String())
+func New(ctx context.Context, dsn *url.URL) (db *DB, err error) {
+	i, err := sql.Open("sqlite", dsn.String())
 	if err != nil {
 		return nil, err
 	}
-	defer db.Close()
 
-	if err := db.Ping(); err != nil {
+	defer func() {
+		if e := i.Close(); e != nil {
+			err = fmt.Errorf("%w; also failed to close DB: %w", err, e)
+		}
+	}()
+
+	if err = i.PingContext(ctx); err != nil {
 		return nil, err
 	}
 
-	queries := orm.New(db)
-
-	return &DB{instance: db, Queries: queries}, nil
+	return &DB{instance: i, Queries: orm.New(i)}, nil
 }

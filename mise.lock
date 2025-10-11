@@ -52,6 +52,10 @@ backend = "go:github.com/templui/templui/cmd/templui"
 version = "0.20.0"
 backend = "go:golang.org/x/tools/gopls"
 
+[[tools.golangci-lint]]
+version = "2.5.0"
+backend = "aqua:golangci/golangci-lint"
+
 [[tools.sqlite]]
 version = "3.50.4"
 backend = "asdf:sqlite"

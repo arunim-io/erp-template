@@ -4,13 +4,14 @@ import (
 	"net/http"
 
 	"filippo.io/csrf"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/httplog/v3"
+
 	"github.com/arunim-io/erp/internal/app"
 	"github.com/arunim-io/erp/internal/auth"
 	"github.com/arunim-io/erp/internal/orm"
 	"github.com/arunim-io/erp/internal/templates/pages"
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
-	"github.com/go-chi/httplog/v3"
 )
 
 func RootRouter(app *app.App) http.Handler {
@@ -35,6 +36,7 @@ func RootRouter(app *app.App) http.Handler {
 					h.ServeHTTP(w, r)
 				})
 			}
+
 			return h
 		},
 	)
@@ -59,6 +61,6 @@ func IndexRoute(app *app.App) http.HandlerFunc {
 		ctx := r.Context()
 		users, _ := app.DB.Queries.ListUsers(ctx, orm.ListUsersParams{})
 
-		pages.Index(len(users)).Render(ctx, w)
+		_ = pages.Index(len(users)).Render(ctx, w)
 	}
 }

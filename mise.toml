@@ -18,6 +18,7 @@ go = "latest"
 "go:github.com/sqlc-dev/sqlc/cmd/sqlc" = "latest"
 "go:github.com/templui/templui/cmd/templui" = "latest"
 "go:golang.org/x/tools/gopls" = "latest"
+golangci-lint = "latest"
 sqlite = "latest"
 
 [tasks]
@@ -26,9 +27,9 @@ dev = "air"
 install-deps = ["bun install", "go mod tidy"]
 reset = ["mise run clean", "mise run install-deps"]
 fix = [
-  "gofmt -w .",
-  "biome check --fix .",
   "sqruff fix ./db/migrations/ ./db/queries/",
+  "biome check --fix .",
+  "golangci-lint run --fix",
 ]
 
 [hooks]

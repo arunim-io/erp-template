@@ -1,12 +1,15 @@
 package auth
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/angelofallars/htmx-go"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-playground/validator/v10"
+
 	"github.com/arunim-io/erp/internal/app"
 	pages "github.com/arunim-io/erp/internal/auth/templates/pages"
-	"github.com/go-chi/chi/v5"
 )
 
 func Router(app *app.App) *chi.Mux {
@@ -18,20 +21,13 @@ func Router(app *app.App) *chi.Mux {
 	return r
 }
 
-type LoginForm struct {
-	Method   string `form:"login-method" validate:"required"`
-	Email    string `form:"email" validate:"email,omitempty"`
-	Username string `form:"username" validate:"omitempty"`
-	Password string `form:"password" validate:"required"`
-}
-
 func LoginRoute(app *app.App) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
-			pages.LoginPage().Render(r.Context(), w)
+			_ = pages.LoginPage().Render(r.Context(), w)
 		case http.MethodPost:
-			r.ParseForm()
+			_ = r.ParseForm()
 
 			var data LoginForm
 			if err := app.Form.Decoder.Decode(&data, r.PostForm); err != nil {
@@ -40,31 +36,42 @@ func LoginRoute(app *app.App) http.HandlerFunc {
 
 			app.Logger.Debug("login successful", "data", data)
 
-			htmx.NewResponse().Refresh(true).Write(w)
+			_ = htmx.NewResponse().Refresh(true).Write(w)
 		}
 	}
 }
 
-type RegisterForm struct {
-	Email    string `form:"email" validate:"email"`
-	Username string `form:"username"`
-	Password string `form:"password" validate:"required"`
-}
-
 func RegisterRoute(app *app.App) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
+
+		var formData RegisterForm
+
 		switch r.Method {
 		case http.MethodGet:
-			pages.RegisterPage().Render(r.Context(), w)
+			_ = pages.RegisterPage().Render(ctx, w)
 		case http.MethodPost:
-			r.ParseForm()
+			if err := r.ParseForm(); err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+			}
 
-			var data RegisterForm
-			if err := app.Form.Decoder.Decode(&data, r.PostForm); err != nil {
+			if err := app.Form.Decoder.Decode(&formData, r.PostForm); err != nil {
 				http.Error(w, "Invalid form", http.StatusNotAcceptable)
 			}
 
-			app.Logger.Debug("registration successful", "data", data)
+			if err := app.Form.Validator.StructCtx(ctx, formData); err != nil {
+				app.Logger.Error("Form data", "err", err)
+
+				var vErrs validator.ValidationErrors
+
+				if ok := errors.As(err, &vErrs); ok {
+					for _, fe := range vErrs {
+						app.Logger.Error("Field error", "field", fe.Field(), "error", fe.Error())
+					}
+				}
+
+				_ = pages.RegisterPage().Render(ctx, w)
+			}
 		}
 	}
 }

@@ -1,5 +1,6 @@
-// templui component icon - version: v0.97.0 installed by templui v0.97.0
 package icon
+
+// templui component icon - version: v0.97.0 installed by templui v0.97.0
 
 import (
 	"context"
@@ -10,9 +11,9 @@ import (
 	"github.com/a-h/templ"
 )
 
-// iconContents caches the fully generated SVG strings for icons that have been used,
-// keyed by a composite key of name and props to handle different stylings.
 var (
+	// iconContents caches the fully generated SVG strings for icons that have been used,
+	// keyed by a composite key of name and props to handle different stylings.
 	iconContents = make(map[string]string)
 	iconMutex    sync.RWMutex
 )
@@ -47,6 +48,7 @@ func Icon(name string) func(...Props) templ.Component {
 
 			if cached {
 				_, err = w.Write([]byte(svg))
+
 				return err
 			}
 
@@ -55,7 +57,12 @@ func Icon(name string) func(...Props) templ.Component {
 			generatedSvg, err := generateSVG(name, p) // p (Props) is passed to generateSVG
 			if err != nil {
 				// Provide more context in the error message
-				return fmt.Errorf("failed to generate svg for icon '%s' with props %+v: %w", name, p, err)
+				return fmt.Errorf(
+					"failed to generate svg for icon '%s' with props %+v: %w",
+					name,
+					p,
+					err,
+				)
 			}
 
 			iconMutex.Lock()
@@ -63,6 +70,7 @@ func Icon(name string) func(...Props) templ.Component {
 			iconMutex.Unlock()
 
 			_, err = w.Write([]byte(generatedSvg))
+
 			return err
 		})
 	}
@@ -91,6 +99,7 @@ func generateSVG(name string, props Props) (string, error) {
 	if stroke == "" {
 		stroke = props.Color // Fallback to Color if Stroke is not set
 	}
+
 	if stroke == "" {
 		stroke = "currentColor" // Default stroke color
 	}
@@ -102,8 +111,16 @@ func generateSVG(name string, props Props) (string, error) {
 
 	// Construct the final SVG string.
 	// The data-lucide attribute helps identify these as Lucide icons if needed.
-	return fmt.Sprintf("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"%d\" height=\"%d\" viewBox=\"0 0 24 24\" fill=\"%s\" stroke=\"%s\" stroke-width=\"%s\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"%s\" data-lucide=\"icon\">%s</svg>",
-		size, size, fill, stroke, strokeWidth, props.Class, content), nil
+	return fmt.Sprintf(
+		"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"%d\" height=\"%d\" viewBox=\"0 0 24 24\" fill=\"%s\" stroke=\"%s\" stroke-width=\"%s\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"%s\" data-lucide=\"icon\">%s</svg>",
+		size,
+		size,
+		fill,
+		stroke,
+		strokeWidth,
+		props.Class,
+		content,
+	), nil
 }
 
 // getIconContent retrieves the raw inner SVG content for a given icon name.
@@ -113,5 +130,6 @@ func getIconContent(name string) (string, error) {
 	if !exists {
 		return "", fmt.Errorf("icon '%s' not found in internalSvgData map", name)
 	}
+
 	return content, nil
 }

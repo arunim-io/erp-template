@@ -1,27 +1,28 @@
 package settings
 
 import (
-	"fmt"
 	"net"
+	"strconv"
 )
 
-// Returns the default config for the server.
-func DefaultServerConfig() ServerConfig {
+const defaultPort int16 = 8000
+
+func defaultServerConfig() ServerConfig {
 	return ServerConfig{
 		Host: "0.0.0.0",
-		Port: 8000,
+		Port: defaultPort,
 	}
 }
 
-// The configuration of the server.
+// ServerConfig contains the configuration of the server.
 type ServerConfig struct {
 	// The host at which the server will run.
 	Host string `koanf:"host"`
 	// The port at which the server will run.
-	Port int `koanf:"port"`
+	Port int16 `koanf:"port"`
 }
 
-// Returns the IP address of the server.
+// ServerAddress returns the IP address of the server.
 func (cfg ServerConfig) ServerAddress() string {
-	return net.JoinHostPort(cfg.Host, fmt.Sprint(cfg.Port))
+	return net.JoinHostPort(cfg.Host, strconv.Itoa(int(cfg.Port)))
 }
