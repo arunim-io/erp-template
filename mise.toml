@@ -1,3 +1,19 @@
 [tools]
+air = "latest"
 go = "latest"
 "go:golang.org/x/tools/gopls" = "latest"
+
+[tasks.dev]
+run = "air"
+
+[tasks.clean]
+run = "rm -rf ./tmp ./vendor"
+
+[tasks.lint]
+run = "golangci-lint run"
+
+[tasks."lint:fix"]
+run = "golangci-lint run --fix"
+
+[hooks]
+postinstall = "go mod tidy"
