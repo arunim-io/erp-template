@@ -2,7 +2,8 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"embed"
+	"html/template"
 	"log/slog"
 	"net"
 	"net/http"
@@ -11,8 +12,19 @@ import (
 	"time"
 )
 
-var greet http.HandlerFunc = func(w http.ResponseWriter, r *http.Request) { //nolint:revive // Just an useless warning
-	_, _ = fmt.Fprintf(w, "Hello World! %s", time.Now())
+//go:embed templates/*.html
+var templatesFS embed.FS
+
+var templates = template.Must(template.ParseFS(templatesFS, "templates/*.html"))
+
+var routes = map[string]http.HandlerFunc{
+	"/": func(w http.ResponseWriter, r *http.Request) {
+		if err := templates.ExecuteTemplate(w, "index.html", map[string]any{"PageTitle": "ERP", "CurrentURL": r.URL.String()}); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+
+			return
+		}
+	},
 }
 
 func main() {
@@ -22,7 +34,9 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/", greet)
+	for pattern, handler := range routes {
+		mux.HandleFunc(pattern, handler)
+	}
 
 	addr := net.JoinHostPort("localhost", "8000")
 	server := &http.Server{
