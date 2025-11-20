@@ -7,6 +7,10 @@ checksum = "sha256:754ec1123ace74ac61caf14bce1d494f65a1477018aca359e96d75f7493e2
 size = 3725302
 url = "https://github.com/air-verse/air/releases/download/v1.63.1/air_1.63.1_linux_amd64.tar.gz"
 
+[[tools.biome]]
+version = "2.2.4"
+backend = "aqua:biomejs/biome"
+
 [[tools.go]]
 version = "1.25.4"
 backend = "core:go"
