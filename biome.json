@@ -18,14 +18,6 @@
 			"recommended": true
 		}
 	},
-	"html": {
-		"formatter": {
-			"enabled": true
-		},
-		"parser": {
-			"interpolation": true
-		}
-	},
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "double"

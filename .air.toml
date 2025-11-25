@@ -45,9 +45,9 @@ time = false
 clean_on_exit = false
 
 [proxy]
-app_port = 0
-enabled = false
-proxy_port = 0
+enabled = true
+app_port = 8080
+proxy_port = 8000
 
 [screen]
 clear_on_rebuild = false

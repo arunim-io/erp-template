@@ -38,7 +38,7 @@ func main() {
 		mux.HandleFunc(pattern, handler)
 	}
 
-	addr := net.JoinHostPort("localhost", "8000")
+	addr := net.JoinHostPort("localhost", "8080")
 	server := &http.Server{
 		Addr:              addr,
 		Handler:           mux,
