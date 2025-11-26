@@ -3,13 +3,21 @@ package templates
 import (
 	"io/fs"
 	"net/http"
+	"sync"
 	"text/template"
 )
 
-var templates *template.Template
+var (
+	templates *template.Template
+	once      sync.Once
+)
 
-func Init(fs fs.FS) {
-	templates = template.Must(template.ParseFS(fs, "templates/**/*.html"))
+func Init(fs fs.FS) (err error) {
+	once.Do(func() {
+		templates, err = template.ParseFS(fs, "templates/**/*.html")
+	})
+
+	return err
 }
 
 func Render(w http.ResponseWriter, name string, data map[string]any) {
