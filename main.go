@@ -3,31 +3,31 @@ package main
 import (
 	"context"
 	"embed"
-	"html/template"
 	"log/slog"
 	"net"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/arunim-io/erp/internal/templates"
 )
 
-//go:embed templates/*.html
+//go:embed templates/**/*.html
 var templatesFS embed.FS
-
-var templates = template.Must(template.ParseFS(templatesFS, "templates/*.html"))
 
 var routes = map[string]http.HandlerFunc{
 	"/": func(w http.ResponseWriter, r *http.Request) {
-		if err := templates.ExecuteTemplate(w, "index.html", map[string]any{"PageTitle": "ERP", "CurrentURL": r.URL.String()}); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-
-			return
-		}
+		templates.RenderDefault(w, map[string]any{
+			"PageTitle":  "ERP",
+			"CurrentURL": r.URL.String(),
+		})
 	},
 }
 
 func main() {
+	templates.Init(templatesFS)
+
 	const timeout = 5 * time.Second
 
 	log := slog.New(slog.NewTextHandler(os.Stderr, nil))
