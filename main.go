@@ -12,8 +12,13 @@ import (
 	"github.com/arunim-io/erp/internal/templates"
 )
 
-//go:embed templates/**/*.html
-var templatesFS embed.FS
+var (
+	//go:embed templates/**/*.html
+	templatesFS embed.FS
+
+	//go:embed static/**/*
+	staticFS embed.FS
+)
 
 func main() {
 	log := slog.New(slog.NewTextHandler(os.Stderr, nil))
@@ -24,7 +29,10 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
-	server.RegisterRoutes(mux)
+	if err := server.RegisterRoutes(mux, staticFS); err != nil {
+		log.Error("Failed to initialize routes", "error", err)
+		os.Exit(1)
+	}
 
 	s := server.New(mux)
 

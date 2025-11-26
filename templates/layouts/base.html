@@ -5,10 +5,12 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>{{ .PageTitle }}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css"/>
 	</head>
 	<body>
 		{{ block "body" . }}
 		{{ end }}
+    <script src="/static/js/index.js"></script>
 	</body>
 </html>
 {{ end }}
