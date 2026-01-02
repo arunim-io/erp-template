@@ -8,26 +8,35 @@ import (
 )
 
 var (
-	templates *template.Template
-	once      sync.Once
+	templatesFS fs.FS
+	templates   *template.Template
+	once        sync.Once
 )
 
 func Init(fs fs.FS) (err error) {
+	templatesFS = fs
+
 	once.Do(func() {
-		templates, err = template.ParseFS(fs, "templates/**/*.html")
+		templates, err = template.ParseFS(fs, "templates/layouts/*.html")
 	})
 
 	return err
 }
 
-func Render(w http.ResponseWriter, name string, data map[string]any) {
-	if err := templates.ExecuteTemplate(w, name, data); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-
-		return
+func Render(w http.ResponseWriter, name string, data map[string]any) error {
+	tpls, err := templates.Clone()
+	if err != nil {
+		return err
 	}
-}
 
-func RenderDefault(w http.ResponseWriter, data map[string]any) {
-	Render(w, "base-layout", data)
+	tpl, err := tpls.ParseFS(templatesFS, "templates/pages/"+name)
+	if err != nil {
+		return err
+	}
+
+	if err := tpl.ExecuteTemplate(w, "base-layout", data); err != nil {
+		return err
+	}
+
+	return nil
 }
