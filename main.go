@@ -28,13 +28,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	mux := http.NewServeMux()
-	if err := server.RegisterRoutes(mux, staticFS); err != nil {
+	r, err := server.Router(staticFS)
+	if err != nil {
 		log.Error("Failed to initialize routes", "error", err)
 		os.Exit(1)
 	}
 
-	s := server.New(mux)
+	s := server.New(r)
 
 	go func() {
 		log.Info("Started server...", "addr", s.Addr)

@@ -11,10 +11,10 @@ const (
 	defaultIdleTimeout = 120 * time.Second
 )
 
-func New(mux *http.ServeMux) *http.Server {
+func New(h http.Handler) *http.Server {
 	return &http.Server{
 		Addr:         net.JoinHostPort("localhost", "8080"),
-		Handler:      mux,
+		Handler:      h,
 		ReadTimeout:  DefaultTimeout,
 		WriteTimeout: DefaultTimeout,
 		IdleTimeout:  defaultIdleTimeout,

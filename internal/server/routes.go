@@ -4,24 +4,28 @@ import (
 	"io/fs"
 	"net/http"
 
+	"github.com/go-chi/chi/v5"
+
 	"github.com/arunim-io/erp/internal/templates"
 )
 
-func RegisterRoutes(mux *http.ServeMux, staticFS fs.FS) error {
-	mux.HandleFunc("/", indexRoute)
-	mux.HandleFunc("/login", loginRoute)
+func Router(staticFS fs.FS) (*chi.Mux, error) {
+	r := chi.NewRouter()
+
+	r.HandleFunc("/", indexRoute)
+	r.HandleFunc("/login", loginRoute)
 
 	fs, err := fs.Sub(staticFS, "static")
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	mux.Handle("/static/", http.StripPrefix(
+	r.Handle("/static/*", http.StripPrefix(
 		"/static/",
 		http.FileServerFS(fs),
 	))
 
-	return nil
+	return r, nil
 }
 
 func indexRoute(w http.ResponseWriter, r *http.Request) {
