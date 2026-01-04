@@ -12,9 +12,6 @@ import (
 func Router(staticFS fs.FS) (*chi.Mux, error) {
 	r := chi.NewRouter()
 
-	r.HandleFunc("/", indexRoute)
-	r.HandleFunc("/login", loginRoute)
-
 	fs, err := fs.Sub(staticFS, "static")
 	if err != nil {
 		return nil, err
@@ -25,19 +22,29 @@ func Router(staticFS fs.FS) (*chi.Mux, error) {
 		http.FileServerFS(fs),
 	))
 
+	r.NotFound(notFoundRoute)
+
+	r.HandleFunc("/", indexRoute)
+	r.HandleFunc("/login", loginRoute)
+
 	return r, nil
 }
 
 func indexRoute(w http.ResponseWriter, r *http.Request) {
 	templates.Render(w, "index.html", map[string]any{
 		"PageTitle":  "ERP",
-		"CurrentURL": r.URL.String(),
+		"CurrentURL": r.URL,
 	})
 }
 
 func loginRoute(w http.ResponseWriter, r *http.Request) {
 	templates.Render(w, "login.html", map[string]any{
-		"PageTitle":  "ERP - Login",
-		"CurrentURL": r.URL.String(),
+		"PageTitle": "ERP - Login",
+	})
+}
+
+func notFoundRoute(w http.ResponseWriter, r *http.Request) {
+	templates.Render(w, "404.html", map[string]any{
+		"PageTitle": "ERP - Page not found",
 	})
 }
