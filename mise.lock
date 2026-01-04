@@ -15,3 +15,7 @@ backend = "core:go"
 [[tools."go:golang.org/x/tools/gopls"]]
 version = "latest"
 backend = "go:golang.org/x/tools/gopls"
+
+[[tools.golangci-lint]]
+version = "2.7.2"
+backend = "aqua:golangci/golangci-lint"

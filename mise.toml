@@ -3,6 +3,7 @@ air = "latest"
 biome = "latest"
 go = "latest"
 "go:golang.org/x/tools/gopls" = "latest"
+golangci-lint = "latest"
 
 [tasks.dev]
 run = "air"

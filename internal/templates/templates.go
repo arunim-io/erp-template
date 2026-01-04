@@ -23,20 +23,26 @@ func Init(fs fs.FS) (err error) {
 	return err
 }
 
-func Render(w http.ResponseWriter, name string, data map[string]any) error {
-	tpls, err := templates.Clone()
+func render(w http.ResponseWriter, name string, data map[string]any) error {
+	tmpls, err := templates.Clone()
 	if err != nil {
 		return err
 	}
 
-	tpl, err := tpls.ParseFS(templatesFS, "templates/pages/"+name)
+	tmpl, err := tmpls.ParseFS(templatesFS, "templates/pages/"+name)
 	if err != nil {
 		return err
 	}
 
-	if err := tpl.ExecuteTemplate(w, "base-layout", data); err != nil {
+	if err := tmpl.ExecuteTemplate(w, "base-layout", data); err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func Render(w http.ResponseWriter, name string, data map[string]any) {
+	if err := render(w, name, data); err != nil {
+		http.Error(w, "Unable to parse Template", http.StatusInternalServerError)
+	}
 }

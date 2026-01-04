@@ -8,15 +8,18 @@ import (
 )
 
 func RegisterRoutes(mux *http.ServeMux, staticFS fs.FS) error {
+	mux.HandleFunc("/", indexRoute)
+	mux.HandleFunc("/login", loginRoute)
+
 	fs, err := fs.Sub(staticFS, "static")
 	if err != nil {
 		return err
 	}
 
-	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServerFS(fs)))
-
-	mux.HandleFunc("/", indexRoute)
-	mux.HandleFunc("/login", loginRoute)
+	mux.Handle("/static/", http.StripPrefix(
+		"/static/",
+		http.FileServerFS(fs),
+	))
 
 	return nil
 }
@@ -30,7 +33,7 @@ func indexRoute(w http.ResponseWriter, r *http.Request) {
 
 func loginRoute(w http.ResponseWriter, r *http.Request) {
 	templates.Render(w, "login.html", map[string]any{
-		"PageTitle":  "ERP",
+		"PageTitle":  "ERP - Login",
 		"CurrentURL": r.URL.String(),
 	})
 }
