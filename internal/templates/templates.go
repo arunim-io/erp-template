@@ -20,6 +20,8 @@ func Init(fs fs.FS) (err error) {
 		templates, err = template.ParseFS(fs, "templates/layouts/*.html")
 	})
 
+	templates = templates.Funcs(template.FuncMap{})
+
 	return err
 }
 
@@ -41,7 +43,14 @@ func render(w http.ResponseWriter, name string, data map[string]any) error {
 	return nil
 }
 
-func Render(w http.ResponseWriter, name string, data map[string]any) {
+func Render(w http.ResponseWriter, r *http.Request, name string, data map[string]any) {
+	if _, exists := data["Request"]; exists {
+		http.Error(w, "Request can't be overwritten!", http.StatusBadRequest)
+		return
+	}
+
+	data["Request"] = r
+
 	if err := render(w, name, data); err != nil {
 		http.Error(w, "Unable to parse Template", http.StatusInternalServerError)
 	}

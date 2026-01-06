@@ -1,4 +1,5 @@
 {{ define "body" }}
 <h1>Home page</h1>
-<h2>Current Url: {{ .CurrentURL }}</h2>
+<h2>Current Url: {{ .Request.URL }}</h2>
+<a href="/login">Go to Login</a>
 {{ end }}
