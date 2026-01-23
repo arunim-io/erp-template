@@ -1,21 +1,23 @@
 [[tools.air]]
-version = "1.63.6"
+version = "1.64.3"
 backend = "aqua:air-verse/air"
-"platforms.linux-x64" = { checksum = "sha256:05b6eb908be4b86a0bcbb8e6a650059b38437a408a6bcde5e6d443e8cc3e1b3c", url = "https://github.com/air-verse/air/releases/download/v1.63.6/air_1.63.6_linux_amd64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:84fb63fabda644ead122e6aa9583ccf86b1660202100d0b7602fea71870818f4", url = "https://github.com/air-verse/air/releases/download/v1.64.3/air_1.64.3_linux_amd64.tar.gz"}
 
 [[tools.biome]]
-version = "2.3.11"
+version = "2.3.12"
 backend = "aqua:biomejs/biome"
-"platforms.linux-x64" = { checksum = "sha256:92587fac102e33cbf8ab1fdb4884f8f4dcbf1117259fc6decd5cb5b5f5e48e67", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.3.11/biome-linux-x64"}
+"platforms.linux-x64" = { checksum = "sha256:a5251fa687b35f8fc06d17dc0794c5b117f1667056bc9f7f268a3268a9b56b78", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.3.12/biome-linux-x64"}
 
 [[tools.go]]
-version = "1.25.5"
+version = "1.25.6"
 backend = "core:go"
+"platforms.linux-x64" = { checksum = "sha256:f022b6aad78e362bcba9b0b94d09ad58c5a70c6ba3b7582905fababf5fe0181a", url = "https://dl.google.com/go/go1.25.6.linux-amd64.tar.gz"}
 
 [[tools."go:golang.org/x/tools/gopls"]]
 version = "0.21.0"
 backend = "go:golang.org/x/tools/gopls"
 
 [[tools.golangci-lint]]
-version = "2.7.2"
+version = "2.8.0"
 backend = "aqua:golangci/golangci-lint"
+"platforms.linux-x64" = { checksum = "sha256:7048bc6b25c9515ed092c83f9fa8709ca97937ead52d9ff317a143299ee97a50", url = "https://github.com/golangci/golangci-lint/releases/download/v2.8.0/golangci-lint-2.8.0-linux-amd64.tar.gz"}
