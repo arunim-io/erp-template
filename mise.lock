@@ -1,0 +1,7 @@
+[[tools.go]]
+version = "1.25.6"
+backend = "core:go"
+
+[[tools.golangci-lint]]
+version = "2.8.0"
+backend = "aqua:golangci/golangci-lint"
