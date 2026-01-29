@@ -11,6 +11,8 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/arunim-io/erp-template/internal/config"
 )
 
 func main() {
@@ -24,16 +26,23 @@ func run(rootCtx context.Context) error {
 	ctx, stop := signal.NotifyContext(rootCtx, os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
+	cfg, err := config.Load()
+	if err != nil {
+		return err
+	}
+
 	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
-		Level: slog.LevelDebug,
+		Level: cfg.Logging.Level,
 	}))
 	slog.SetDefault(logger)
 
-	const timeout = 5 * time.Second
 	server := &http.Server{
-		Addr:              "localhost:8000",
+		Addr:              cfg.Server.Addr(),
 		Handler:           http.HandlerFunc(handler),
-		ReadHeaderTimeout: timeout,
+		IdleTimeout:       cfg.Server.IdleTimeout,
+		ReadTimeout:       cfg.Server.ReadTimeout,
+		WriteTimeout:      cfg.Server.WriteTimeout,
+		ReadHeaderTimeout: cfg.Server.ReadHeaderTimeout,
 	}
 
 	go func() {
@@ -47,6 +56,7 @@ func run(rootCtx context.Context) error {
 	logger.InfoContext(ctx, "Shutting down server")
 	stop()
 
+	const timeout = 5 * time.Second
 	shutdownCtx, cancel := context.WithTimeout(rootCtx, timeout)
 	defer cancel()
 
