@@ -1,10 +1,5 @@
-[vars]
-db_container_name = "erp-db"
-
-[tools]
-go = "latest"
-golangci-lint = "latest"
-"github:air-verse/air" = "latest"
+[env]
+_.file = { path = ".env", tools = true, redact = true }
 
 [tasks]
 "compose:up" = "podman-compose up -d"
@@ -13,3 +8,11 @@ golangci-lint = "latest"
 [tasks.dev]
 depends = "compose:up"
 run = ["podman exec {{vars.db_container_name}} pg_isready -U postgres", "air"]
+
+[tools]
+go = "latest"
+golangci-lint = "latest"
+"github:air-verse/air" = "latest"
+
+[vars]
+db_container_name = "erp-db"

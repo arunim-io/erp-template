@@ -16,8 +16,9 @@ import (
 var k = koanf.New(".")
 
 type Config struct {
-	Server  ServerConfig
-	Logging LoggingConfig
+	Server   ServerConfig  `koanf:"server"`
+	Logging  LoggingConfig `koanf:"logging"`
+	Database DBConfig      `koanf:"database"`
 }
 
 func Default() Config {
@@ -53,7 +54,7 @@ func Load() (*Config, error) {
 		Prefix: "ERP_",
 		TransformFunc: func(k, v string) (string, any) {
 			k = strings.ReplaceAll(strings.ToLower(
-				strings.TrimPrefix(k, "MYVAR_")), "_", ".")
+				strings.TrimPrefix(k, "ERP_")), "_", ".")
 
 			if strings.Contains(v, " ") {
 				return k, strings.Split(v, " ")
@@ -71,12 +72,12 @@ func Load() (*Config, error) {
 }
 
 type ServerConfig struct {
-	Host              string
-	Port              int16
-	IdleTimeout       time.Duration
-	ReadTimeout       time.Duration
-	WriteTimeout      time.Duration
-	ReadHeaderTimeout time.Duration
+	Host              string        `koanf:"host"`
+	Port              int16         `koanf:"port"`
+	IdleTimeout       time.Duration `koanf:"idle_timeout"`
+	ReadTimeout       time.Duration `koanf:"read_timeout"`
+	WriteTimeout      time.Duration `koanf:"write_timeout"`
+	ReadHeaderTimeout time.Duration `koanf:"read_header_timeout"`
 }
 
 func (c *ServerConfig) Addr() string {
@@ -84,5 +85,9 @@ func (c *ServerConfig) Addr() string {
 }
 
 type LoggingConfig struct {
-	Level slog.Leveler
+	Level slog.Leveler `koanf:"level"`
+}
+
+type DBConfig struct {
+	URL string `koanf:"url"`
 }

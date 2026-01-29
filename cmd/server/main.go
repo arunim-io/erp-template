@@ -12,6 +12,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/jackc/pgx/v5"
+
 	"github.com/arunim-io/erp-template/internal/config"
 )
 
@@ -35,6 +37,13 @@ func run(rootCtx context.Context) error {
 		Level: cfg.Logging.Level,
 	}))
 	slog.SetDefault(logger)
+	logger.DebugContext(ctx, "Config data", "cfg", cfg)
+
+	db, err := pgx.Connect(ctx, cfg.Database.URL)
+	if err != nil {
+		return err
+	}
+	defer db.Close(ctx)
 
 	server := &http.Server{
 		Addr:              cfg.Server.Addr(),
