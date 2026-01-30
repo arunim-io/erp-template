@@ -2,6 +2,16 @@
 version = "1.64.4"
 backend = "github:air-verse/air"
 
+[[tools."github:amacneil/dbmate"]]
+version = "2.29.3"
+backend = "github:amacneil/dbmate"
+"platforms.linux-x64" = { checksum = "sha256:2bb1554a32d9c0bd544841d3523eae64fd60a58d7720c5d82900043dc5e87a6c", url = "https://github.com/amacneil/dbmate/releases/download/v2.29.3/dbmate-linux-amd64", url_api = "https://api.github.com/repos/amacneil/dbmate/releases/assets/339603398"}
+
+[[tools."github:sqlc-dev/sqlc"]]
+version = "1.30.0"
+backend = "github:sqlc-dev/sqlc"
+"platforms.linux-x64" = { checksum = "sha256:468aecee071bfe55e97fcbcac52ea0208eeca444f67736f3b8f0f3d6a106132e", url = "https://github.com/sqlc-dev/sqlc/releases/download/v1.30.0/sqlc_1.30.0_linux_amd64.tar.gz", url_api = "https://api.github.com/repos/sqlc-dev/sqlc/releases/assets/288589112"}
+
 [[tools.go]]
 version = "1.25.6"
 backend = "core:go"
