@@ -2,18 +2,31 @@
 _.file = { path = ".env", tools = true, redact = true }
 
 [tasks]
+compose = "podman-compose"
 "compose:up" = "podman-compose up -d"
 "compose:down" = "podman-compose down"
+db = "dbmate"
+"db:wait" = "dbmate wait"
 
 [tasks.dev]
-depends = "compose:up"
-run = ["dbmate wait", "air"]
+depends = ["compose:up", "db:wait"]
+run = "air"
+
+[tasks."db:migrate"]
+depends = "db:wait"
+run = ["dbmate migrate", "mise run db:clean-schema-file"]
+
+[tasks."db:rollback"]
+depends = "db:wait"
+run = ["dbmate rollback", "mise run db:clean-schema-file"]
 
 [tools]
 go = "latest"
 golangci-lint = "latest"
 "github:air-verse/air" = "latest"
 "github:amacneil/dbmate" = "latest"
+"github:sqlc-dev/sqlc" = "latest"
+sd = "latest"
 
 [vars]
 db_container_name = "erp-db"
