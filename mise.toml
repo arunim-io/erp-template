@@ -6,15 +6,20 @@ compose = "podman-compose"
 "compose:up" = "podman-compose up -d"
 "compose:down" = "podman-compose down"
 db = "dbmate"
+"db:reset" = ["dbmate drop", "mise run db:migrate"]
 "db:wait" = "dbmate wait"
 
 [tasks.dev]
 depends = ["compose:up", "db:wait"]
 run = "air"
 
+[tasks."db:generate"]
+depends = "db:wait"
+run = "sqlc generate"
+
 [tasks."db:migrate"]
 depends = "db:wait"
-run = ["dbmate migrate", "mise run db:clean-schema-file"]
+run = ["dbmate up", "mise run db:clean-schema-file"]
 
 [tasks."db:rollback"]
 depends = "db:wait"
