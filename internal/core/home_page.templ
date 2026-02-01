@@ -1,15 +1,7 @@
 package core
 
 templ HomePage() {
-	<!DOCTYPE html>
-	<html lang="en">
-		<head>
-			<meta charset="UTF-8"/>
-			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<title>ERP</title>
-		</head>
-		<body>
-			<h1>Hello, World!</h1>
-		</body>
-	</html>
+	@MainLayout(MainLayoutProps{PageTitle: "Home - ERP"}) {
+		<h1>Hello, World!</h1>
+	}
 }

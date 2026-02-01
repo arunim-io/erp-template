@@ -1,0 +1,21 @@
+package core
+
+type MainLayoutProps struct {
+	PageTitle string
+	Attrs     templ.Attributes
+}
+
+templ MainLayout(p MainLayoutProps) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>{ p.PageTitle }</title>
+			<link type="text/css" rel="stylesheet" href="/static/css/main.css"/>
+		</head>
+		<body { p.Attrs... }>
+			{ children... }
+		</body>
+	</html>
+}

@@ -58,6 +58,8 @@ func run(rootCtx context.Context) error {
 
 	mux := chi.NewMux()
 
+	mux.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+
 	mux.Mount("/", core.Router())
 
 	server := &http.Server{
