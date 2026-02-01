@@ -12,9 +12,11 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5"
 
 	"github.com/arunim-io/erp-template/internal/config"
+	"github.com/arunim-io/erp-template/internal/core"
 )
 
 func main() {
@@ -37,17 +39,30 @@ func run(rootCtx context.Context) error {
 		Level: cfg.Logging.Level,
 	}))
 	slog.SetDefault(logger)
-	logger.DebugContext(ctx, "Config data", "cfg", cfg)
+	logger.DebugContext(ctx, "Config loaded", "data", cfg)
 
 	db, err := pgx.Connect(ctx, cfg.Database.URL)
 	if err != nil {
+		logger.ErrorContext(ctx, "Unable to connect to database")
+
 		return err
 	}
 	defer db.Close(ctx)
+	if err := db.Ping(ctx); err != nil {
+		logger.ErrorContext(ctx, "Unable to ping database")
+
+		return err
+	}
+
+	logger.DebugContext(ctx, "Database connected")
+
+	mux := chi.NewMux()
+
+	mux.Mount("/", core.Router())
 
 	server := &http.Server{
 		Addr:              cfg.Server.Addr(),
-		Handler:           http.HandlerFunc(handler),
+		Handler:           mux,
 		IdleTimeout:       cfg.Server.IdleTimeout,
 		ReadTimeout:       cfg.Server.ReadTimeout,
 		WriteTimeout:      cfg.Server.WriteTimeout,
@@ -57,7 +72,7 @@ func run(rootCtx context.Context) error {
 	go func() {
 		logger.InfoContext(ctx, "Server running", "address", server.Addr)
 		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			log.Fatalf("error while listening: %v", err)
+			log.Fatalf("Error while listening: %v", err)
 		}
 	}()
 
@@ -78,8 +93,4 @@ func run(rootCtx context.Context) error {
 	logger.InfoContext(shutdownCtx, "Server sucessfully shut down")
 
 	return nil
-}
-
-func handler(w http.ResponseWriter, _ *http.Request) {
-	fmt.Fprintln(w, "Hello World!")
 }

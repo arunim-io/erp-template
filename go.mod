@@ -3,6 +3,8 @@ module github.com/arunim-io/erp-template
 go 1.25
 
 require (
+	github.com/a-h/templ v0.3.977
+	github.com/go-chi/chi/v5 v5.2.4
 	github.com/jackc/pgx/v5 v5.8.0
 	github.com/knadh/koanf/providers/env/v2 v2.0.0
 	github.com/knadh/koanf/providers/structs v1.0.0

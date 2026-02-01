@@ -32,6 +32,7 @@ golangci-lint = "latest"
 "github:amacneil/dbmate" = "latest"
 "github:sqlc-dev/sqlc" = "latest"
 sd = "latest"
+"github:a-h/templ" = "latest"
 
 [vars]
 db_container_name = "erp-db"

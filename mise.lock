@@ -1,3 +1,8 @@
+[[tools."github:a-h/templ"]]
+version = "0.3.977"
+backend = "github:a-h/templ"
+"platforms.linux-x64" = { checksum = "sha256:231087561d1df2001a0176fc7dda4f0fd8ad0a8ff7b36d268389e43fa3a64073", url = "https://github.com/a-h/templ/releases/download/v0.3.977/templ_Linux_x86_64.tar.gz", url_api = "https://api.github.com/repos/a-h/templ/releases/assets/334950700"}
+
 [[tools."github:air-verse/air"]]
 version = "1.64.4"
 backend = "github:air-verse/air"
