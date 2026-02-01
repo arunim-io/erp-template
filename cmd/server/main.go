@@ -14,6 +14,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/httplog/v3"
 	"github.com/jackc/pgx/v5"
 
 	"github.com/arunim-io/erp-template/internal/config"
@@ -36,10 +37,15 @@ func run(rootCtx context.Context) error {
 		return err
 	}
 
+	schema := httplog.SchemaECS.Concise(true)
+
 	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
-		Level: cfg.Logging.Level,
+		AddSource:   false,
+		Level:       cfg.Logging.Level,
+		ReplaceAttr: schema.ReplaceAttr,
 	}))
 	slog.SetDefault(logger)
+
 	logger.DebugContext(ctx, "Config loaded", "data", cfg)
 
 	db, err := pgx.Connect(ctx, cfg.Database.URL)
@@ -59,7 +65,15 @@ func run(rootCtx context.Context) error {
 
 	mux := chi.NewMux()
 
-	mux.Use(middleware.CleanPath, middleware.GetHead, middleware.Recoverer, middleware.StripSlashes)
+	mux.Use(
+		middleware.CleanPath,
+		middleware.GetHead,
+		middleware.StripSlashes,
+		httplog.RequestLogger(logger, &httplog.Options{
+			Schema:        schema,
+			RecoverPanics: true,
+		}),
+	)
 
 	mux.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
