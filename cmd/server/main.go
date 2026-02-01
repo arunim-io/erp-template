@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/jackc/pgx/v5"
 
 	"github.com/arunim-io/erp-template/internal/config"
@@ -27,7 +28,7 @@ func main() {
 }
 
 func run(rootCtx context.Context) error {
-	ctx, stop := signal.NotifyContext(rootCtx, os.Interrupt, syscall.SIGTERM)
+	ctx, stop := signal.NotifyContext(rootCtx, os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
 	defer stop()
 
 	cfg, err := config.Load()
@@ -58,6 +59,8 @@ func run(rootCtx context.Context) error {
 
 	mux := chi.NewMux()
 
+	mux.Use(middleware.CleanPath, middleware.GetHead, middleware.Recoverer, middleware.StripSlashes)
+
 	mux.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	mux.Mount("/", core.Router())
@@ -82,7 +85,7 @@ func run(rootCtx context.Context) error {
 	logger.InfoContext(ctx, "Shutting down server")
 	stop()
 
-	const timeout = 5 * time.Second
+	const timeout = 10 * time.Second
 	shutdownCtx, cancel := context.WithTimeout(rootCtx, timeout)
 	defer cancel()
 
