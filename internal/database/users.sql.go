@@ -12,36 +12,57 @@ import (
 )
 
 const createUser = `-- name: CreateUser :one
-INSERT INTO users ( username, password_hash)
-VALUES ( $1, $2 )
-RETURNING id, username, password_hash
+INSERT INTO users ( password_hash, username, email, first_name, last_name, date_joined )
+VALUES ( $1, $2, $3, $4, $5, $6 )
+RETURNING ( username, email, first_name, last_name )
 `
 
 type CreateUserParams struct {
-	Username     string
 	PasswordHash pgtype.Text
+	Username     string
+	Email        pgtype.Text
+	FirstName    pgtype.Text
+	LastName     pgtype.Text
+	DateJoined   pgtype.Timestamp
 }
 
-func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
-	row := q.db.QueryRow(ctx, createUser, arg.Username, arg.PasswordHash)
-	var i User
-	err := row.Scan(&i.ID, &i.Username, &i.PasswordHash)
-	return i, err
+func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (interface{}, error) {
+	row := q.db.QueryRow(ctx, createUser,
+		arg.PasswordHash,
+		arg.Username,
+		arg.Email,
+		arg.FirstName,
+		arg.LastName,
+		arg.DateJoined,
+	)
+	var column_1 interface{}
+	err := row.Scan(&column_1)
+	return column_1, err
 }
 
 const getUserByID = `-- name: GetUserByID :one
-SELECT id, username, password_hash FROM users WHERE id = $1
+SELECT id, password_hash, last_login, is_active, username, email, first_name, last_name, date_joined FROM users WHERE id = $1
 `
 
 func (q *Queries) GetUserByID(ctx context.Context, id int64) (User, error) {
 	row := q.db.QueryRow(ctx, getUserByID, id)
 	var i User
-	err := row.Scan(&i.ID, &i.Username, &i.PasswordHash)
+	err := row.Scan(
+		&i.ID,
+		&i.PasswordHash,
+		&i.LastLogin,
+		&i.IsActive,
+		&i.Username,
+		&i.Email,
+		&i.FirstName,
+		&i.LastName,
+		&i.DateJoined,
+	)
 	return i, err
 }
 
 const getUsers = `-- name: GetUsers :many
-SELECT id, username, password_hash FROM users
+SELECT id, password_hash, last_login, is_active, username, email, first_name, last_name, date_joined FROM users
 `
 
 func (q *Queries) GetUsers(ctx context.Context) ([]User, error) {
@@ -53,7 +74,17 @@ func (q *Queries) GetUsers(ctx context.Context) ([]User, error) {
 	var items []User
 	for rows.Next() {
 		var i User
-		if err := rows.Scan(&i.ID, &i.Username, &i.PasswordHash); err != nil {
+		if err := rows.Scan(
+			&i.ID,
+			&i.PasswordHash,
+			&i.LastLogin,
+			&i.IsActive,
+			&i.Username,
+			&i.Email,
+			&i.FirstName,
+			&i.LastName,
+			&i.DateJoined,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)

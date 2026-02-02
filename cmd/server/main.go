@@ -19,6 +19,7 @@ import (
 
 	"github.com/arunim-io/erp-template/internal/config"
 	"github.com/arunim-io/erp-template/internal/core"
+	"github.com/arunim-io/erp-template/internal/database"
 )
 
 func main() {
@@ -60,6 +61,7 @@ func run(rootCtx context.Context) error {
 
 		return err
 	}
+	queries := database.New(db)
 
 	logger.DebugContext(ctx, "Database connected")
 
@@ -77,7 +79,7 @@ func run(rootCtx context.Context) error {
 
 	mux.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
-	mux.Mount("/", core.Router())
+	mux.Mount("/", core.Router(queries))
 
 	server := &http.Server{
 		Addr:              cfg.Server.Addr(),

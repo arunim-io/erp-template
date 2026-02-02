@@ -33,8 +33,14 @@ CREATE TABLE public.schema_migrations (
 
 CREATE TABLE public.users (
     id bigint NOT NULL,
+    password_hash character varying(128),
+    last_login timestamp without time zone,
+    is_active boolean DEFAULT true,
     username character varying(150) NOT NULL,
-    password_hash character varying(128)
+    email character varying(254),
+    first_name character varying(150),
+    last_name character varying(150),
+    date_joined timestamp without time zone DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -70,6 +76,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
 
 
 --

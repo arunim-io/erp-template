@@ -12,8 +12,20 @@ type SchemaMigration struct {
 	Version string
 }
 
+type Session struct {
+	Key        string
+	Data       []byte
+	ExpiryDate pgtype.Timestamp
+}
+
 type User struct {
 	ID           int64
-	Username     string
 	PasswordHash pgtype.Text
+	LastLogin    pgtype.Timestamp
+	IsActive     pgtype.Bool
+	Username     string
+	Email        pgtype.Text
+	FirstName    pgtype.Text
+	LastName     pgtype.Text
+	DateJoined   pgtype.Timestamp
 }
