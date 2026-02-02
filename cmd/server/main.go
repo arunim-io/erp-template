@@ -12,10 +12,12 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/alexedwards/scs/pgxstore"
+	"github.com/alexedwards/scs/v2"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/httplog/v3"
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/arunim-io/erp-template/internal/config"
 	"github.com/arunim-io/erp-template/internal/core"
@@ -39,7 +41,6 @@ func run(rootCtx context.Context) error {
 	}
 
 	schema := httplog.SchemaECS.Concise(true)
-
 	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
 		AddSource:   false,
 		Level:       cfg.Logging.Level,
@@ -49,21 +50,26 @@ func run(rootCtx context.Context) error {
 
 	logger.DebugContext(ctx, "Config loaded", "data", cfg)
 
-	db, err := pgx.Connect(ctx, cfg.Database.URL)
+	dbPoolCfg, err := pgxpool.ParseConfig(cfg.Database.URL)
 	if err != nil {
-		logger.ErrorContext(ctx, "Unable to connect to database")
-
-		return err
+		return fmt.Errorf("unable to parse database url: %w", err)
 	}
-	defer db.Close(ctx)
-	if err := db.Ping(ctx); err != nil {
-		logger.ErrorContext(ctx, "Unable to ping database")
 
-		return err
+	dbPool, err := pgxpool.NewWithConfig(ctx, dbPoolCfg)
+	if err != nil {
+		return fmt.Errorf("unable to connect to database: %w", err)
 	}
-	queries := database.New(db)
+	defer dbPool.Close()
+	if err := dbPool.Ping(ctx); err != nil {
+		return fmt.Errorf("unable to ping database: %w", err)
+	}
+
+	queries := database.New(dbPool)
 
 	logger.DebugContext(ctx, "Database connected")
+
+	sessionManager := scs.New()
+	sessionManager.Store = pgxstore.New(dbPool)
 
 	mux := chi.NewMux()
 
@@ -75,10 +81,10 @@ func run(rootCtx context.Context) error {
 			Schema:        schema,
 			RecoverPanics: true,
 		}),
+		sessionManager.LoadAndSave,
 	)
 
 	mux.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-
 	mux.Mount("/", core.Router(queries))
 
 	server := &http.Server{
@@ -106,9 +112,7 @@ func run(rootCtx context.Context) error {
 	defer cancel()
 
 	if err := server.Shutdown(shutdownCtx); err != nil {
-		logger.ErrorContext(shutdownCtx, "Server forced to shutdown", "error", err)
-
-		return err
+		return fmt.Errorf("server forced to shutdown: %w", err)
 	}
 
 	logger.InfoContext(shutdownCtx, "Server sucessfully shut down")

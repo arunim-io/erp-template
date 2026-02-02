@@ -13,9 +13,9 @@ type SchemaMigration struct {
 }
 
 type Session struct {
-	Key        string
-	Data       []byte
-	ExpiryDate pgtype.Timestamp
+	Token  string
+	Data   []byte
+	Expiry pgtype.Timestamptz
 }
 
 type User struct {
