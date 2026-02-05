@@ -16,22 +16,26 @@ import (
 var k = koanf.New(".")
 
 type Config struct {
-	Server   ServerConfig  `koanf:"server"`
-	Logging  LoggingConfig `koanf:"logging"`
-	Database DBConfig      `koanf:"database"`
+	Mode          Mode                 `koanf:"mode"`
+	Server        *ServerConfig        `koanf:"server"`
+	Logging       *LoggingConfig       `koanf:"logging"`
+	Database      *DBConfig            `koanf:"database"`
+	SessionCookie *SessionCookieConfig `koanf:"session_cookie"`
 }
 
 func Default() Config {
 	const (
-		port              = 8000
-		idleTimeout       = time.Minute
-		readTimeout       = 10 * time.Second
-		writeTimeout      = 30 * time.Second
-		readHeaderTimeout = 2 * time.Second
+		port                  = 8000
+		idleTimeout           = time.Minute
+		readTimeout           = 10 * time.Second
+		writeTimeout          = 30 * time.Second
+		readHeaderTimeout     = 2 * time.Second
+		sessionCookieLifetime = 24 * time.Hour
 	)
 
 	return Config{
-		Server: ServerConfig{
+		Mode: ModeDev,
+		Server: &ServerConfig{
 			Host:              "localhost",
 			Port:              port,
 			IdleTimeout:       idleTimeout,
@@ -39,13 +43,16 @@ func Default() Config {
 			WriteTimeout:      writeTimeout,
 			ReadHeaderTimeout: readHeaderTimeout,
 		},
-		Logging: LoggingConfig{
+		Logging: &LoggingConfig{
 			Level: slog.LevelDebug,
+		},
+		SessionCookie: &SessionCookieConfig{
+			Lifetime: sessionCookieLifetime,
 		},
 	}
 }
 
-func Load() (*Config, error) {
+func Load(logger *slog.Logger) (*Config, error) {
 	var cfg Config
 
 	_ = k.Load(structs.Provider(Default(), "koanf"), nil)
@@ -68,7 +75,48 @@ func Load() (*Config, error) {
 		return nil, fmt.Errorf("unable to unmarshal config: %w", err)
 	}
 
+	if cfg.Mode.IsProd() {
+		if cfg.Logging.Level == slog.LevelDebug {
+			logger.Warn("debug logs are not shown in production")
+			cfg.Logging.Level = slog.LevelInfo
+		}
+	}
+
 	return &cfg, nil
+}
+
+type Mode string
+
+const (
+	ModeDev  Mode = "development"
+	ModeProd Mode = "production"
+)
+
+func (m *Mode) IsDev() bool  { return *m == ModeDev }
+func (m *Mode) IsProd() bool { return *m == ModeProd }
+
+func (m *Mode) String() string {
+	switch *m {
+	case ModeDev:
+		return "development"
+	case ModeProd:
+		return "production"
+	default:
+		return ""
+	}
+}
+
+func (m *Mode) UnmarshalText(text []byte) error {
+	switch strings.ToLower(string(text)) {
+	case "development", "dev":
+		*m = ModeDev
+	case "production", "prod":
+		*m = ModeProd
+	default:
+		return fmt.Errorf("unknown mode :%s", text)
+	}
+
+	return nil
 }
 
 type ServerConfig struct {
@@ -90,4 +138,8 @@ type LoggingConfig struct {
 
 type DBConfig struct {
 	URL string `koanf:"url"`
+}
+
+type SessionCookieConfig struct {
+	Lifetime time.Duration `koanf:"lifetime"`
 }

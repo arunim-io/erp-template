@@ -1,0 +1,9 @@
+package templates
+
+import layouts "github.com/arunim-io/erp-template/internal/templates/layouts"
+
+templ HomePage() {
+	@layouts.MainLayout(layouts.MainLayoutProps{PageTitle: "Home - ERP"}) {
+		<h1>Hello, World!</h1>
+	}
+}
