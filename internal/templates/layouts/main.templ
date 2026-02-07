@@ -1,11 +1,11 @@
-package templates
+package layouts
 
 type MainLayoutProps struct {
 	PageTitle string
 	Attrs     templ.Attributes
 }
 
-templ MainLayout(p MainLayoutProps) {
+templ Main(p MainLayoutProps) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>

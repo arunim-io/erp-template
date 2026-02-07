@@ -11,10 +11,12 @@ import (
 	"github.com/arunim-io/erp-template/internal/database/postgres"
 )
 
+type Queries = postgres.Queries
+
 type DB struct {
 	*pgxpool.Pool
 
-	Queries *postgres.Queries
+	Queries *Queries
 }
 
 func New(ctx context.Context, dsn string, mode config.Mode) (*DB, error) {
