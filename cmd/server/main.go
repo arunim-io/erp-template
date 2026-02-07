@@ -41,7 +41,7 @@ func run(rootCtx context.Context) error {
 
 	logger.DebugContext(ctx, "Config loaded", "data", cfg)
 
-	db, err := database.NewDB(ctx, cfg.Database.URL, cfg.Mode)
+	db, err := database.New(ctx, cfg.Database.URL, cfg.Mode)
 	if err != nil {
 		return err
 	}

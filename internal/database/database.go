@@ -8,15 +8,16 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/arunim-io/erp-template/internal/config"
+	"github.com/arunim-io/erp-template/internal/database/postgres"
 )
 
 type DB struct {
 	*pgxpool.Pool
 
-	Queries *Queries
+	Queries *postgres.Queries
 }
 
-func NewDB(ctx context.Context, dsn string, mode config.Mode) (*DB, error) {
+func New(ctx context.Context, dsn string, mode config.Mode) (*DB, error) {
 	cfg, err := pgxpool.ParseConfig(dsn)
 	if err != nil {
 		return nil, fmt.Errorf("unable to parse database url: %w", err)
@@ -36,5 +37,5 @@ func NewDB(ctx context.Context, dsn string, mode config.Mode) (*DB, error) {
 		return nil, fmt.Errorf("unable to ping database: %w", err)
 	}
 
-	return &DB{Pool: pool, Queries: New(pool)}, nil
+	return &DB{Pool: pool, Queries: postgres.New(pool)}, nil
 }
