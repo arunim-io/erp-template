@@ -1,4 +1,6 @@
+@import "theme.css";
+
 body {
-  color: white;
-  background-color: black;
+	color: var(--foreground);
+	background-color: var(--background);
 }

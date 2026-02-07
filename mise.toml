@@ -33,6 +33,7 @@ golangci-lint = "latest"
 "github:sqlc-dev/sqlc" = "latest"
 sd = "latest"
 "github:a-h/templ" = "latest"
+biome = "latest"
 
 [vars]
 db_container_name = "erp-db"
