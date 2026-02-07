@@ -85,6 +85,15 @@ func Load(logger *slog.Logger) (*Config, error) {
 	return &cfg, nil
 }
 
+func (c Config) LogValue() slog.Value {
+	return slog.GroupValue(
+		slog.Any("server", c.Server),
+		slog.Any("logging", c.Logging),
+		slog.Any("database", c.Database),
+		slog.Any("session_cookie", c.SessionCookie),
+	)
+}
+
 type Mode string
 
 const (
@@ -132,14 +141,37 @@ func (c *ServerConfig) Addr() string {
 	return net.JoinHostPort(c.Host, strconv.Itoa(int(c.Port)))
 }
 
+func (c ServerConfig) LogValue() slog.Value {
+	return slog.GroupValue(
+		slog.String("host", c.Host),
+		slog.Int("port", int(c.Port)),
+		slog.Duration("idle_timeout", c.IdleTimeout),
+		slog.Duration("read_timeout", c.ReadTimeout),
+		slog.Duration("write_timeout", c.WriteTimeout),
+		slog.Duration("read_header_timeout", c.ReadHeaderTimeout),
+	)
+}
+
 type LoggingConfig struct {
 	Level slog.Leveler `koanf:"level"`
+}
+
+func (c LoggingConfig) LogValue() slog.Value {
+	return slog.GroupValue(slog.Any("level", c.Level))
 }
 
 type DBConfig struct {
 	URL string `koanf:"url"`
 }
 
+func (c DBConfig) LogValue() slog.Value {
+	return slog.GroupValue(slog.String("url", c.URL))
+}
+
 type SessionCookieConfig struct {
 	Lifetime time.Duration `koanf:"lifetime"`
+}
+
+func (c SessionCookieConfig) LogValue() slog.Value {
+	return slog.GroupValue(slog.Duration("lifetime", c.Lifetime))
 }
