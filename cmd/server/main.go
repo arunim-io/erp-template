@@ -36,21 +36,22 @@ func run(rootCtx context.Context) error {
 	}
 	mode := cfg.Mode
 
-	logger := logging.NewLogger(cfg.Logging.Level, !mode.IsDev()).
+	logger := logging.
+		NewLogger(cfg.Logging.Level, !mode.IsDev()).
 		With(slog.String("env", mode.String()))
 
 	logger.DebugContext(ctx, "Config loaded", "data", cfg)
 
-	db, err := database.New(ctx, cfg.Database.URL, cfg.Mode)
+	db, err := database.New(ctx, cfg.Database.URL, mode)
 	if err != nil {
 		return err
 	}
 
 	logger.DebugContext(ctx, "Database connected")
 
-	sm := session.New(db, !cfg.Mode.IsProd(), cfg.SessionCookie)
+	sm := session.New(db, !mode.IsProd(), cfg.SessionCookie)
 
-	svr, err := server.New(ctx, logger, sm, db.Queries, cfg.Mode, cfg.Server)
+	svr, err := server.New(ctx, logger, sm, db.Queries, mode, cfg.Server)
 	if err != nil {
 		return err
 	}

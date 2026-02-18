@@ -16,7 +16,7 @@ var staticFiles embed.FS
 
 func Root(ctx context.Context, mode config.Mode, logger *slog.Logger) (http.FileSystem, error) {
 	if mode.IsDev() {
-		logger.InfoContext(ctx, "loading static files from local filesystem")
+		logger.DebugContext(ctx, "Loading static files from local filesystem")
 
 		return http.Dir("static"), nil
 	}
