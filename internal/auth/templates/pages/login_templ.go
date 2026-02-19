@@ -43,7 +43,7 @@ func Login() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<h1>LOGIN PAGE</h1>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<main><section><h1>LOGIN PAGE</h1><form action=\"/auth/login\" method=\"post\"><div><label for=\"username\">Username</label> <input id=\"username\" autocomplete=\"username\" type=\"text\"></div><div><label for=\"password\">Password</label> <input id=\"password\" type=\"password\"></div><button type=\"submit\">Login</button></form></section></main>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

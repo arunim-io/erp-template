@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 type MainLayoutProps struct {
 	PageTitle string
-	Attrs     templ.Attributes
+	BodyAttrs templ.Attributes
 }
 
 func Main(p MainLayoutProps) templ.Component {
@@ -51,7 +51,7 @@ func Main(p MainLayoutProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.RenderAttributes(ctx, templ_7745c5c3_Buffer, p.Attrs)
+		templ_7745c5c3_Err = templ.RenderAttributes(ctx, templ_7745c5c3_Buffer, p.BodyAttrs)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

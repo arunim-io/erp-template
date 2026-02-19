@@ -2,7 +2,7 @@ package layouts
 
 type MainLayoutProps struct {
 	PageTitle string
-	Attrs     templ.Attributes
+	BodyAttrs templ.Attributes
 }
 
 templ Main(p MainLayoutProps) {
@@ -14,7 +14,7 @@ templ Main(p MainLayoutProps) {
 			<title>{ p.PageTitle }</title>
 			<link type="text/css" rel="stylesheet" href="/static/css/main.css"/>
 		</head>
-		<body { p.Attrs... }>
+		<body { p.BodyAttrs... }>
 			{ children... }
 		</body>
 	</html>

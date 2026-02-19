@@ -4,6 +4,21 @@ import "github.com/arunim-io/erp-template/internal/templates/layouts"
 
 templ Login() {
 	@layouts.Main(layouts.MainLayoutProps{PageTitle: "Login - ERP"}) {
-		<h1>LOGIN PAGE</h1>
+		<main>
+			<section>
+				<h1>LOGIN PAGE</h1>
+				<form action="/auth/login" method="post">
+					<div>
+						<label for="username">Username</label>
+						<input id="username" autocomplete="username" type="text"/>
+					</div>
+					<div>
+						<label for="password">Password</label>
+						<input id="password" type="password"/>
+					</div>
+					<button type="submit">Login</button>
+				</form>
+			</section>
+		</main>
 	}
 }
