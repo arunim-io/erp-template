@@ -3,15 +3,13 @@ package static
 import (
 	"context"
 	"embed"
-	"fmt"
-	"io/fs"
 	"log/slog"
 	"net/http"
 
 	"github.com/arunim-io/erp-template/internal/config"
 )
 
-//go:embed *
+//go:embed css/*
 var staticFiles embed.FS
 
 func Root(ctx context.Context, mode config.Mode, logger *slog.Logger) (http.FileSystem, error) {
@@ -23,10 +21,5 @@ func Root(ctx context.Context, mode config.Mode, logger *slog.Logger) (http.File
 
 	logger.InfoContext(ctx, "loading static file from embedded filesystem")
 
-	subFS, err := fs.Sub(staticFiles, "static")
-	if err != nil {
-		return nil, fmt.Errorf("unable to load embedded static files: %w", err)
-	}
-
-	return http.FS(subFS), nil
+	return http.FS(staticFiles), nil
 }
