@@ -1,12 +1,20 @@
 [[tools.biome]]
-version = "2.4.2"
+version = "2.4.4"
 backend = "aqua:biomejs/biome"
-"platforms.linux-x64" = { checksum = "sha256:025aa8c5feec8e18eb57a232b9c835db5d229aedc9734db39a86a003ab17f982", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.2/biome-linux-x64"}
+"platforms.linux-arm64" = { checksum = "sha256:708cfaa01d12b2bb1649c5b7d97f3de24a1741fbcfcf0a461c5f9be4875c760b", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.4/biome-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:ba5073017ec03a700e5b9270b2454df7dbec6a5124611bb785b68ae717506d45", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.4/biome-linux-x64"}
+"platforms.macos-arm64" = { checksum = "sha256:e89011b1714a20ebd4b683321ba7184ce2a79a28f4ee3d33bda74a4ea749062a", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.4/biome-darwin-arm64"}
+"platforms.macos-x64" = { checksum = "sha256:4fad0d5015ebb6be52b89398ed0e90721ee0239f4cdea0c347257a0a286e8d84", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.4/biome-darwin-x64"}
+"platforms.windows-x64" = { checksum = "sha256:8a09016cabaac8575abb42d19c55075fa7ca81c955f777604a2fb971a44a7ed5", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.4/biome-win32-x64.exe"}
 
 [[tools."github:a-h/templ"]]
-version = "0.3.977"
+version = "0.3.1001"
 backend = "github:a-h/templ"
-"platforms.linux-x64" = { checksum = "sha256:231087561d1df2001a0176fc7dda4f0fd8ad0a8ff7b36d268389e43fa3a64073", url = "https://github.com/a-h/templ/releases/download/v0.3.977/templ_Linux_x86_64.tar.gz", url_api = "https://api.github.com/repos/a-h/templ/releases/assets/334950700"}
+"platforms.linux-arm64" = { checksum = "sha256:236de54408f96edfae30c9d1dc1924b7baa15b22767c24b864670be1e67db699", url = "https://github.com/a-h/templ/releases/download/v0.3.1001/templ_Linux_arm64.tar.gz", url_api = "https://api.github.com/repos/a-h/templ/releases/assets/364089598"}
+"platforms.linux-x64" = { checksum = "sha256:30ad2671c8b0a475bd2fbb9f521909869fe4c2693d2f4d90682b12c83de9fe1c", url = "https://github.com/a-h/templ/releases/download/v0.3.1001/templ_Linux_x86_64.tar.gz", url_api = "https://api.github.com/repos/a-h/templ/releases/assets/364089600"}
+"platforms.macos-arm64" = { checksum = "sha256:5720783995ac5a644bb9aef2eb73280d5eea9969cdf12f9a83f77f5abdc89305", url = "https://github.com/a-h/templ/releases/download/v0.3.1001/templ_Darwin_arm64.tar.gz", url_api = "https://api.github.com/repos/a-h/templ/releases/assets/364089605"}
+"platforms.macos-x64" = { checksum = "sha256:83ad9a4578bba48a27cf6fd129816beeceb37a4adfc28352be773d5d04d942aa", url = "https://github.com/a-h/templ/releases/download/v0.3.1001/templ_Darwin_x86_64.tar.gz", url_api = "https://api.github.com/repos/a-h/templ/releases/assets/364089607"}
+"platforms.windows-x64" = { checksum = "sha256:d48ca193b9a25ee8232fb6f520721e55eba81e2b7978c817158380d9355b5e4d", url = "https://github.com/a-h/templ/releases/download/v0.3.1001/templ_Windows_x86_64.tar.gz", url_api = "https://api.github.com/repos/a-h/templ/releases/assets/364089599"}
 
 [[tools."github:air-verse/air"]]
 version = "1.64.5"
@@ -14,9 +22,13 @@ backend = "github:air-verse/air"
 "platforms.linux-x64" = { checksum = "sha256:2318802038baead95775b871ea7b6dd40d7e1af2f1bb63f590e86465544bb993", url = "https://github.com/air-verse/air/releases/download/v1.64.5/air_1.64.5_linux_amd64.tar.gz", url_api = "https://api.github.com/repos/air-verse/air/releases/assets/349624694"}
 
 [[tools."github:amacneil/dbmate"]]
-version = "2.30.0"
+version = "2.31.0"
 backend = "github:amacneil/dbmate"
-"platforms.linux-x64" = { checksum = "sha256:6bc5b4774c49fb5b625d042978a8328f1456c4ce282b6eb6ee49fa31769bf44d", url = "https://github.com/amacneil/dbmate/releases/download/v2.30.0/dbmate-linux-amd64", url_api = "https://api.github.com/repos/amacneil/dbmate/releases/assets/354334792"}
+"platforms.linux-arm64" = { checksum = "sha256:d136461540e7b7ca444f1dd6a7aac07ea1e297eb0888fd8cdc78829b7b4a6a72", url = "https://github.com/amacneil/dbmate/releases/download/v2.31.0/dbmate-linux-arm64", url_api = "https://api.github.com/repos/amacneil/dbmate/releases/assets/358034055"}
+"platforms.linux-x64" = { checksum = "sha256:a5cde18ce35ce053cecab1e15a72f8a41f7715380e9b9a8a81d065dca7201567", url = "https://github.com/amacneil/dbmate/releases/download/v2.31.0/dbmate-linux-amd64", url_api = "https://api.github.com/repos/amacneil/dbmate/releases/assets/358034342"}
+"platforms.macos-arm64" = { checksum = "sha256:0792f0956dd84c1b17d02aad903bed76ad2f3215c6ab5b3520be9c258611ddff", url = "https://github.com/amacneil/dbmate/releases/download/v2.31.0/dbmate-macos-arm64", url_api = "https://api.github.com/repos/amacneil/dbmate/releases/assets/358033467"}
+"platforms.macos-x64" = { checksum = "sha256:06e9afaba9d0421991da50bccc5ced586cd2f6327b99a5041bb78b76fe05cdfe", url = "https://github.com/amacneil/dbmate/releases/download/v2.31.0/dbmate-macos-amd64", url_api = "https://api.github.com/repos/amacneil/dbmate/releases/assets/358034651"}
+"platforms.windows-x64" = { checksum = "sha256:9f0514cf1e699a682a5d4ccdff40cfd5fa119f6a3dc9c4167eb8eb74f2716057", url = "https://github.com/amacneil/dbmate/releases/download/v2.31.0/dbmate-windows-amd64.exe", url_api = "https://api.github.com/repos/amacneil/dbmate/releases/assets/358034655"}
 
 [[tools."github:sqlc-dev/sqlc"]]
 version = "1.30.0"
@@ -29,7 +41,7 @@ backend = "core:go"
 "platforms.linux-x64" = { checksum = "sha256:aac1b08a0fb0c4e0a7c1555beb7b59180b05dfc5a3d62e40e9de90cd42f88235", url = "https://dl.google.com/go/go1.26.0.linux-amd64.tar.gz"}
 
 [[tools."go:golang.org/x/tools/gopls"]]
-version = "latest"
+version = "0.21.1"
 backend = "go:golang.org/x/tools/gopls"
 
 [[tools.golangci-lint]]
@@ -38,6 +50,10 @@ backend = "aqua:golangci/golangci-lint"
 "platforms.linux-x64" = { checksum = "sha256:dfa775874cf0561b404a02a8f4481fc69b28091da95aa697259820d429b09c99", url = "https://github.com/golangci/golangci-lint/releases/download/v2.10.1/golangci-lint-2.10.1-linux-amd64.tar.gz"}
 
 [[tools.sd]]
-version = "1.0.0"
+version = "1.1.0"
 backend = "aqua:chmln/sd"
-"platforms.linux-x64" = { checksum = "blake3:b88001a0b4cfaa0e36237f0ba7fd36437c5c4a3e0766daeeed354d08c37cd416", url = "https://github.com/chmln/sd/releases/download/v1.0.0/sd-v1.0.0-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.linux-arm64" = { checksum = "sha256:ec8c93c0533ff21f4851d11566808d4082544baf063d9b96ea77c27e98b7cd99", url = "https://github.com/chmln/sd/releases/download/v1.1.0/sd-v1.1.0-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:02f00f4777d43e8e95b7b8d49e1a0d6e502fed4b8e79c1c8b8063857a30caa2e", url = "https://github.com/chmln/sd/releases/download/v1.1.0/sd-v1.1.0-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:4bd3c09226376ca0a1d69589c91e86276fae36c5fbaaee669afce583f6682030", url = "https://github.com/chmln/sd/releases/download/v1.1.0/sd-v1.1.0-aarch64-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:1fca1e9c91813a8aac6821063c923107ba0f66a83309e095edcd3b202f67f97e", url = "https://github.com/chmln/sd/releases/download/v1.1.0/sd-v1.1.0-x86_64-apple-darwin.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:59837c2e7c911099aca1cc46b663bcdc5a949fd3e9fbbaf34fc73e5d5d71007c", url = "https://github.com/chmln/sd/releases/download/v1.1.0/sd-v1.1.0-x86_64-pc-windows-msvc.zip"}

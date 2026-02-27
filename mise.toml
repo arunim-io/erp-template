@@ -11,6 +11,15 @@ db = "dbmate"
 depends = "db:wait"
 run = "air"
 
+[tasks.generate]
+run = ["sqlc generate", "templ generate"]
+
+[tasks.test]
+run = "go test ./..."
+
+[tasks.lint]
+run = "golangci-lint run"
+
 [tasks."db:generate"]
 depends = "db:wait"
 run = "sqlc generate"
