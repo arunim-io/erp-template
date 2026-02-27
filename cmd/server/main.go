@@ -46,6 +46,7 @@ func run(rootCtx context.Context) error {
 	if err != nil {
 		return err
 	}
+	defer db.Close()
 
 	logger.DebugContext(ctx, "Database connected")
 

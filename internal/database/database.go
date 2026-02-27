@@ -33,7 +33,6 @@ func New(ctx context.Context, dsn string, mode config.Mode) (*DB, error) {
 	if err != nil {
 		return nil, fmt.Errorf("unable to connect to database: %w", err)
 	}
-	defer pool.Close()
 
 	if err := pool.Ping(ctx); err != nil {
 		return nil, fmt.Errorf("unable to ping database: %w", err)
