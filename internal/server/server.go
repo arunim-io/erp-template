@@ -28,6 +28,8 @@ func New(
 		return nil, err
 	}
 
+	csrf := http.NewCrossOriginProtection()
+
 	mux := Mux(
 		queries,
 		staticRoot,
@@ -39,6 +41,7 @@ func New(
 			RecoverPanics: true,
 		}),
 		sm.LoadAndSave,
+		csrf.Handler,
 	)
 
 	return &http.Server{
