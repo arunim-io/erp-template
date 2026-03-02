@@ -12,6 +12,9 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/go-playground/form/v4"
+	"github.com/go-playground/validator/v10"
+
 	"github.com/arunim-io/erp-template/internal/config"
 	"github.com/arunim-io/erp-template/internal/database"
 	"github.com/arunim-io/erp-template/internal/logging"
@@ -25,6 +28,11 @@ func main() {
 		os.Exit(1)
 	}
 }
+
+var (
+	formDecoder   *form.Decoder
+	formValidator *validator.Validate
+)
 
 func run(rootCtx context.Context) error {
 	ctx, stop := signal.NotifyContext(rootCtx, os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
@@ -52,7 +60,10 @@ func run(rootCtx context.Context) error {
 
 	sm := session.New(db, !mode.IsProd(), cfg.SessionCookie)
 
-	svr, err := server.New(ctx, logger, sm, db.Queries, mode, cfg.Server)
+	formDecoder = form.NewDecoder()
+	formValidator = validator.New(validator.WithRequiredStructEnabled())
+
+	svr, err := server.New(ctx, logger, sm, db.Queries, formDecoder, formValidator, mode, cfg.Server)
 	if err != nil {
 		return err
 	}

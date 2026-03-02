@@ -8,6 +8,8 @@ import (
 	"github.com/alexedwards/scs/v2"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/httplog/v3"
+	"github.com/go-playground/form/v4"
+	"github.com/go-playground/validator/v10"
 
 	"github.com/arunim-io/erp-template/internal/config"
 	"github.com/arunim-io/erp-template/internal/database"
@@ -20,6 +22,8 @@ func New(
 	logger *slog.Logger,
 	sm *scs.SessionManager,
 	queries *database.Queries,
+	formDecoder *form.Decoder,
+	formValidator *validator.Validate,
 	mode config.Mode,
 	cfg *config.ServerConfig,
 ) (*http.Server, error) {
@@ -33,6 +37,10 @@ func New(
 	mux := Mux(
 		queries,
 		staticRoot,
+		formDecoder,
+		formValidator,
+		logger,
+		sm,
 		middleware.CleanPath,
 		middleware.GetHead,
 		middleware.StripSlashes,

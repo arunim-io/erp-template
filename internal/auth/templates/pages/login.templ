@@ -1,20 +1,31 @@
 package pages
 
-import "github.com/arunim-io/erp-template/internal/templates/layouts"
+import (
+	"github.com/go-playground/validator/v10"
 
-templ Login() {
+	"github.com/arunim-io/erp-template/internal/templates/layouts"
+)
+
+templ Login(validationErrs validator.ValidationErrors) {
+	{{ hasErr := len(validationErrs) > 0 }}
 	@layouts.Main(layouts.MainLayoutProps{PageTitle: "Login - ERP"}) {
 		<main>
 			<section>
 				<h1>LOGIN PAGE</h1>
+				if hasErr {
+					<h2>No of errors: { len(validationErrs) }</h2>
+					for _, err := range validationErrs {
+						<h3>{ err.Error() }</h3>
+					}
+				}
 				<form action="/auth/login" method="post">
 					<div>
 						<label for="username">Username</label>
-						<input id="username" autocomplete="username" type="text"/>
+						<input id="username" name="Username" autocomplete="username" type="text"/>
 					</div>
 					<div>
 						<label for="password">Password</label>
-						<input id="password" type="password"/>
+						<input id="password" name="Password" type="password" autocomplete="current-password"/>
 					</div>
 					<button type="submit">Login</button>
 				</form>
