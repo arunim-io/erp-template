@@ -33,9 +33,11 @@ func loginHandler(
 ) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
+		pageProps := pages.LoginProps{}
+
 		switch r.Method {
 		case http.MethodGet:
-			_ = pages.Login(nil).Render(ctx, w)
+			_ = pages.Login(pageProps).Render(ctx, w)
 		case http.MethodPost:
 			if err := r.ParseForm(); err != nil {
 				http.Error(w, "Invalid form data", http.StatusForbidden)
@@ -43,7 +45,7 @@ func loginHandler(
 
 			var form struct {
 				Username string `validate:"required"`
-				Password string `validate:"required,min=10,required" json:"-"`
+				Password string `json:"-" validate:"required"`
 			}
 
 			if err := formDecoder.Decode(&form, r.Form); err != nil {
@@ -54,13 +56,17 @@ func loginHandler(
 				var errs validator.ValidationErrors
 
 				if errors.As(err, &errs) {
-					_ = pages.Login(errs).Render(ctx, w)
+					pageProps.ValidationErrors = errs
+
+					_ = pages.Login(pageProps).Render(ctx, w)
+
+					return
 				}
 			}
 
 			logger.DebugContext(ctx, "login form successfully submitted", "data", form)
 
-			_ = pages.Login(nil).Render(ctx, w)
+			_ = pages.Login(pageProps).Render(ctx, w)
 		}
 	}
 }

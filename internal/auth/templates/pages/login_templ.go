@@ -14,7 +14,15 @@ import (
 	"github.com/arunim-io/erp-template/internal/templates/layouts"
 )
 
-func Login(validationErrs validator.ValidationErrors) templ.Component {
+type LoginProps struct {
+	ValidationErrors validator.ValidationErrors
+}
+
+func (p *LoginProps) hasErrs() bool {
+	return len(p.ValidationErrors) > 0
+}
+
+func Login(props LoginProps) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -35,7 +43,6 @@ func Login(validationErrs validator.ValidationErrors) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		hasErr := len(validationErrs) > 0
 		templ_7745c5c3_Var2 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -48,19 +55,19 @@ func Login(validationErrs validator.ValidationErrors) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<main><section><h1>LOGIN PAGE</h1>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<main><h1>LOGIN PAGE</h1>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			if hasErr {
+			if props.hasErrs() {
 				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<h2>No of errors: ")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var3 string
-				templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(len(validationErrs))
+				templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(len(props.ValidationErrors))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/auth/templates/pages/login.templ`, Line: 16, Col: 44}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/auth/templates/pages/login.templ`, Line: 22, Col: 51}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 				if templ_7745c5c3_Err != nil {
@@ -70,7 +77,7 @@ func Login(validationErrs validator.ValidationErrors) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				for _, err := range validationErrs {
+				for _, err := range props.ValidationErrors {
 					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<h3>")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
@@ -78,7 +85,7 @@ func Login(validationErrs validator.ValidationErrors) templ.Component {
 					var templ_7745c5c3_Var4 string
 					templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(err.Error())
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/auth/templates/pages/login.templ`, Line: 18, Col: 23}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/auth/templates/pages/login.templ`, Line: 24, Col: 22}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 					if templ_7745c5c3_Err != nil {
@@ -90,7 +97,7 @@ func Login(validationErrs validator.ValidationErrors) templ.Component {
 					}
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<form action=\"/auth/login\" method=\"post\"><div><label for=\"username\">Username</label> <input id=\"username\" name=\"Username\" autocomplete=\"username\" type=\"text\"></div><div><label for=\"password\">Password</label> <input id=\"password\" name=\"Password\" type=\"password\" autocomplete=\"current-password\"></div><button type=\"submit\">Login</button></form></section></main>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<form action=\"/auth/login\" method=\"post\"><div><label for=\"username\">Username</label> <input id=\"username\" name=\"Username\" autocomplete=\"username\" type=\"text\"></div><div><label for=\"password\">Password</label> <input id=\"password\" name=\"Password\" type=\"password\" autocomplete=\"current-password\"></div><button type=\"submit\">Login</button></form></main>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
