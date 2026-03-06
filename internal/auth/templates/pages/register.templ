@@ -1,0 +1,56 @@
+package pages
+
+import (
+	"github.com/go-playground/validator/v10"
+
+	"github.com/arunim-io/erp-template/internal/templates/layouts"
+)
+
+type RegisterProps struct {
+	ValidationErrors validator.ValidationErrors
+}
+
+func (p *RegisterProps) hasErrs() bool {
+	return len(p.ValidationErrors) > 0
+}
+
+templ Register(props RegisterProps) {
+	@layouts.Main(layouts.MainLayoutProps{PageTitle: "Register - ERP"}) {
+		<main>
+			<h1>REGISTER PAGE</h1>
+			if props.hasErrs() {
+				<h2>No of errors: { len(props.ValidationErrors) }</h2>
+				for _, err := range props.ValidationErrors {
+					<h3>{ err.Error() }</h3>
+				}
+			}
+			<form action="/auth/register" method="post">
+				<div>
+					<label for="first-name">First Name</label>
+					<input id="first-name" name="FirstName" autocomplete="given-name" type="text"/>
+				</div>
+				<div>
+					<label for="last-name">Last Name</label>
+					<input id="last-name" name="LastName" autocomplete="family-name" type="text"/>
+				</div>
+				<div>
+					<label for="username">Username</label>
+					<input id="username" name="Username" autocomplete="username" type="text"/>
+				</div>
+				<div>
+					<label for="email">Email Address</label>
+					<input id="email" name="Email" autocomplete="email" type="email"/>
+				</div>
+				<div>
+					<label for="password">Password</label>
+					<input id="password" name="Password" type="password" autocomplete="new-password"/>
+				</div>
+				<div>
+					<label for="confirm-password">Confirm password</label>
+					<input id="confirm-password" name="ConfirmPassword" type="password" autocomplete="new-password"/>
+				</div>
+				<button type="submit">Register</button>
+			</form>
+		</main>
+	}
+}

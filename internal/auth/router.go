@@ -21,6 +21,7 @@ func Router(
 ) *chi.Mux {
 	r := chi.NewRouter()
 
+	r.Handle("/register", registerHandler(formDecoder, formValidator, logger))
 	r.Handle("/login", loginHandler(formDecoder, formValidator, logger))
 
 	return r
@@ -33,11 +34,12 @@ func loginHandler(
 ) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
+		page := pages.Login
 		pageProps := pages.LoginProps{}
 
 		switch r.Method {
 		case http.MethodGet:
-			_ = pages.Login(pageProps).Render(ctx, w)
+			_ = page(pageProps).Render(ctx, w)
 		case http.MethodPost:
 			if err := r.ParseForm(); err != nil {
 				http.Error(w, "Invalid form data", http.StatusForbidden)
@@ -58,7 +60,7 @@ func loginHandler(
 				if errors.As(err, &errs) {
 					pageProps.ValidationErrors = errs
 
-					_ = pages.Login(pageProps).Render(ctx, w)
+					_ = page(pageProps).Render(ctx, w)
 
 					return
 				}
@@ -66,7 +68,57 @@ func loginHandler(
 
 			logger.DebugContext(ctx, "login form successfully submitted", "data", form)
 
-			_ = pages.Login(pageProps).Render(ctx, w)
+			_ = page(pageProps).Render(ctx, w)
+		}
+	}
+}
+
+func registerHandler(
+	formDecoder *form.Decoder,
+	formValidator *validator.Validate,
+	logger *slog.Logger,
+) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
+		page := pages.Register
+		pageProps := pages.RegisterProps{}
+
+		switch r.Method {
+		case http.MethodGet:
+			_ = page(pageProps).Render(ctx, w)
+		case http.MethodPost:
+			if err := r.ParseForm(); err != nil {
+				http.Error(w, "Invalid form data", http.StatusForbidden)
+			}
+
+			var form struct {
+				FirstName       string `form:",omitempty"`
+				LastName        string `form:",omitempty"`
+				Username        string `validate:"required"`
+				Email           string `validate:"email,required"`
+				Password        string `json:"-" validate:"required"`
+				ConfirmPassword string `json:"-" validate:"required,eqfield=Password"`
+			}
+
+			if err := formDecoder.Decode(&form, r.Form); err != nil {
+				http.Error(w, "Unable to parse form data", http.StatusNotAcceptable)
+			}
+
+			if err := formValidator.StructCtx(ctx, form); err != nil {
+				var errs validator.ValidationErrors
+
+				if errors.As(err, &errs) {
+					pageProps.ValidationErrors = errs
+
+					_ = page(pageProps).Render(ctx, w)
+
+					return
+				}
+			}
+
+			logger.DebugContext(ctx, "register form successfully submitted", "data", form)
+
+			_ = page(pageProps).Render(ctx, w)
 		}
 	}
 }
