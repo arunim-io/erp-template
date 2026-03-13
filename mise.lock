@@ -1,11 +1,11 @@
 [[tools.biome]]
-version = "2.4.4"
+version = "2.4.6"
 backend = "aqua:biomejs/biome"
-"platforms.linux-arm64" = { checksum = "sha256:708cfaa01d12b2bb1649c5b7d97f3de24a1741fbcfcf0a461c5f9be4875c760b", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.4/biome-linux-arm64"}
-"platforms.linux-x64" = { checksum = "sha256:ba5073017ec03a700e5b9270b2454df7dbec6a5124611bb785b68ae717506d45", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.4/biome-linux-x64"}
-"platforms.macos-arm64" = { checksum = "sha256:e89011b1714a20ebd4b683321ba7184ce2a79a28f4ee3d33bda74a4ea749062a", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.4/biome-darwin-arm64"}
-"platforms.macos-x64" = { checksum = "sha256:4fad0d5015ebb6be52b89398ed0e90721ee0239f4cdea0c347257a0a286e8d84", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.4/biome-darwin-x64"}
-"platforms.windows-x64" = { checksum = "sha256:8a09016cabaac8575abb42d19c55075fa7ca81c955f777604a2fb971a44a7ed5", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.4/biome-win32-x64.exe"}
+"platforms.linux-arm64" = { checksum = "sha256:2da0b8d028e77f778900ac84e1d44bbc70332da9ffdae3ec3aa04355f339fa7a", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.6/biome-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:6bc192f1f0b3495443472d95bd4dbfc9372c17f7ac51256d635192ca525da59d", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.6/biome-linux-x64"}
+"platforms.macos-arm64" = { checksum = "sha256:8452b1175f297b69c5b71fe3bd044b381a78c812d7c0f437638fcb3a325973c9", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.6/biome-darwin-arm64"}
+"platforms.macos-x64" = { checksum = "sha256:169f3f31d1bd8be09f184eca55184e71d0449ef57c79ea56d0202358709431fb", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.6/biome-darwin-x64"}
+"platforms.windows-x64" = { checksum = "sha256:4c1d9cb0a2d9442ff7ffdf3bd07654e5a8bb24f2236f596d0cc414653bbf91d5", url = "https://github.com/biomejs/biome/releases/download/%40biomejs/biome%402.4.6/biome-win32-x64.exe"}
 
 [[tools."github:a-h/templ"]]
 version = "0.3.1001"
@@ -36,18 +36,26 @@ backend = "github:sqlc-dev/sqlc"
 "platforms.linux-x64" = { checksum = "sha256:468aecee071bfe55e97fcbcac52ea0208eeca444f67736f3b8f0f3d6a106132e", url = "https://github.com/sqlc-dev/sqlc/releases/download/v1.30.0/sqlc_1.30.0_linux_amd64.tar.gz", url_api = "https://api.github.com/repos/sqlc-dev/sqlc/releases/assets/288589112"}
 
 [[tools.go]]
-version = "1.26.0"
+version = "1.26.1"
 backend = "core:go"
-"platforms.linux-x64" = { checksum = "sha256:aac1b08a0fb0c4e0a7c1555beb7b59180b05dfc5a3d62e40e9de90cd42f88235", url = "https://dl.google.com/go/go1.26.0.linux-amd64.tar.gz"}
+"platforms.linux-arm64" = { checksum = "sha256:a290581cfe4fe28ddd737dde3095f3dbeb7f2e4065cab4eae44dfc53b760c2f7", url = "https://dl.google.com/go/go1.26.1.linux-arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:031f088e5d955bab8657ede27ad4e3bc5b7c1ba281f05f245bcc304f327c987a", url = "https://dl.google.com/go/go1.26.1.linux-amd64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:353df43a7811ce284c8938b5f3c7df40b7bfb6f56cb165b150bc40b5e2dd541f", url = "https://dl.google.com/go/go1.26.1.darwin-arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:65773dab2f8cc4cd23d93ba6d0a805de150ca0b78378879292be0b903b8cdd08", url = "https://dl.google.com/go/go1.26.1.darwin-amd64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:9b68112c913f45b7aebbf13c036721264bbba7e03a642f8f7490c561eebd1ecc", url = "https://dl.google.com/go/go1.26.1.windows-amd64.zip"}
 
 [[tools."go:golang.org/x/tools/gopls"]]
 version = "0.21.1"
 backend = "go:golang.org/x/tools/gopls"
 
 [[tools.golangci-lint]]
-version = "2.10.1"
+version = "2.11.3"
 backend = "aqua:golangci/golangci-lint"
-"platforms.linux-x64" = { checksum = "sha256:dfa775874cf0561b404a02a8f4481fc69b28091da95aa697259820d429b09c99", url = "https://github.com/golangci/golangci-lint/releases/download/v2.10.1/golangci-lint-2.10.1-linux-amd64.tar.gz"}
+"platforms.linux-arm64" = { checksum = "sha256:ee3d95f301359e7d578e6d99c8ad5aeadbabc5a13009a30b2b0df11c8058afe9", url = "https://github.com/golangci/golangci-lint/releases/download/v2.11.3/golangci-lint-2.11.3-linux-arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:87bb8cddbcc825d5778b64e8a91b46c0526b247f4e2f2904dea74ec7450475d1", url = "https://github.com/golangci/golangci-lint/releases/download/v2.11.3/golangci-lint-2.11.3-linux-amd64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:30ee39979c516b9d1adca289a3f93429d130c4c0fda5e57d637850894221f6cc", url = "https://github.com/golangci/golangci-lint/releases/download/v2.11.3/golangci-lint-2.11.3-darwin-arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:f93bda1f2cc981fd1326464020494be62f387bbf262706e1b3b644e5afacc440", url = "https://github.com/golangci/golangci-lint/releases/download/v2.11.3/golangci-lint-2.11.3-darwin-amd64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:cd42e890176bc5cfeb36225a77e66b9410ddd3a59a03551e23f6b210d29e1f67", url = "https://github.com/golangci/golangci-lint/releases/download/v2.11.3/golangci-lint-2.11.3-windows-amd64.zip"}
 
 [[tools.sd]]
 version = "1.1.0"
