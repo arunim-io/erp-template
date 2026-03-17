@@ -63,7 +63,16 @@ func run(rootCtx context.Context) error {
 	formDecoder = form.NewDecoder()
 	formValidator = validator.New(validator.WithRequiredStructEnabled())
 
-	svr, err := server.New(ctx, logger, sm, db.Queries, formDecoder, formValidator, mode, cfg.Server)
+	svr, err := server.New(
+		ctx,
+		logger,
+		sm,
+		db.Queries,
+		formDecoder,
+		formValidator,
+		mode,
+		cfg.Server,
+	)
 	if err != nil {
 		return err
 	}

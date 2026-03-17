@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
+#MISE tools={sd="latest"}
+
 sd '(?m)^\\\w+.*\n' '' db/schema.sql

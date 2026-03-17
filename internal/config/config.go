@@ -137,7 +137,7 @@ type ServerConfig struct {
 	ReadHeaderTimeout time.Duration `koanf:"read_header_timeout"`
 }
 
-func (c *ServerConfig) Addr() string {
+func (c ServerConfig) Addr() string {
 	return net.JoinHostPort(c.Host, strconv.Itoa(int(c.Port)))
 }
 

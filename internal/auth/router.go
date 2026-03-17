@@ -43,6 +43,8 @@ func loginHandler(
 		case http.MethodPost:
 			if err := r.ParseForm(); err != nil {
 				http.Error(w, "Invalid form data", http.StatusForbidden)
+
+				return
 			}
 
 			var form struct {
@@ -89,6 +91,8 @@ func registerHandler(
 		case http.MethodPost:
 			if err := r.ParseForm(); err != nil {
 				http.Error(w, "Invalid form data", http.StatusForbidden)
+
+				return
 			}
 
 			var form struct {

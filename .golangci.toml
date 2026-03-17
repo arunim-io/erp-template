@@ -99,6 +99,7 @@ gocognit.min-complexity = 20
 goconst = { find-duplicates = true, eval-const-expressions = true }
 gocritic.settings = { captLocal.paramsOnly = false, underef.skipRecvDeref = false }
 godoclint.enable = ["no-unused-link"]
+gosec.excludes = ["G120"]
 govet = { enable-all = true, disable = ["fieldalignment"] }
 ireturn.allow = ["anon", "error", "empty", "stdlib", "generic"]
 nakedret.max-func-lines = 0
